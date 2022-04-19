@@ -1,0 +1,20 @@
+<header>
+	<nav>
+		<div class="left">
+			<div class="logo">
+				<img src="{{asset('images/static/logo.png')}}" alt="logo">
+			</div>
+			<a class='nav-link' href="{{path('app_home')}}">Accueil</a>
+			<a class='nav-link' href="#">Rechercher</a>
+
+		</div>
+		<div class="right">
+			{% if not(is_granted('ROLE_USER')) %}
+				<a class="nav-link" href="{{path('app_login')}}">Se Connecter/S'inscrire</a>
+			{% else %}
+				<span class="username">Bienvenue {{app.user.username}}! </span>
+				<a class="nav-link" href="{{path('app_logout')}}">Se déconnecter</a>
+			{% endif %}
+		</div>
+	</nav>
+</header>
