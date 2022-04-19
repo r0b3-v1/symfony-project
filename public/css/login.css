@@ -19,8 +19,31 @@ form label {
   margin-right: 1em;
 }
 
-form .form-input:nth-last-child(1) {
-  color: red !important;
+form .form-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  min-width: 25em;
+}
+
+form .input-alert {
+  background: #ca9393;
+  padding: 1em;
+  border-radius: 10px;
+  border: 1px solid red;
+  color: white;
+}
+
+form .input-errors {
+  font-size: 0.8em;
+  color: red;
+}
+
+form .input-errors i {
+  margin-right: 10px;
 }
 
 .top-separator {

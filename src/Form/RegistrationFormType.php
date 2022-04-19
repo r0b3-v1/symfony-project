@@ -6,6 +6,8 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -20,7 +22,7 @@ class RegistrationFormType extends AbstractType
             ->add('username')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
-                'label' => 'J\'accepte les <a class="link-anim" href="#">conditions d\'utilisation</a>',
+                'label' => 'J\'accepte les <a class="link-anim" href="/terms" target="_blank">conditions d\'utilisation</a>',
                 'label_html' => true,
                 'constraints' => [
                     new IsTrue([
@@ -28,7 +30,12 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
+            ->add('mail', TextType::class)
+            ->add('plainPassword', RepeatedType::class, [
+                'type'=>PasswordType::class,
+                'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmer le mot de passe'],
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,

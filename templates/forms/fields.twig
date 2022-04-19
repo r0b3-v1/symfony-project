@@ -1,0 +1,17 @@
+{% block form_row %}
+
+    <div {% if not((form_errors(form)|trim) is empty)%} class="input-alert" {% endif %}>
+        <div class="form-input">
+            {{ form_label(form) }}
+            {{ form_widget(form) }}
+        </div>
+            {{ form_errors(form) }}
+    </div>
+
+{% endblock %}
+
+{% block form_errors %}
+          {% for error in errors %}
+                <div class="input-errors"><i class="fa-solid fa-triangle-exclamation"></i>{{ error.message }}</div>
+          {% endfor %}
+{% endblock %}

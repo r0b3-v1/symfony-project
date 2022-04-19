@@ -17,4 +17,11 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    /**
+     * @Route("/terms", name="app_terms")
+     */
+    public function terms() : Response {
+        return $this->render('home/terms.html.twig');
+    }
 }
