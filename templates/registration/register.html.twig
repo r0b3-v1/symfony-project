@@ -23,13 +23,14 @@
                     label: 'Adresse mail : '
                 }) }}
         {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_row(registrationForm.agreeTerms) }} <span class='check-label'></span>
         <button type="submit" class="button">Enregistrer</button>
             <div class="top-separator">
             <a class="link-anim" href="{{path('app_login')}}">Revenir à la page de connexion</a>
         </div>
     </div>
 	{{ form_end(registrationForm) }}
+
 
 
 {% endblock %}

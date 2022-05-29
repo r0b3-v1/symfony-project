@@ -34,8 +34,8 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type'=>PasswordType::class,
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmer le mot de passe'],
+                'first_options'  => ['label' => 'Mot de passe :'],
+                'second_options' => ['label' => 'Confirmer le mot de passe :'],
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
