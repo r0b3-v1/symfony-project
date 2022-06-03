@@ -52,6 +52,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $mail;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $is_verified;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -168,6 +173,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMail(string $mail): self
     {
         $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+
+    public function setIsVerified(bool $is_verified): self
+    {
+        $this->is_verified = $is_verified;
 
         return $this;
     }
