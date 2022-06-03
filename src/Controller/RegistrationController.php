@@ -56,6 +56,9 @@ class RegistrationController extends AbstractController {
             //on génère le token
             $token = $jWTService->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
+            //on remplace les . car ils provoquent une erreur dans l'url
+            $token = str_replace('.','*',$token);
+
 
             //on envoie un mail
             $mailerService->send(
@@ -82,6 +85,9 @@ class RegistrationController extends AbstractController {
      * @Route("/verif/{token}", name="verify_user", requirements={"token"=".+"})
      */
     public function verifyUser($token, JWTService $jwtService, UserRepository $userRepository, EntityManagerInterface $em): Response {
+        
+        //on retransforme les * en .
+        $token = str_replace('*','.',$token);
 
         //on vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
         if ($jwtService->isValid($token) && !$jwtService->isExpired($token) && $jwtService->check($token, $this->getParameter('app.jwtsecret'))) {
