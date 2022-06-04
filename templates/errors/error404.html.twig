@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if customTitle == '' %}
+		Erreur 404!
+	{% else %}
+		{{customTitle | raw}}
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+	{% if customMessage == '' %}
+		Erreur, cette page n'existe pas!
+	{% else %}
+		{{customMessage | raw}}
+	{% endif %}
+{% endblock %}
