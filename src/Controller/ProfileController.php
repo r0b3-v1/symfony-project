@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user")
+ * @Route("/user/{username}")
  */
 class ProfileController extends AbstractController {
     /**
-     * @Route("/{username}", name="app_profile")
+     * @Route("/infos", name="app_profile_infos")
      */
     public function index(string $username, Helpers $helper, UserRepository $ur): Response {
         $allowEditing = false;
@@ -30,5 +30,13 @@ class ProfileController extends AbstractController {
             'user'=>$user,
             'allowEditing'=>$allowEditing
         ]);
+    }
+
+    /**
+     * @Route("/edit", name="test_image")
+     */
+    public function edit(){
+        
+
     }
 }

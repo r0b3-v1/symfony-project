@@ -49,8 +49,8 @@ header .username {
   color: green;
 }
 
-header .left .nav-link:hover,
-header .right .nav-link:hover {
+header .left .nav_link:hover,
+header .right .nav_link:hover {
   color: var(--MP-text-link-hover);
   background-color: var(--MP-bg-link-hover);
 }
@@ -101,7 +101,7 @@ body {
   padding: 0 8em;
 }
 
-.text-light {
+.text_light {
   color: var(--MP-text-primary);
 }
 

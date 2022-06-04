@@ -48,8 +48,8 @@ header {
     }
 
 
-    .left .nav-link,
-    .right .nav-link {
+    .left .nav_link,
+    .right .nav_link {
 
 
         &:hover {
@@ -95,7 +95,7 @@ body{
     padding: 0 8em;
 }
 
-.text-light{
+.text_light{
     color: var(--MP-text-primary);
 }
 
