@@ -16,13 +16,19 @@ class ProfileController extends AbstractController {
      * @Route("/{username}", name="app_profile")
      */
     public function index(string $username, Helpers $helper, UserRepository $ur): Response {
+        $allowEditing = false;
         $user = $ur->findOneBy(['username'=>$username]);
+        $currentUser = $this->getUser();
         if(!$user){
             return $helper->error(404, 'Utilisateur introuvable', 'Cet utilisateur n\'existe pas!');
         }
+        if($currentUser && $currentUser->getId()===$user->getId())
+            $allowEditing = true;
+            
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
-            'user'=>$user
+            'user'=>$user,
+            'allowEditing'=>$allowEditing
         ]);
     }
 }
