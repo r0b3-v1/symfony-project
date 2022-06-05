@@ -79,6 +79,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $ToS;
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
@@ -297,6 +307,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getToS(): ?string
+    {
+        return $this->ToS;
+    }
+
+    public function setToS(?string $ToS): self
+    {
+        $this->ToS = $ToS;
 
         return $this;
     }
