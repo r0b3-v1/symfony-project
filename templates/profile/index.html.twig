@@ -15,10 +15,19 @@
 				{{ user.username}}!
 			{% endif %}
 		</h1>
-        
+
 		{% if allowEditing %}
 			<p>Ici vous pouvez voir vos informations et les modifier</p>
 		{% endif %}
+
+		<div class="infos">
+			<p>nom :
+				{{user.name}}</p>
+			<p>prénom :
+				{{user.surname}}</p>
+			<p>adresse mail :
+				{{user.mail}}</p>
+		</div>
 
 	</div>
 {% endblock %}
