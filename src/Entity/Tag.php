@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\TagRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TagRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=TagRepository::class)
  */
-class Tag
-{
+class Tag {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -29,23 +28,19 @@ class Tag
      */
     private $submissions;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->submissions = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
+    public function getName(): ?string {
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
+    public function setName(string $name): self {
         $this->name = $name;
 
         return $this;
@@ -54,13 +49,11 @@ class Tag
     /**
      * @return Collection<int, Submission>
      */
-    public function getSubmissions(): Collection
-    {
+    public function getSubmissions(): Collection {
         return $this->submissions;
     }
 
-    public function addSubmission(Submission $submission): self
-    {
+    public function addSubmission(Submission $submission): self {
         if (!$this->submissions->contains($submission)) {
             $this->submissions[] = $submission;
             $submission->addTag($this);
@@ -69,8 +62,7 @@ class Tag
         return $this;
     }
 
-    public function removeSubmission(Submission $submission): self
-    {
+    public function removeSubmission(Submission $submission): self {
         if ($this->submissions->removeElement($submission)) {
             $submission->removeTag($this);
         }

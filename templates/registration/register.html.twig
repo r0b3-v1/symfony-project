@@ -16,14 +16,17 @@
 	{{ form_start(registrationForm, { 'attr' : { 'class': 'text_light' } }) }}
 	<div class="form-content">
         <h1>Créer mon compte</h1>
-        {{ form_row(registrationForm.username, {
-                    label: 'Nom d\'utilisateur : ',
-                }) }}
-        {{ form_row(registrationForm.mail, {
-                    label: 'Adresse mail : '
-                }) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }} <span class='check-label'></span>
+
+        <div class="inputs">
+            {{ form_row(registrationForm.username, {
+                        label: 'Nom d\'utilisateur : ',
+                    }) }}
+            {{ form_row(registrationForm.mail, {
+                        label: 'Adresse mail : '
+                    }) }}
+            {{ form_row(registrationForm.plainPassword) }}
+            {{ form_row(registrationForm.agreeTerms) }} <span class='check-label'></span>
+        </div>
         <button type="submit" class="button">Enregistrer</button>
             <div class="top-separator">
             <a class="link-anim" href="{{path('app_login')}}">Revenir à la page de connexion</a>

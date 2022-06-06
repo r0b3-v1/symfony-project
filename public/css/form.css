@@ -7,8 +7,7 @@ form {
   padding: 5em;
 }
 
-form .form-content {
-  background-color: #2b2b2b;
+form .inputs, form .form-content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -16,10 +15,29 @@ form .form-content {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  gap: 2em;
+}
+
+form .inputs {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 2em;
+}
+
+form .inputs div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+form .form-content {
+  background-color: #2b2b2b;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 4em 0;
   padding-top: 2em;
   width: 50%;
@@ -38,11 +56,14 @@ form .form-content label {
   margin-right: 1em;
 }
 
-form .form-content input:focus {
-  -webkit-box-shadow: 0 0 10px #00b5ff;
-          box-shadow: 0 0 10px #00b5ff;
+form .form-content input, form .form-content textarea {
   outline: none;
   border: none;
+}
+
+form .form-content input:focus, form .form-content textarea:focus {
+  -webkit-box-shadow: 0 0 10px #00b5ff;
+          box-shadow: 0 0 10px #00b5ff;
   -webkit-animation: border_color_change 5s infinite;
           animation: border_color_change 5s infinite;
 }

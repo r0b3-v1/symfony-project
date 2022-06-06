@@ -89,6 +89,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $ToS;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $disponible;
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
@@ -331,6 +336,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setToS(?string $ToS): self
     {
         $this->ToS = $ToS;
+
+        return $this;
+    }
+
+    public function getDisponible(): ?bool
+    {
+        return $this->disponible;
+    }
+
+    public function setDisponible(?bool $disponible): self
+    {
+        $this->disponible = $disponible;
 
         return $this;
     }

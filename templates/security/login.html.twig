@@ -28,18 +28,20 @@
                     <a class="logout link-anim" href="{{ path('app_logout') }}">Se déconnecter</a>
                 </div>
             {% endif %}
-            <div class="form-input">
-                <label for="inputUsername">Votre nom d'utilisateur :
-                </label>
-                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="" required autofocus>
+            <div class="inputs">
+                <div class="form-input">
+                    <label for="inputUsername">Votre nom d'utilisateur :
+                    </label>
+                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="" required autofocus>
+                </div>
+                <div class="form-input">
+                    <label for="inputPassword">Votre mot de passe :
+                    </label>
+                    <input type="password" name="password" id="inputPassword" class="" required>
+                </div>
+                <input
+                type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             </div>
-            <div class="form-input">
-                <label for="inputPassword">Votre mot de passe :
-                </label>
-                <input type="password" name="password" id="inputPassword" class="" required>
-            </div>
-            <input
-            type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             {#
                                             Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
                                             See https://symfony.com/doc/current/security/remember_me.html

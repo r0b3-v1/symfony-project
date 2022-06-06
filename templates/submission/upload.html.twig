@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle submission
+{% endblock %}
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
+	<link rel="stylesheet" href="{{ asset('css/form.css')}}">
+
+{% endblock %}
+
+{% block body %}
+	{% form_theme submissionForm 'forms/fields.twig' %}
+	{{ form_start(submissionForm, { 'attr' : { 'class': 'text_light' } }) }}
+	<div class="form-content">
+		<h1>Créer une nouvelle image</h1>
+		<div class="inputs">
+			{{ form_row(submissionForm.title, {
+                        label: 'Titre de votre image : '
+                    }) }}
+			{{ form_row(submissionForm.description, {
+                        label: 'Description : '
+                    }) }}
+			{{ form_row(submissionForm.tags,{
+                label: 'Tags :'
+            }) }}
+			{{ form_row(submissionForm.image,{
+                label: 'Image :'
+            }) }}
+		</div>
+		<button type="submit" class="button">Valider</button>
+
+	</div>
+</div>
+{{ form_end(submissionForm) }}{% endblock %}
