@@ -149,4 +149,60 @@ footer {
   border-radius: 10px;
   background-color: var(--MP-text-link-hover);
 }
+
+.main-content {
+  background-color: #333;
+  border: 1px solid black;
+  padding: 2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 2em;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.main-content .submission {
+  cursor: pointer;
+  max-width: 30%;
+  max-height: 350px;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main-content .submission a {
+  display: contents;
+}
+
+.main-content .submission:hover img {
+  border: 1px solid white;
+}
+
+.main-content .submission:hover h3 {
+  text-decoration: underline;
+}
+
+.main-content .submission img {
+  -webkit-transition: border 0.3s ease-in-out;
+  transition: border 0.3s ease-in-out;
+  max-width: 100%;
+  max-height: 100%;
+  border: 1px solid gray;
+}
+
+.main-content .submission h3 {
+  font-size: 1em;
+}
 /*# sourceMappingURL=style.css.map */

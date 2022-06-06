@@ -57,7 +57,7 @@ class ProfileController extends AbstractController {
                 $ok = true;
                 $newName = uniqid().'.'.$image->guessExtension();
                 try {
-                    $submission->setUrl($this->getParameter('app.imageDirectory').'/'.$user->getUsername().'/'.$newName);
+                    $submission->setUrl($user->getUsername().'/'.$newName);
                     $image->move(
                         $this->getParameter('app.imageDirectory').'/'.$user->getUsername(),
                         $newName
