@@ -76,7 +76,9 @@ header {
     .left .nav_link,
     .right .nav_link {
 
-
+        i{
+            margin-left: 0.5em;
+        }
         &:hover {
             color: var(--MP-text-link-hover)!important;
             background-color: var(--MP-bg-link-hover);

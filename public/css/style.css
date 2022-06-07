@@ -79,6 +79,11 @@ header .user a img:hover {
           box-shadow: 0 0 2px 2px green;
 }
 
+header .left .nav_link i,
+header .right .nav_link i {
+  margin-left: 0.5em;
+}
+
 header .left .nav_link:hover,
 header .right .nav_link:hover {
   color: var(--MP-text-link-hover) !important;
