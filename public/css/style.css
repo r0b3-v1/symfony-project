@@ -19,7 +19,7 @@ a,
 a:focus,
 a:visited {
   text-decoration: none;
-  color: var(--MP-text-primary);
+  color: var(--MP-text-primary) !important;
 }
 
 header {
@@ -28,30 +28,60 @@ header {
   border-bottom: 1px solid black;
 }
 
-header .left > *:not(.logo), header .right > * {
+header .left > *:not(.logo),
+header .right > * {
   position: relative;
   padding: 10px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
-header .left > *:not(.logo):not(:last-child):after, header .right > *:not(:last-child):after {
+header .left > *:not(.logo):not(:last-child):after,
+header .right > *:not(:last-child):after {
   content: '';
   background-color: var(--MP-text-primary);
   height: 1.5em;
   width: 1px;
   position: absolute;
-  top: 0.5em;
+  top: 0.6em;
   right: -1em;
 }
 
-header .username {
-  color: green;
+header .user:after {
+  top: 1.2em !important;
+}
+
+header .user a {
+  color: var(--MP-text-primary);
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1em;
+}
+
+header .user a:hover {
+  color: green !important;
+}
+
+header .user a img {
+  border-radius: 50%;
+  height: 40px;
+}
+
+header .user a img:hover {
+  -webkit-box-shadow: 0 0 2px 2px green;
+          box-shadow: 0 0 2px 2px green;
 }
 
 header .left .nav_link:hover,
 header .right .nav_link:hover {
-  color: var(--MP-text-link-hover);
+  color: var(--MP-text-link-hover) !important;
   background-color: var(--MP-bg-link-hover);
 }
 
@@ -94,6 +124,16 @@ header nav .right .logo img {
 body {
   min-height: 100vh;
   background-color: var(--MP-bg-body);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .main {
@@ -113,6 +153,9 @@ footer {
   width: 100%;
   bottom: 0;
   margin-top: 2em;
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
 }
 
 .banner-container {
@@ -167,8 +210,8 @@ footer {
 
 .main-content .submission {
   cursor: pointer;
-  max-width: 30%;
-  max-height: 350px;
+  max-width: 15%;
+  max-height: 165px;
   text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -177,9 +220,16 @@ footer {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.main-content .submission:hover {
+  max-width: 20%;
+  max-height: 220px;
 }
 
 .main-content .submission a {

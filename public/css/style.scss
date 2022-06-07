@@ -20,14 +20,15 @@ a,
 a:focus,
 a:visited {
     text-decoration: none;
-    color: var(--MP-text-primary);
+    color: var(--MP-text-primary) !important;
 }
 
 header {
     background: var(--MP-bg-primary) linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 150%);
     border-bottom: 1px solid black;
 
-    .left>*:not(.logo), .right>*{
+    .left>*:not(.logo),
+    .right>* {
         position: relative;
         padding: 10px;
         transition: all 0.2s ease-in-out;
@@ -38,13 +39,37 @@ header {
             height: 1.5em;
             width: 1px;
             position: absolute;
-            top: 0.5em;
+            top: 0.6em;
             right: -1em;
         }
     }
 
-    .username{
-        color:green;
+    .user {
+        &:after {
+            top: 1.2em !important;
+        }
+
+        a {
+            color: var(--MP-text-primary);
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1em;
+
+            &:hover {
+                color: green !important;
+            }
+
+            img {
+                border-radius: 50%;
+                height: 40px;
+
+                &:hover {
+                    box-shadow: 0 0 2px 2px green;
+                }
+            }
+        }
     }
 
 
@@ -53,7 +78,7 @@ header {
 
 
         &:hover {
-            color: var(--MP-text-link-hover);
+            color: var(--MP-text-link-hover)!important;
             background-color: var(--MP-bg-link-hover);
         }
 
@@ -85,9 +110,12 @@ header {
 }
 
 
-body{
+body {
     min-height: 100vh;
     background-color: var(--MP-bg-body);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .main {
@@ -95,7 +123,7 @@ body{
     padding: 0 8em;
 }
 
-.text_light{
+.text_light {
     color: var(--MP-text-primary);
 }
 
@@ -107,6 +135,7 @@ footer {
     width: 100%;
     bottom: 0;
     margin-top: 2em;
+    order: 1;
 }
 
 .banner-container {
@@ -124,7 +153,7 @@ footer {
     }
 }
 
-.button{
+.button {
     background-color: var(--MP-bg-primary);
     color: var(--MP-text-primary);
     border: 1px solid var(--MP-text-primary);
@@ -132,13 +161,14 @@ footer {
     cursor: pointer;
     padding: 0.5em;
     transition: all 0.2s ease-in-out;
-    &:hover{
+
+    &:hover {
         border-radius: 10px;
         background-color: var(--MP-text-link-hover);
     }
 }
 
-.main-content{
+.main-content {
     background-color: #333;
     border: 1px solid black;
     padding: 2em;
@@ -146,31 +176,43 @@ footer {
     flex-wrap: wrap;
     gap: 2em;
     justify-content: center;
-    .submission{
+
+    .submission {
         cursor: pointer;
-        max-width: 30%;
-        max-height: 350px;
+        max-width: 15%;
+        max-height: 165px;
         text-align: center;
         display: flex;
         flex-direction: column;
-        a{
+        transition: all 0.5s ease-in-out;
+
+        &:hover {
+            max-width: 20%;
+            max-height: 220px;
+        }
+
+        a {
             display: contents;
         }
+
         align-items: center;
-        &:hover img{
+
+        &:hover img {
             border: 1px solid white;
         }
-        &:hover h3{
+
+        &:hover h3 {
             text-decoration: underline;
         }
-        img{
+
+        img {
             transition: border 0.3s ease-in-out;
             max-width: 100%;
             max-height: 100%;
             border: 1px solid gray;
         }
 
-        h3{
+        h3 {
             font-size: 1em;
         }
     }
