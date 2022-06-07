@@ -9,7 +9,6 @@ use App\Form\SubmissionType;
 use App\Repository\TagRepository;
 use App\Repository\SubmissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,13 +43,16 @@ class SubmissionController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
+            
+            //les infos globales de la submission
             $submission->setAuthor($user);
             $submission->setDateCreation(new \DateTime());
             $submission->setTitle($form->get('title')->getData());
             $submission->setDescription($form->get('description')->getData());
             $image = $form->get('image')->getData();
+
+            //stockage de l'image
             if ($image) {
-                $ok = true;
                 $newName = uniqid() . '.' . $image->guessExtension();
                 try {
                     $submission->setUrl($user->getUsername() . '/' . $newName);
@@ -66,9 +68,11 @@ class SubmissionController extends AbstractController {
                     ]);
                 }
             }
+
+            //récupération des tags sous la forme d'un tableau
             $tags = explode(' ', $form->getData()['tags']);
 
-
+            //si le tag existe déjà, on ajoute la relation avec la submission, sinon on crée le tag
             foreach ($tags as $tag) {
                 $DBtag = $tr->findOneBy(['name' => $tag]);
                 if (!$DBtag) {
@@ -111,8 +115,6 @@ class SubmissionController extends AbstractController {
                 $tr->remove($tag);
         }
         
-
-      
         $this->addFlash('success','Le post a bien été supprimé');
         return $this->redirectToRoute('app_home');
     }
