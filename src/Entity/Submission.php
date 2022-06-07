@@ -41,7 +41,7 @@ class Submission
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="submissions")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="submissions", fetch="EAGER")
      */
     private $tags;
 

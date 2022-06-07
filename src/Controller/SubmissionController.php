@@ -17,9 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SubmissionController extends AbstractController {
     /**
-     * @Route("/post/{postId}/show", name="post_show")
+     * @Route("/post/{postId}/show", name="app_post_show")
      */
-    public function index(int $postId, SubmissionRepository $sr, Helpers $helper): Response {
+    public function show(int $postId, SubmissionRepository $sr, Helpers $helper): Response {
         $submission = $sr->find($postId);
         if (!$submission) {
             return $helper->error(404, 'Post introuvable', 'Ce post n\'existe pas');
@@ -32,9 +32,9 @@ class SubmissionController extends AbstractController {
 
 
     /**
-     * @Route("/upload", name="app_upload")
+     * @Route("/upload", name="app_post_upload")
      */
-    public function uploadSubmission(Request $request, TagRepository $tr, EntityManagerInterface $em, Helpers $helper) {
+    public function upload(Request $request, TagRepository $tr, EntityManagerInterface $em, Helpers $helper) {
         if(!$this->getUser()){
             return $helper->error(404,'Accès non autorisé','Vous ne pouvez pas upload de fichier sans être connecté');
         }
@@ -90,5 +90,30 @@ class SubmissionController extends AbstractController {
         return $this->render('submission/upload.html.twig', [
             'submissionForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/post/{postId}/delete", name="app_post_delete")
+     */
+    public function delete(int $postId, SubmissionRepository $sr, Helpers $helper, TagRepository $tr){
+        
+        $submission = $sr->find($postId);
+        if(!$sr){
+            return $helper->error(404);
+        }
+
+        $targetTags = $submission->getTags();
+
+        $sr->remove($submission);
+        //si dans la table de jointure avec les tags, les tags du post ne sont plus associés à aucun autre post, on les supprime 
+        foreach ($targetTags as $tag) {
+            if(count($tag->getSubmissions()) == 0)
+                $tr->remove($tag);
+        }
+        
+
+      
+        $this->addFlash('success','Le post a bien été supprimé');
+        return $this->redirectToRoute('app_home');
     }
 }

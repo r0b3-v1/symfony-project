@@ -24,7 +24,7 @@ class Tag {
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Submission::class, mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity=Submission::class, mappedBy="tags", fetch="EAGER")
      */
     private $submissions;
 

@@ -2,12 +2,12 @@
 	<nav>
 		<div class="left">
 			<div class="logo">
-				<img src="{{asset('images/static/logo.png')}}" alt="logo">
+				<img src="{{asset('images/static/logo2.png')}}" alt="logo">
 			</div>
 			<a class='nav_link' href="{{path('app_home')}}">Accueil</a>
 			<a class='nav_link' href="#">Rechercher</a>
 			{% if is_granted('ROLE_USER') %}
-				<a class='nav_link' href="{{ path('app_upload')}}">Upload</a>
+				<a class='nav_link' href="{{ path('app_post_upload')}}">Upload</a>
 			{% endif %}
 
 		</div>
