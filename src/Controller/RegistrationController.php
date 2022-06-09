@@ -142,7 +142,7 @@ class RegistrationController extends AbstractController {
 
         //on envoie un mail
         $mailer->send(
-            'martketplace@outlook.com',
+            'martketplace@outlook.fr',
             $user->getMail(),
             'Activation de votre compte MarketPlace',
             'register',

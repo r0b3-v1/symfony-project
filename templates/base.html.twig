@@ -25,22 +25,13 @@
 	</head>
 	<body>
 		
-		{% include 'parts/header.html.twig' %}
+		{% include '_partials/header.html.twig' %}
 
-		{% if app.user and app.user.isVerified == false %}
-		<div class="alert alert-warning alert-dismissible" role="alert">
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			<div class="alert-message">
-				<strong>Votre compte n'est pas activé !</strong> <a href="{{ path('resend_verif')}}">Renvoyer un lien d'activation</a>
-			</div>
-		</div>
-		{% endif %}
-
-		{% include 'parts/flash.html.twig' %}
+		{% include '_partials/flash.html.twig' %}
 
 		
 		<div class="main"> {% block body %}{% endblock %}
 			</div>
-			{% include 'parts/footer.html.twig' %}
+			{% include '_partials/footer.html.twig' %}
 		</body>
 	</html>
