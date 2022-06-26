@@ -9,7 +9,7 @@
 		{# bootstrap seulement pour les flash message #}
 		<link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.css') }}">
 		<script src="{{ asset('js/bootstrap/bootstrap.bundle.min.js') }}"></script>
-		
+
 		{# font awesome #}
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 		<link
@@ -21,17 +21,22 @@
 
 		{% endblock %}
 
-		{% block javascripts %}{% endblock %}
+
 	</head>
 	<body>
-		
+
 		{% include '_partials/header.html.twig' %}
 
 		{% include '_partials/flash.html.twig' %}
 
-		
-		<div class="main"> {% block body %}{% endblock %}
-			</div>
+
+		<div class="main"> 
+		{% block body %}
+		{% endblock %}
+		</div>
+
+			{% block javascripts %}{% endblock %}
+			
 			{% include '_partials/footer.html.twig' %}
 		</body>
 	</html>

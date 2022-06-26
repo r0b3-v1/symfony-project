@@ -2,16 +2,16 @@
 
 {% block title %}
 	{% if  customTitle is defined or customTitle == '' %}
-		Erreur 404!
+		Erreur 403!
 	{% else %}
 		{{customTitle | raw}}
 	{% endif %}
 {% endblock %}
 
 {% block body %}
-<h1>Erreur 404</h1>
+<h1>Erreur 403</h1>
 	{% if not customMessage is defined or customMessage == '' %}
-		Erreur, cette page n'existe pas!
+		Vous n'avez pas l'autorisation d'accéder à cette page!
 	{% else %}
 		{{customMessage | raw}}
 	{% endif %}

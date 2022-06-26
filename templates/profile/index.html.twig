@@ -3,31 +3,71 @@
 {% block title %}Hello ProfileController!
 {% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{asset('css/profile.css')}}">
+{% endblock %}
+
+
 {% block body %}
 
 	<div class="main">
-		<h1>
+
+		<div class="greet">
+			<h1>
+				{% if allowEditing %}
+					Bienvenue sur votre profil
+					{{ user.username }}!
+				{% else %}
+					Bienvenue sur le profil de
+					{{ user.username}}!
+				{% endif %}
+			</h1>
+
 			{% if allowEditing %}
-				Bienvenue sur votre profil
-				{{ user.username }}!
-			{% else %}
-				Bienvenue sur le profil de
-				{{ user.username}}!
+				<p>Ici vous pouvez voir vos informations et les modifier</p>
 			{% endif %}
-		</h1>
-
-		{% if allowEditing %}
-			<p>Ici vous pouvez voir vos informations et les modifier</p>
-		{% endif %}
-
-		<div class="infos">
-			<p>nom :
-				{{user.name}}</p>
-			<p>prénom :
-				{{user.surname}}</p>
-			<p>adresse mail :
-				{{user.mail}}</p>
 		</div>
+		<div class="tabs">
+			<button class="profile_tabs active" target="infos">mes informations</button>
+			<button class="profile_tabs" target="favoris">mes favoris</button>
+			<button class="profile_tabs" target="ToS">mes conditions d'utilisation</button>
+		</div>
+		<div class="content">
+			<div class="profile_content infos active" data="infos">
+				<p>nom :
+					{{user.name}}</p>
+				<p>prénom :
+					{{user.surname}}</p>
+				<p>adresse mail :
+					{{user.mail}}</p>
+				<p>Votre description :
+					{{ user.description}}</p>
 
+				{% if allowEditing %}
+					<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
+				{% endif %}
+
+			</div>
+			<div class="profile_content favoris" data="favoris">
+				<p>ici sont listés les images favorites de {{user.username}}</p>
+				<div class="images_container">
+					{% for submission in user.favorites %}
+						<div class="submission text_light">
+							<a href="{{ path('app_post_show', { 'postId':submission.id })}}"><img src="{{ asset('images/users/' ~ submission.url) }}" alt="{{ submission.title }}"/>
+								<h3>{{ submission.title }}</h3>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="profile_content ToS" data="ToS">
+				<p>Mes conditions d'utilisation</p>
+			</div>
+		</div>
+		{% block javascripts %}
+			{{ parent() }}
+			<script src="{{asset('js/profile.js')}}"></script>
+		{% endblock %}
 	</div>
 {% endblock %}

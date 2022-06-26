@@ -72,6 +72,8 @@ header .user a:hover {
 header .user a img {
   border-radius: 50%;
   height: 40px;
+  width: 40px;
+  border: 1px solid var(--MP-text-primary);
 }
 
 header .user a img:hover {
@@ -209,7 +211,7 @@ footer {
   background-color: var(--MP-text-link-hover);
 }
 
-.main-content {
+.images_container {
   background-color: #333;
   border: 1px solid black;
   padding: 2em;
@@ -224,7 +226,12 @@ footer {
           justify-content: center;
 }
 
-.main-content .submission {
+.images_container.expandable .submission:hover {
+  max-width: 20%;
+  max-height: 220px;
+}
+
+.images_container .submission {
   cursor: pointer;
   max-width: 15%;
   max-height: 165px;
@@ -243,24 +250,19 @@ footer {
           align-items: center;
 }
 
-.main-content .submission:hover {
-  max-width: 20%;
-  max-height: 220px;
-}
-
-.main-content .submission a {
+.images_container .submission a {
   display: contents;
 }
 
-.main-content .submission:hover img {
+.images_container .submission:hover img {
   border: 1px solid white;
 }
 
-.main-content .submission:hover h3 {
+.images_container .submission:hover h3 {
   text-decoration: underline;
 }
 
-.main-content .submission img {
+.images_container .submission img {
   -webkit-transition: border 0.3s ease-in-out;
   transition: border 0.3s ease-in-out;
   max-width: 100%;
@@ -268,7 +270,7 @@ footer {
   border: 1px solid gray;
 }
 
-.main-content .submission h3 {
+.images_container .submission h3 {
   font-size: 1em;
 }
 /*# sourceMappingURL=style.css.map */

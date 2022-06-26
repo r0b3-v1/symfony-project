@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos informations
+{% endblock %}
+
+{% block stylesheets %}
+
+	{{parent()}}
+	<link rel="stylesheet" href="{{ asset('css/form.css')}}">
+
+{% endblock %}
+
+{% block body %}
+	{% form_theme profileForm 'forms/fields.twig' %}
+	{{ form_start(profileForm, { 'attr' : { 'class': 'text_light' } }) }}
+	<div class="form-content">
+		<h1>Modifier vos informations</h1>
+		<div class="inputs">
+			{{ form_row(profileForm.name, {
+                        label: 'Votre nom : ',
+                    }) }}
+			{{ form_row(profileForm.surname, {
+                        label: 'Votre prénom : '
+                    }) }}
+			{{ form_row(profileForm.mail, {
+                        label: 'Votre adresse mail : '
+                    }) }}
+			{{ form_row(profileForm.avatar,{
+                label: 'Votre nouvel avatar :'
+            }) }}
+			{{ form_row(profileForm.description,{
+                label: 'Votre description :'
+            }) }}
+			
+		</div>
+		<button type="submit" class="button">Valider</button>
+
+	</div>
+</div>
+{{ form_end(profileForm) }}{% endblock %}

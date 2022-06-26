@@ -94,10 +94,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $disponible;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Submission::class, inversedBy="favedby", fetch="EAGER")
+     */
+    private $favorites;
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -348,6 +354,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDisponible(?bool $disponible): self
     {
         $this->disponible = $disponible;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Submission>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Submission $favorite): self
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites[] = $favorite;
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Submission $favorite): self
+    {
+        $this->favorites->removeElement($favorite);
 
         return $this;
     }

@@ -1,0 +1,62 @@
+.main {
+  min-height: 500px;
+  color: var(--MP-text-primary);
+  background-color: var(--MP-bg-primary);
+}
+
+.content {
+  background-color: #282828;
+  min-height: 300px;
+  padding: 0 1em;
+  padding-top: 2em;
+}
+
+.content .profile_content:not(.active) {
+  display: none;
+}
+
+.greet {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.tabs {
+  height: 2em;
+  width: 100%;
+  background-color: #202020;
+}
+
+.tabs button {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 0 1em;
+  background-color: transparent;
+  color: var(--MP-text-primary);
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.tabs button:hover, .tabs button.active {
+  border: 1px solid gray;
+}
+
+.infos {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.infos .button {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+/*# sourceMappingURL=profile.css.map */

@@ -64,6 +64,8 @@ header {
             img {
                 border-radius: 50%;
                 height: 40px;
+                width: 40px;
+                border: 1px solid var(--MP-text-primary);
 
                 &:hover {
                     box-shadow: 0 0 2px 2px green;
@@ -76,11 +78,12 @@ header {
     .left .nav_link,
     .right .nav_link {
 
-        i{
+        i {
             margin-left: 0.5em;
         }
+
         &:hover {
-            color: var(--MP-text-link-hover)!important;
+            color: var(--MP-text-link-hover) !important;
             background-color: var(--MP-bg-link-hover);
         }
 
@@ -175,7 +178,7 @@ footer {
     }
 }
 
-.main-content {
+.images_container {
     background-color: #333;
     border: 1px solid black;
     padding: 2em;
@@ -183,6 +186,11 @@ footer {
     flex-wrap: wrap;
     gap: 2em;
     justify-content: center;
+
+    &.expandable .submission:hover {
+        max-width: 20%;
+        max-height: 220px;
+    }
 
     .submission {
         cursor: pointer;
@@ -192,11 +200,6 @@ footer {
         display: flex;
         flex-direction: column;
         transition: all 0.5s ease-in-out;
-
-        &:hover {
-            max-width: 20%;
-            max-height: 220px;
-        }
 
         a {
             display: contents;

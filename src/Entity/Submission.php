@@ -55,10 +55,16 @@ class Submission
      */
     private $description;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="favorites")
+     */
+    private $favedby;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->favedby = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,6 +182,33 @@ class Submission
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFavedby(): Collection
+    {
+        return $this->favedby;
+    }
+
+    public function addFavedby(User $favedby): self
+    {
+        if (!$this->favedby->contains($favedby)) {
+            $this->favedby[] = $favedby;
+            $favedby->addFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavedby(User $favedby): self
+    {
+        if ($this->favedby->removeElement($favedby)) {
+            $favedby->removeFavorite($this);
+        }
 
         return $this;
     }
