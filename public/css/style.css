@@ -273,4 +273,25 @@ footer {
 .images_container .submission h3 {
   font-size: 1em;
 }
+
+.page-buttons {
+  margin-top: 1em;
+  position: relative;
+}
+
+.page-buttons .left {
+  position: absolute;
+  left: 0;
+}
+
+.page-buttons .right {
+  position: absolute;
+  right: 0;
+}
+
+.home-page {
+  text-align: center;
+  color: var(--MP-text-primary);
+  margin-bottom: 1em;
+}
 /*# sourceMappingURL=style.css.map */

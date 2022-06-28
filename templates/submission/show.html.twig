@@ -1,7 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SubmissionController!{% endblock %}
+{% block title %}Hello SubmissionController!
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{ asset('css/post.css')}}">
+{% endblock %}
 
 {% block body %}
-<img src="{{ asset('images/users/' ~ submission.url)}}" alt="">
+	<div class="image">
+		<img src="{{ asset('images/users/' ~ submission.url)}}" alt="{{ submission.title }}">
+	</div>
+	<div class="actions">
+    {% if isFaved%}
+		<a href="{{path('app_post_unfav',{postId:submission.id})}}" class="button">retirer des favoris</a>
+    {% else %}
+		<a href="{{path('app_post_fav',{postId:submission.id})}}" class="button">ajouter aux favoris</a>
+    {% endif %}
+	</div>
+
+    <div class="description"></div>
+    <div class="comments">
+    {{form_start(commentForm)}}
+    {{ form_row(commentForm.content, {
+                        label: 'Votre message : '
+                    }) }}
+    <button type="submit" class="button">Valider</button>
+    {{form_end(commentForm)}}
+    
+    {% for comment in submission.comments %}
+        <p>posté par {{comment.user.username}} le</p>
+        <p>{{comment.content}}</p>
+    {% endfor %}
+    </div>
+
 {% endblock %}

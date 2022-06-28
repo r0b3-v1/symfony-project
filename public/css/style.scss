@@ -227,3 +227,23 @@ footer {
         }
     }
 }
+
+.page-buttons{
+    margin-top: 1em;
+    position: relative;
+    .left{
+        position: absolute;
+        left: 0;
+    }
+    .right{
+        position: absolute;
+        right: 0;
+    }
+  
+}
+
+.home-page{
+    text-align: center;
+    color: var(--MP-text-primary);
+    margin-bottom: 1em;
+}

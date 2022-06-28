@@ -4,6 +4,8 @@
 {% endblock %}
 
 {% block body %}
+<h1 class="home-page">Page
+		{{page}}/{{totalPage}}</h1>
 	<div class="images_container expandable">
 		{% for submission in submissions %}
 			<div class="submission text_light">
@@ -12,6 +14,17 @@
 				</a>
 			</div>
 		{% endfor %}
+	</div>
+
+	<div class="page-buttons">
+		{% if page > 1 %}
+			<a class="button left" href="{{ path('app_home',{page : page-1 })}}"><< page
+				{{ page - 1}}</a>
+		{% endif %}
+		{% if page < totalPage %}
+			<a class="button right" href="{{ path('app_home',{page : page+1 })}}">page
+				{{ page + 1}} >></a>
+		{% endif %}
 	</div>
 
 {% endblock %}

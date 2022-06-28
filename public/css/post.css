@@ -1,0 +1,14 @@
+.image, .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: var(--MP-bg-primary);
+}
+
+.image {
+  padding: 2em;
+}
+/*# sourceMappingURL=post.css.map */

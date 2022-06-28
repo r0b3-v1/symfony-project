@@ -1,0 +1,10 @@
+.image,.actions {
+    display: flex;
+    justify-content: center;
+
+    background-color: var(--MP-bg-primary);
+}
+.image{
+    padding: 2em;
+}
+

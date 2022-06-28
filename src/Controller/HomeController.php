@@ -10,14 +10,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/home", name="app_home")
+     * @Route("/home/{page}", name="app_home")
      */
-    public function index(SubmissionRepository $sr): Response
+    public function index(int $page = 1, SubmissionRepository $sr): Response
     {
-        $submissions = $sr->findAll();
+        // $submissions = $sr->findAll();
+        $postPerPage = 20;
+        $totalPage = ceil(count($sr->findAll())/$postPerPage);
+        $submissions = $sr->findBy([],null,$postPerPage, ($page-1)*$postPerPage);
         return $this->render('home/home.html.twig', [
             'controller_name' => 'HomeController',
-            'submissions'=>$submissions
+            'submissions'=>$submissions,
+            'page'=>$page,
+            'totalPage'=>$totalPage
         ]);
     }
 
