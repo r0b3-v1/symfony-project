@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block body %}
+	{% include "_partials/search.html.twig" %}
 <h1 class="home-page">Page
 		{{page}}/{{totalPage}}</h1>
 	<div class="images_container expandable">
@@ -26,5 +27,10 @@
 				{{ page + 1}} >></a>
 		{% endif %}
 	</div>
+
+	{% block javascripts %}
+		{{parent()}}
+		<script src="{{asset('js/search.js')}}"></script>
+	{% endblock %}
 
 {% endblock %}

@@ -247,3 +247,27 @@ footer {
     color: var(--MP-text-primary);
     margin-bottom: 1em;
 }
+
+.collapsable,.collapsed{
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 1s cubic-bezier(0, 1, 0, 1);
+}
+.collapsed{
+    max-height: 500px;
+}
+
+.search{
+    color: var(--MP-text-primary);
+    background: var(--MP-bg-primary);
+
+    .type-container{
+        padding: 1em;
+    }
+    select{
+        margin-left: 1em;
+        width: 150px;
+        background: var(--MP-bg-body);
+        color: var(--MP-text-primary);
+    }
+}
