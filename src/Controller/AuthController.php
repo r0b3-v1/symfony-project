@@ -109,7 +109,7 @@ class AuthController extends AbstractController {
                     );
                     $ur->add($user);
                     $this->addFlash('success', 'votre mot de passe a bien été modifié');
-                    $this->redirectToRoute('app_home');
+                    return $this->redirectToRoute('app_home');
                 }
 
                 return $this->render('security/password-new.html.twig', [
@@ -118,11 +118,11 @@ class AuthController extends AbstractController {
 
             } else {
                 $this->addFlash('error', 'Utilisateur introuvable');
-                $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('app_home');
             }
         } else {
             $this->addFlash('error', 'Token invalide');
-            $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home');
         }
     }
 }
