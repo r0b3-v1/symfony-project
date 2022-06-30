@@ -60,6 +60,12 @@ class Submission
      */
     private $favedby;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="submissions")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $category;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -209,6 +215,18 @@ class Submission
         if ($this->favedby->removeElement($favedby)) {
             $favedby->removeFavorite($this);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

@@ -101,6 +101,7 @@ class SubmissionController extends AbstractController {
             $submission->setDateCreation(new \DateTime());
             $submission->setTitle($form->get('title')->getData());
             $submission->setDescription($form->get('description')->getData());
+            $submission->setCategory($form->get('category')->getData());
             $image = $form->get('image')->getData();
 
             //stockage de l'image
