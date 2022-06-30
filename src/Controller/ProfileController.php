@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\UsernameType;
 use App\Form\UserType;
 use App\Repository\StatutRepository;
 use App\Repository\UserRepository;
@@ -97,4 +98,6 @@ class ProfileController extends AbstractController {
             'user' => $user
         ]);
     }
+
+
 }

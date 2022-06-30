@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié
+{% endblock %}
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
+	<link rel="stylesheet" href="{{ asset('css/form.css')}}">
+
+{% endblock %}
+
+{% block body %}
+    {% form_theme usernameForm 'forms/fields.twig' %}
+    
+	{{ form_start(usernameForm, { 'attr' : { 'class': 'text_light' } }) }}
+	<div class="form-content">
+        <h1>Mot de passe oublié</h1>
+
+        <div class="inputs">
+            {{ form_row(usernameForm.username, {
+                        label: 'Nom d\'utilisateur : ',
+                    }) }}
+        </div>
+        <button type="submit" class="button">Valider</button>
+            <div class="top-separator">
+            <a class="link-anim" href="{{path('app_login')}}">Revenir à la page de connexion</a>
+        </div>
+    </div>
+	{{ form_end(usernameForm) }}
+
+
+
+{% endblock %}
