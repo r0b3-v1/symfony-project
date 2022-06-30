@@ -27,16 +27,22 @@ class SubmissionController extends AbstractController {
         $isFaved = false;
         $comment = new Comment;
         $commentForm = $this->createForm(CommentType::class, $comment)->handleRequest($request);
-        if($this->getUser()->getFavorites()->contains($submission)) $isFaved = true;
+        if($this->getUser() && $this->getUser()->getFavorites()->contains($submission)) $isFaved = true;
         if (!$submission) {
             return $helper->error(404, 'Post introuvable', 'Ce post n\'existe pas');
         }
         if($commentForm->isSubmitted() && $commentForm->isValid()){
+            if($this->getUser()){
+                $comment->setUser($this->getUser());
+                $comment->setDate(new \DateTime());
+                $comment->setSubmission($submission);
+                $cr->add($comment);
+
+            }
+            else{
+                $this->addFlash('error', 'vous devez être connecté pour poster un commentaire');
+            }
             
-            $comment->setUser($this->getUser());
-            $comment->setDate(new \DateTime());
-            $comment->setSubmission($submission);
-            $cr->add($comment);
         }
         return $this->render('submission/show.html.twig', [
             'controller_name' => 'SubmissionController',

@@ -294,4 +294,19 @@ footer {
   color: var(--MP-text-primary);
   margin-bottom: 1em;
 }
+
+#search-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: var(--MP-text-primary);
+}
+
+#search-link input {
+  margin-left: 1em;
+}
+
+#search-link i {
+  cursor: pointer;
+}
 /*# sourceMappingURL=style.css.map */

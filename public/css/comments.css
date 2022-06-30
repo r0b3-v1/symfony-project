@@ -1,0 +1,31 @@
+.messages-container {
+  background: var(--MP-bg-primary);
+  color: var(--MP-text-primary);
+  padding: 1em;
+}
+
+.messages-container .head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+
+.messages-container .head .avatar {
+  height: 50px;
+  width: 50px;
+}
+
+.messages-container .head .avatar img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.messages-container .message {
+  margin-top: 1em;
+  padding: 1em;
+  border: 1px solid;
+}
+/*# sourceMappingURL=comments.css.map */

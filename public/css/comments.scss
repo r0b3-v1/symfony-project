@@ -1,0 +1,23 @@
+.messages-container{
+    background: var(--MP-bg-primary);
+    color: var(--MP-text-primary);
+    padding: 1em;
+
+    .head{
+        display: flex;
+        align-items: baseline;
+        .avatar{
+            height: 50px;
+            width: 50px;
+            img{
+                max-height: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+    .message{
+        margin-top: 1em;
+        padding: 1em;
+        border: 1px solid;
+    }
+}

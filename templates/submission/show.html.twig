@@ -6,6 +6,7 @@
 {% block stylesheets %}
 	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/post.css')}}">
+	<link rel="stylesheet" href="{{ asset('css/comments.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -13,7 +14,7 @@
 		<img src="{{ asset('images/users/' ~ submission.url)}}" alt="{{ submission.title }}">
 	</div>
 	<div class="actions">
-    {% if isFaved%}
+    {% if isFaved %}
 		<a href="{{path('app_post_unfav',{postId:submission.id})}}" class="button">retirer des favoris</a>
     {% else %}
 		<a href="{{path('app_post_fav',{postId:submission.id})}}" class="button">ajouter aux favoris</a>
@@ -21,18 +22,8 @@
 	</div>
 
     <div class="description"></div>
-    <div class="comments">
-    {{form_start(commentForm)}}
-    {{ form_row(commentForm.content, {
-                        label: 'Votre message : '
-                    }) }}
-    <button type="submit" class="button">Valider</button>
-    {{form_end(commentForm)}}
     
-    {% for comment in submission.comments %}
-        <p>posté par {{comment.user.username}} le</p>
-        <p>{{comment.content}}</p>
-    {% endfor %}
-    </div>
+    
+    {% include "_partials/comments.html.twig" %}
 
 {% endblock %}

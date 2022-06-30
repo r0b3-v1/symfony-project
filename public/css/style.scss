@@ -247,3 +247,14 @@ footer {
     color: var(--MP-text-primary);
     margin-bottom: 1em;
 }
+
+#search-link{
+    display: flex;
+    color: var(--MP-text-primary);
+    input{
+        margin-left: 1em;
+    }
+    i{
+        cursor: pointer;
+    }
+}
