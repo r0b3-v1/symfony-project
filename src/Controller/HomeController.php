@@ -34,7 +34,8 @@ class HomeController extends AbstractController
         }
         //dans ce cas c'est une recherche avancée faite via le formulaire de recherche
         else{
-
+            $paramsPost = $request->request;
+            dump($paramsPost);
         }
 
 

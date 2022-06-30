@@ -1,4 +1,4 @@
-form {
+.main form {
   background: linear-gradient(88deg, #49d25a, #1aa3cc, #a20db2);
   background-size: 600% 600%;
   -webkit-animation: bg_gradient 13s ease infinite;
@@ -7,7 +7,7 @@ form {
   padding: 5em;
 }
 
-form .inputs, form .form-content {
+.main form .inputs, .main form .form-content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -18,14 +18,14 @@ form .inputs, form .form-content {
   gap: 2em;
 }
 
-form .inputs {
+.main form .inputs {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 1em;
 }
 
-form .inputs div {
+.main form .inputs div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -34,7 +34,7 @@ form .inputs div {
           justify-content: space-between;
 }
 
-form .form-content {
+.main form .form-content {
   background-color: #2b2b2b;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -46,30 +46,30 @@ form .form-content {
   border: 1px solid black;
 }
 
-form .form-content h1 {
+.main form .form-content h1 {
   border-bottom: 1px solid;
   width: 100%;
   text-align: center;
   padding-bottom: 1em;
 }
 
-form .form-content label {
+.main form .form-content label {
   margin-right: 1em;
 }
 
-form .form-content input, form .form-content textarea {
+.main form .form-content input, .main form .form-content textarea {
   outline: none;
   border: none;
 }
 
-form .form-content input:focus, form .form-content textarea:focus {
+.main form .form-content input:focus, .main form .form-content textarea:focus {
   -webkit-box-shadow: 0 0 10px #00b5ff;
           box-shadow: 0 0 10px #00b5ff;
   -webkit-animation: border_color_change 5s infinite;
           animation: border_color_change 5s infinite;
 }
 
-form .form-content .form-input {
+.main form .form-content .form-input {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -79,7 +79,7 @@ form .form-content .form-input {
   min-width: 25em;
 }
 
-form .form-content .input-alert {
+.main form .form-content .input-alert {
   background: #ca9393;
   padding: 1em;
   border-radius: 10px;
@@ -87,12 +87,12 @@ form .form-content .input-alert {
   color: white;
 }
 
-form .form-content .input-errors {
+.main form .form-content .input-errors {
   font-size: 0.8em;
   color: red;
 }
 
-form .form-content .input-errors i {
+.main form .form-content .input-errors i {
   margin-right: 10px;
 }
 

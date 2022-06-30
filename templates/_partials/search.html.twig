@@ -1,16 +1,47 @@
-<div id="search-modal" class="search collapsable">
+<div id="search-modal" class="search">
 
 	<div class="type-container">
-        <label for="search-type-select">Que voulez-vous chercher?</label>
-        <select name="search-type" id="search-type-select">
-            <option value="image">Image</option>
-            <option value="artist">Artiste</option>
-        </select>
-        <div class="search-image collapsed" data="image">
-        <p>test images</p>
-        </div>
-        <div class="search-artist collapsable" data="artist">
-        <p>test artistes</p>
-        </div>
-    </div>
+		<label for="search-type-select">Que voulez-vous chercher?</label>
+		<select name="search-type" id="search-type-select">
+			<option value="image">Image</option>
+			<option value="artist">Artiste</option>
+		</select>
+		<div class="search-container">
+			<div class="search-block collapsed" data="image">
+				<form action="{{path('app_search')}}" method="POST">
+					<div class="field">
+						<label for="">titre :
+						</label>
+						<input type="text" name="title">
+					</div>
+					<div class="field">
+						<label for="">description :
+						</label>
+						<input type="text" name="description">
+					</div>
+					<div class="field">
+						<label for="">auteur :
+						</label>
+						<input type="text" name="author">
+					</div>
+					{# <div class="field">
+						<label for="">intervalle de temps :
+						</label>
+						<input type="date" name="date-min" id="">
+						<label for="">après :
+						</label>
+						<input type="date" name="date-max" id="">
+					</div> #}
+					<div class="field">
+						<label for="">tags :</label>
+						<input type="text" name="tags">
+					</div>
+					<button class="button" type="submit" id="search-post-button">Valider</button>
+				</form>
+			</div>
+			<div class="search-artist collapsable" data="artist">
+				<p>test artistes</p>
+			</div>
+		</div>
+	</div>
 </div>
