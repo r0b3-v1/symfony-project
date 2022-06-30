@@ -12,7 +12,7 @@
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</a>
 
-				{% if is_granted('ROLE_USER') %}
+				{% if is_granted('ROLE_USER') and app.user.statut.name == 'artiste' %}
 					<a class='nav_link' href="{{ path('app_post_upload')}}">Upload
 						<i class="fa-solid fa-file-arrow-up"></i>
 					</a>

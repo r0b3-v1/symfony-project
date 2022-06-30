@@ -35,7 +35,9 @@
 		{% endblock %}
 		</div>
 
-			{% block javascripts %}{% endblock %}
+			{% block javascripts %}
+				<script src="{{asset('js/utils.js')}}"></script>
+			{% endblock %}
 			
 			{% include '_partials/footer.html.twig' %}
 		</body>

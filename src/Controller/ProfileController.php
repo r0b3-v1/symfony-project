@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserType;
+use App\Repository\StatutRepository;
 use App\Repository\UserRepository;
 use App\Service\Helpers;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,18 +21,33 @@ class ProfileController extends AbstractController {
     public function index(string $username, Helpers $helper, UserRepository $ur): Response {
         $allowEditing = false;
         $user = $ur->findOneBy(['username' => $username]);
-        $currentUser = $this->getUser();
         if (!$user) {
             return $helper->error(404, 'Utilisateur introuvable', 'Cet utilisateur n\'existe pas!');
         }
-        if ($currentUser && $currentUser->getId() === $user->getId())
-            $allowEditing = true;
+        $allowEditing = $helper->checkUser($username);
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
             'user' => $user,
             'allowEditing' => $allowEditing
         ]);
+    }
+
+    /**
+     * @Route("/infos/status/change", name="app_change_status")
+     */
+    public function changeStatus(string $username, UserRepository $ur, StatutRepository $sr, Helpers $helper){
+        if (!$helper->checkUser($username)){
+            $this->addFlash('error', 'Vous n\'avez pas l\'autorisation de modifier ce profil');
+        }
+        else{
+            $user = $ur->findOneBy(['username' => $username]);
+            $statut = $sr->findOneBy(['name' => 'artiste']);
+            $user->setStatut($statut);
+            $ur->add($user);
+            $this->addFlash('success', 'Vous êtes maintenant un artiste! Il y a de nouvelles sections que vous pouvez remplir dans votre profil!');
+        }
+        return $this->redirectToRoute("app_profile_infos", ['username'=>$username]);
     }
 
     /**
@@ -42,6 +58,7 @@ class ProfileController extends AbstractController {
         if($user != $this->getUser()){
             return $helper->error(403);
         }
+        $previousAvatar = $ur->find($user->getId())->getAvatar();
 
         $form = $this->createForm(UserType::class, $user)->handleRequest($request);
 
@@ -68,7 +85,7 @@ class ProfileController extends AbstractController {
                 }
             }
             else{
-                $avatar = $user->getAvatar();
+                $user->setAvatar($previousAvatar);
             }
             $ur->add($user);
 

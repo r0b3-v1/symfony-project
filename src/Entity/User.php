@@ -60,7 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $is_verified;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Statut::class, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity=Statut::class, inversedBy="users", fetch="EAGER")
      */
     private $statut;
 

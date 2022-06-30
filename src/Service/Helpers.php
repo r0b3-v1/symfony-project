@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class Helpers extends AbstractController{
@@ -11,5 +12,9 @@ class Helpers extends AbstractController{
             'customTitle' => $customTitle,
             'customMessage' => $customMessage
         ]);
+    }
+
+    public function checkUser(string $username){
+        return $this->getUser() && ($this->getUser()->getUsername() === $username);
     }
 }

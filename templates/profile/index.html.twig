@@ -31,7 +31,11 @@
 		<div class="tabs">
 			<button class="profile_tabs active" target="infos">mes informations</button>
 			<button class="profile_tabs" target="favoris">mes favoris</button>
-			<button class="profile_tabs" target="ToS">mes conditions d'utilisation</button>
+			{% if user.statut.name == 'artiste' %}
+				<button class="profile_tabs" target="ToS">mes conditions d'utilisation</button>
+				<button class="profile_tabs" target="galerie">galerie</button>
+				<button class="profile_tabs" target="commission">faire une commande</button>
+			{% endif %}
 		</div>
 		<div class="content">
 			<div class="profile_content infos active" data="infos">
@@ -46,6 +50,9 @@
 
 				{% if allowEditing %}
 					<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
+					{% if user.statut.name != 'artiste' %}
+						<a class="button" collapse-trigger target="artiste-modal">Devenir un artiste</a>
+					{% endif %}
 				{% endif %}
 
 			</div>
@@ -63,6 +70,33 @@
 			</div>
 			<div class="profile_content ToS" data="ToS">
 				<p>Mes conditions d'utilisation</p>
+			</div>
+			<div class="profile_content galerie" data="galerie">
+				<p>Ma galerie</p>
+				<div class="images_container">
+					{% for submission in user.submissions %}
+						<div class="submission text_light">
+							<a href="{{ path('app_post_show', { 'postId':submission.id })}}"><img src="{{ asset('images/users/' ~ submission.url) }}" alt="{{ submission.title }}"/>
+								<h3>{{ submission.title }}</h3>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="profile_content commission" data="commission">
+				<p>Me commissionner</p>
+			</div>
+		</div>
+
+		<div id="artiste-modal" collapsable>
+			<div class="modal-content">
+				<h3>Changer de statut?</h3>
+					<p>En validant vous allez passer du statut de simple visiteur à celui d'artiste, ce qui vous permettra de créer un galerie et même recevoir des commissions!</p>
+					<p>Il vous sera demandé de renseigner certaines informations supplémentaires pour être validé en tant qu'artiste.</p>
+					<div class="buttons">
+						<a href="{{ path('app_change_status',{username: user.username})}}" class="button">Valider</a>
+						<button class="button" onclick="document.querySelector('#artiste-modal').classList.remove('collapsed');return false;">Annuler</button>
+					</div>
 			</div>
 		</div>
 		{% block javascripts %}

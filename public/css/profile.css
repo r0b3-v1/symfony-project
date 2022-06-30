@@ -59,4 +59,25 @@
   -ms-flex-item-align: start;
       align-self: flex-start;
 }
+
+#artiste-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: var(--MP-bg-primary);
+}
+
+#artiste-modal.collapsed {
+  border: 1px solid var(--MP-text-primary);
+}
+
+#artiste-modal .modal-content {
+  padding: 1rem;
+}
+
+#artiste-modal .buttons {
+  margin-top: 1em;
+}
 /*# sourceMappingURL=profile.css.map */
