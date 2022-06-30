@@ -230,4 +230,8 @@ class Submission
 
         return $this;
     }
+
+    public function __toString(){
+        return 'title: ' . $this->getTitle() . ', id:' . $this->getId();
+    }
 }

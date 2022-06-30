@@ -8,9 +8,12 @@
 				<a class='nav_link' href="{{path('app_home')}}">Accueil
 					<i class="fa-solid fa-house"></i>
 				</a>
-				<a class='nav_link' href="#" id="search-link">Rechercher
-					<i class="fa-solid fa-magnifying-glass"></i>
-				</a>
+				<span class='nav_link' href="#" id="search-link">Recherche rapide
+					<form action="{{path('app_search')}}">
+						<input type="text" name="params" id="quicksearch-input" value="{% if paramsGet is defined %}{{paramsGet}}{% endif %}"> 
+						<i class="fa-solid fa-magnifying-glass" id="quicksearch-submit" type="submit"></i>
+					</form>
+				</span>
 
 				{% if is_granted('ROLE_USER') and app.user.statut.name == 'artiste' %}
 					<a class='nav_link' href="{{ path('app_post_upload')}}">Upload

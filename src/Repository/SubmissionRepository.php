@@ -48,19 +48,16 @@ class SubmissionRepository extends ServiceEntityRepository
     // /**
     //  * @return Submission[] Returns an array of Submission objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function search($value)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('s.title LIKE :val')
+            ->setParameter('val', '%' . $value . '%')
             ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Submission

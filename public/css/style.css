@@ -86,8 +86,8 @@ header .right .nav_link i {
   margin-left: 0.5em;
 }
 
-header .left .nav_link:hover,
-header .right .nav_link:hover {
+header .left .nav_link:not(#search-link):hover,
+header .right .nav_link:not(#search-link):hover {
   color: var(--MP-text-link-hover) !important;
   background-color: var(--MP-bg-link-hover);
 }
@@ -327,5 +327,20 @@ footer {
 
 .collapsed {
   max-height: 500px;
+}
+
+#search-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: var(--MP-text-primary);
+}
+
+#search-link input {
+  margin-left: 1em;
+}
+
+#search-link i {
+  cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */

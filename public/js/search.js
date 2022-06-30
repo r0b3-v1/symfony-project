@@ -1,11 +1,17 @@
 const searchButton = document.getElementById('search-link');
 const searchDiv = document.getElementById('search-modal');
 const typeSelect = document.getElementById('search-type-select');
+const quickSearchSubmit = document.getElementById('quicksearch-submit');
 
-searchButton.addEventListener('click', function (e) {
-    e.preventDefault();
-    toggleCollapse(searchDiv);
-});
+quickSearchSubmit.addEventListener('click', function(e){
+    console.log('test')
+    this.parentElement.submit();
+})
+
+// searchButton.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     toggleCollapse(searchDiv);
+// });
 
 typeSelect.addEventListener('change', function(){
     let selectedValue = this.options[this.selectedIndex].value;

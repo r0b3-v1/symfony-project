@@ -82,7 +82,7 @@ header {
             margin-left: 0.5em;
         }
 
-        &:hover {
+        &:not(#search-link):hover {
             color: var(--MP-text-link-hover) !important;
             background-color: var(--MP-bg-link-hover);
         }
@@ -278,4 +278,15 @@ footer {
 
 .collapsed{
     max-height: 500px;
+}
+
+#search-link{
+    display: flex;
+    color: var(--MP-text-primary);
+    input{
+        margin-left: 1em;
+    }
+    i{
+        cursor: pointer;
+    }
 }
