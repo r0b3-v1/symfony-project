@@ -258,3 +258,23 @@ footer {
         cursor: pointer;
     }
 }
+
+.collapsable,.collapsed{
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 1s cubic-bezier(0, 1, 0, 1);
+}
+
+[collapsable]{
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 1s cubic-bezier(0, 1, 0, 1);
+    &:not(.collapsed){
+        padding: 0!important;
+    }
+}
+
+.collapsed{
+    max-height: 500px;
+}
+

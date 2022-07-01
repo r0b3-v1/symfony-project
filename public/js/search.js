@@ -2,9 +2,14 @@ const searchButton = document.getElementById('search-link');
 const searchDiv = document.getElementById('search-modal');
 const typeSelect = document.getElementById('search-type-select');
 const quickSearchSubmit = document.getElementById('quicksearch-submit');
+const searchCollapser = document.getElementById('search-collapser');
+
+searchCollapser.addEventListener('click', function(){
+    this.classList.toggle('fa-plus');
+    this.classList.toggle('fa-minus');
+})
 
 quickSearchSubmit.addEventListener('click', function(e){
-    console.log('test')
     this.parentElement.submit();
 })
 
@@ -30,3 +35,4 @@ function toggleCollapse(element){
     element.classList.toggle('collapsable');
     element.classList.toggle('collapsed');
 }
+

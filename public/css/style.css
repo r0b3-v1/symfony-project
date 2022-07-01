@@ -309,4 +309,26 @@ footer {
 #search-link i {
   cursor: pointer;
 }
+
+.collapsable, .collapsed {
+  max-height: 0px;
+  overflow: hidden;
+  -webkit-transition: max-height 1s cubic-bezier(0, 1, 0, 1);
+  transition: max-height 1s cubic-bezier(0, 1, 0, 1);
+}
+
+[collapsable] {
+  max-height: 0px;
+  overflow: hidden;
+  -webkit-transition: max-height 1s cubic-bezier(0, 1, 0, 1);
+  transition: max-height 1s cubic-bezier(0, 1, 0, 1);
+}
+
+[collapsable]:not(.collapsed) {
+  padding: 0 !important;
+}
+
+.collapsed {
+  max-height: 500px;
+}
 /*# sourceMappingURL=style.css.map */

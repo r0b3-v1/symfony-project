@@ -19,6 +19,9 @@
     {% else %}
 		<a href="{{path('app_post_fav',{postId:submission.id})}}" class="button">ajouter aux favoris</a>
     {% endif %}
+	{% if editAllowed %}
+		<a href="{{path('app_post_delete',{postId:submission.id})}}" class="button" onclick="Voulez-vous vraiment supprimer ce post?">Supprimer</a>
+	{% endif %}
 	</div>
 
     <div class="description"></div>

@@ -25,8 +25,10 @@ class SubmissionController extends AbstractController {
     public function show(int $postId, SubmissionRepository $sr, Helpers $helper, Request $request, CommentRepository $cr): Response {
         $submission = $sr->find($postId);
         $isFaved = false;
+        $editAllowed = false;
         $comment = new Comment;
         $commentForm = $this->createForm(CommentType::class, $comment)->handleRequest($request);
+        if($this->getUser()==$submission->getAuthor()) $editAllowed = true;
         if($this->getUser() && $this->getUser()->getFavorites()->contains($submission)) $isFaved = true;
         if (!$submission) {
             return $helper->error(404, 'Post introuvable', 'Ce post n\'existe pas');
@@ -48,6 +50,7 @@ class SubmissionController extends AbstractController {
             'controller_name' => 'SubmissionController',
             'submission' => $submission,
             'isFaved'=>$isFaved,
+            'editAllowed'=>$editAllowed,
             'commentForm' => $commentForm->createView()
         ]);
     }
@@ -166,7 +169,6 @@ class SubmissionController extends AbstractController {
         }
 
         $targetTags = $submission->getTags();
-
         $sr->remove($submission);
         //si dans la table de jointure avec les tags, les tags du post ne sont plus associés à aucun autre post, on les supprime 
         foreach ($targetTags as $tag) {
