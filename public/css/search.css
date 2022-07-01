@@ -49,8 +49,8 @@
   margin-top: 0.5em;
 }
 
-.search input {
-  margin-left: 2em;
+.search .type-container .field > label {
+  margin-right: 2em;
 }
 
 .search #search-post-button {
