@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification post
+{% endblock %}
+
+{% block stylesheets %}
+
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/form.css')}}">
+
+{% endblock %}
+
+{% block body %}
+	{% form_theme submissionForm 'forms/fields.twig' %}
+	{{ form_start(submissionForm, { 'attr' : { 'class': 'text_light' } }) }}
+	<div class="form-content">
+		<h1>Modifier les informations de votre image</h1>
+		<div class="inputs">
+			{{ form_row(submissionForm.title, {
+                        label: 'Titre de votre image : '
+                    }) }}
+			{{ form_row(submissionForm.description, {
+                        label: 'Description : '
+                    }) }}
+			{{ form_row(submissionForm.tags,{
+                label: 'Tags :',
+                'attr' : {'value': tagNames}
+            }) }}
+			{{ form_row(submissionForm.image,{
+                label: 'Image :'
+            }) }}
+			{{ form_row(submissionForm.category,{
+                label: 'Catégorie :'
+            }) }}
+		</div>
+		<button type="submit" class="button">Valider</button>
+
+	</div>
+</div>
+{{ form_end(submissionForm) }}{% endblock %}

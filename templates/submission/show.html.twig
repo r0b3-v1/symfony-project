@@ -21,6 +21,7 @@
     {% endif %}
 	{% if editAllowed %}
 		<a href="{{path('app_post_delete',{postId:submission.id})}}" class="button" onclick="return confirm('Voulez-vous vraiment supprimer ce post?')">Supprimer</a>
+		<a href="{{path('app_post_edit',{postId:submission.id})}}" class="button">Modifier</a>
 	{% endif %}
 	</div>
 

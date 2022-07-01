@@ -7,6 +7,7 @@ use App\Entity\Comment;
 use App\Service\Helpers;
 use App\Form\CommentType;
 use App\Entity\Submission;
+use App\Form\EditSubmissionType;
 use App\Form\SubmissionType;
 use App\Repository\CommentRepository;
 use App\Repository\TagRepository;
@@ -178,5 +179,85 @@ class SubmissionController extends AbstractController {
 
         $this->addFlash('success', 'Le post a bien été supprimé');
         return $this->redirectToRoute('app_home');
+    }
+
+
+    /**
+     * @Route("/post/{postId}/edit", name="app_post_edit")
+     */
+    public function edit(int $postId, SubmissionRepository $sr, Helpers $helper, TagRepository $tr, Request $request, EntityManagerInterface $em, SubmissionRepository $sm) {
+
+        $submission = $sr->find($postId);
+        if (!$sr) {
+            return $helper->error(404);
+        }
+
+        $tags = $submission->getTags();
+        $tagNames = '';
+        foreach ($tags as $tag) {
+            $tagNames .= ' ' . $tag->getName();
+        }
+
+        $form = $this->createForm(EditSubmissionType::class, $submission)
+        ->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $this->getUser();
+            $newTags = explode(' ',$form->get('tags')->getData());
+            $newImage = $form->get('image')->getData();
+
+            if ($newImage) {
+                unlink($this->getParameter('app.imageDirectory') . '/' . $submission->getUrl());
+                $newName = uniqid() . '.' . $newImage->guessExtension();
+                try {
+                    $submission->setUrl($user->getUsername() . '/' . $newName);
+                    $newImage->move(
+                        $this->getParameter('app.imageDirectory') . '/' . $user->getUsername(),
+                        $newName
+                    );
+                    $em->persist($submission);
+                } catch (\Throwable $th) {
+                    $this->addFlash('errors', 'un problème est survenu pendant l\'upload du fichier');
+                    return $this->render('submission/upload.html.twig', [
+                        'submissionForm' => $form->createView(),
+                    ]);
+                }
+            }
+
+            foreach ($submission->getTags() as $tag) {
+                $tag->removeSubmission($submission);
+                $em->persist($tag);
+            }
+            foreach ($newTags as $tag) {
+                $DBtag = $tr->findOneBy(['name' => $tag]);
+                if (!$DBtag) {
+                    $tagObj = new Tag;
+                    $tagObj->setName($tag);
+                    $tagObj->addSubmission($submission);
+                    $em->persist($tagObj);
+                } else {
+                    $DBtag->addSubmission($submission);
+                    $em->persist($DBtag);
+                }
+            }
+
+            $em->flush();
+
+            foreach ($tags as $tag) {
+                if (count($tag->getSubmissions()) == 0)
+                    $tr->remove($tag);
+            }
+
+            $sm->add($submission);
+            $this->addFlash('success', 'Le post a bien été modifié');
+            return $this->redirectToRoute('app_post_show', ['postId'=>$postId]);    
+
+        }
+
+        return $this->render('submission/edit.html.twig', [
+            'submissionForm' => $form->createView(),
+            'tagNames'=>trim($tagNames)
+        ]);
     }
 }
