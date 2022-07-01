@@ -69,7 +69,10 @@
 				</div>
 			</div>
 			<div class="profile_content ToS" data="ToS">
-				<p>Mes conditions d'utilisation</p>
+				<p>{{user.ToS}}</p>
+				{% if allowEditing %}
+					<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
+				{% endif %}
 			</div>
 			<div class="profile_content galerie" data="galerie">
 				<p>Ma galerie</p>

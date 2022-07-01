@@ -20,6 +20,7 @@ class UserType extends AbstractType
         ->add('surname')
         ->add('mail')
         ->add('description')
+        ->add('ToS')
         ->add('avatar', FileType::class, [
             'data_class'=>null,
             'required' => false,

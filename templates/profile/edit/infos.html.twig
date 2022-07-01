@@ -31,6 +31,14 @@
 			{{ form_row(profileForm.description,{
                 label: 'Votre description :'
             }) }}
+
+			{% if user.statut.name == 'artiste' %}
+				{{ form_row(profileForm.ToS,{
+                label: 'Vos conditions d\'utilisation :'
+            }) }}
+			{% else %}
+				{{ form_widget(profileForm.ToS, { 'attr': {'style': 'display:none;'} }) }}
+			{% endif %}
 			
 		</div>
 		<button type="submit" class="button">Valider</button>
