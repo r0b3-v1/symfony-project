@@ -27,8 +27,4 @@
 .main .user-container .user-row:not(.hidden):nth-child(2n) {
   background-color: rgba(255, 255, 255, 0.1);
 }
-
-.main .hidden {
-  display: none;
-}
 /*# sourceMappingURL=admin.css.map */

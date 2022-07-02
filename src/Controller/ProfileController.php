@@ -28,10 +28,17 @@ class ProfileController extends AbstractController {
         }
         $allowEditing = $helper->checkUser($username);
 
+        $notifs = $user->getReceivedNotifs();
+        $senders = [];
+        foreach ($notifs as $notif) {
+            $sender = $notif->getAuthor()->getUsername();
+            if(!in_array($sender,$senders)) $senders[] = $sender;
+        }
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
             'user' => $user,
-            'allowEditing' => $allowEditing
+            'allowEditing' => $allowEditing,
+            'senders' => $senders
         ]);
     }
 
@@ -122,6 +129,7 @@ class ProfileController extends AbstractController {
             $notif->setRecipient($recipient);
             $notif->setDate(new \DateTime);
             $notif->setContent($form->get('content')->getData());
+            $notif->setSeen(false);
 
             $nr->add($notif);
             $this->addFlash('success', 'Votre notification a bien été envoyée');
@@ -146,9 +154,24 @@ class ProfileController extends AbstractController {
                 if(!$notif->getSeen()) $unseen ++;
             }
         }
-        
+
         return $this->render('_partials/unseenNotifs.html.twig', ['notifs' => $unseen]);
 
+    }
+
+    /**
+     * @Route("/user/{username}/update-notif", name="app_update_notifs")
+     */
+    public function updateNotifs(string $username, NotificationRepository $nr, UserRepository $ur){
+        $user = $ur->findOneBy(['username'=>$username]);
+        if($user){
+            $notifs = $user->getReceivedNotifs();
+            foreach ($notifs as $notif) {
+                $notif->setSeen(true);
+                $nr->add($notif);
+            }
+        }
+        return new Response();
     }
 
 }

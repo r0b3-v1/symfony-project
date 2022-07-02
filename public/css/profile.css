@@ -80,4 +80,8 @@
 #artiste-modal .buttons {
   margin-top: 1em;
 }
+
+.notif-admin {
+  border: 1px solid red;
+}
 /*# sourceMappingURL=profile.css.map */

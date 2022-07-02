@@ -281,7 +281,7 @@ footer {
 .user a{
     position: relative;
 }
-.notifs{
+#notifs-indicator{
     position: absolute;
     top: 0;
     right: -10px;
@@ -290,4 +290,12 @@ footer {
     padding: 0.25em 0.5em ;
     font-size: 0.8em;
     border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 15px;
+}
+
+.hidden{
+    display: none;
 }
