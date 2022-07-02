@@ -18,7 +18,7 @@
             <div class="user-row">
                 <a target="_blank" href="{{path('app_profile_infos', { username : user.username })}}" class='username'>{{user.username}}</a>
                 <div class="actions">
-                    <a href="">notifier</a>
+                    <a href="{{path('app_send_notif', { username : user.username })}}">Notifier</a>
                     <a onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur?')"  href="{{path('app_admin_delete', {  userId : user.id })}}">supprimer</a>
                 </div>
             </div>

@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
-use App\Form\UsernameType;
+use App\Entity\Notification;
+use App\Form\NotifType;
 use App\Form\UserType;
+use App\Repository\NotificationRepository;
 use App\Repository\StatutRepository;
 use App\Repository\UserRepository;
 use App\Service\Helpers;
+use DateTimeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -97,6 +100,42 @@ class ProfileController extends AbstractController {
             'profileForm' => $form->createView(),
             'user' => $user
         ]);
+    }
+
+    /**
+     * @Route("/notif", name="app_send_notif")
+     */
+    public function sendNotif(string $username, UserRepository $ur, Helpers $helper, Request $request, NotificationRepository $nr){
+        $recipient = $ur->findOneBy(['username' => $username]);
+        if(!$recipient){
+            return $helper->error(404);
+        }
+        $author = $this->getUser();
+        if(!$author){
+            return $helper->error(403);
+        }
+
+        $form = $this->createForm(NotifType::class)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $notif = new Notification;
+            $notif->setAuthor($author);
+            $notif->setRecipient($recipient);
+            $notif->setDate(new \DateTime);
+            $notif->setContent($form->get('content')->getData());
+
+            $nr->add($notif);
+            $this->addFlash('success', 'Votre notification a bien été envoyée');
+            return $this->redirectToRoute('app_home');
+
+        }
+
+        return $this->render('profile/notification.html.twig', [
+            'notifForm' => $form->createView(),
+            'recipient' => $recipient
+        ]);
+
     }
 
 

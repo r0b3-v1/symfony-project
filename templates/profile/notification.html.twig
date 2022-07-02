@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Envoyer une notification
+{% endblock %}
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
+	<link rel="stylesheet" href="{{ asset('css/form.css')}}">
+
+{% endblock %}
+
+{% block body %}
+    {% form_theme notifForm 'forms/fields.twig' %}
+    
+	{{ form_start(notifForm, { 'attr' : { 'class': 'text_light' } }) }}
+	<div class="form-content">
+        <h1>Envoyer une notification à {{recipient.username}}</h1>
+
+        <div class="inputs">
+            {{ form_row(notifForm.content, {
+                        label: 'contenu : ',
+                    }) }}
+        </div>
+        <button type="submit" class="button">Enregistrer</button>
+    </div>
+	{{ form_end(notifForm) }}
+
+
+
+{% endblock %}
