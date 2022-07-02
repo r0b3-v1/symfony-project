@@ -109,6 +109,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $receivedNotifs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commission::class, mappedBy="client")
+     */
+    private $orderedCommissions;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commission::class, mappedBy="artist")
+     */
+    private $clientCommissions;
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
@@ -116,6 +126,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->favorites = new ArrayCollection();
         $this->sentNotifs = new ArrayCollection();
         $this->receivedNotifs = new ArrayCollection();
+        $this->orderedCommissions = new ArrayCollection();
+        $this->clientCommissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -448,6 +460,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($receivedNotif->getRecipient() === $this) {
                 $receivedNotif->setRecipient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commission>
+     */
+    public function getOrderedCommissions(): Collection
+    {
+        return $this->orderedCommissions;
+    }
+
+    public function addOrderedCommission(Commission $orderedCommission): self
+    {
+        if (!$this->orderedCommissions->contains($orderedCommission)) {
+            $this->orderedCommissions[] = $orderedCommission;
+            $orderedCommission->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderedCommission(Commission $orderedCommission): self
+    {
+        if ($this->orderedCommissions->removeElement($orderedCommission)) {
+            // set the owning side to null (unless already changed)
+            if ($orderedCommission->getClient() === $this) {
+                $orderedCommission->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commission>
+     */
+    public function getClientCommissions(): Collection
+    {
+        return $this->clientCommissions;
+    }
+
+    public function addClientCommission(Commission $clientCommission): self
+    {
+        if (!$this->clientCommissions->contains($clientCommission)) {
+            $this->clientCommissions[] = $clientCommission;
+            $clientCommission->setArtist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientCommission(Commission $clientCommission): self
+    {
+        if ($this->clientCommissions->removeElement($clientCommission)) {
+            // set the owning side to null (unless already changed)
+            if ($clientCommission->getArtist() === $this) {
+                $clientCommission->setArtist(null);
             }
         }
 
