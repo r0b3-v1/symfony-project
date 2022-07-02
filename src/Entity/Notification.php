@@ -37,6 +37,11 @@ class Notification
      */
     private $recipient;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" : false})
+     */
+    private $seen;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Notification
     public function setRecipient(?User $recipient): self
     {
         $this->recipient = $recipient;
+
+        return $this;
+    }
+
+    public function getSeen(): ?bool
+    {
+        return $this->seen;
+    }
+
+    public function setSeen(bool $seen): self
+    {
+        $this->seen = $seen;
 
         return $this;
     }

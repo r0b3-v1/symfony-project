@@ -15,12 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user/{username}")
- */
+
 class ProfileController extends AbstractController {
     /**
-     * @Route("/infos", name="app_profile_infos")
+     * @Route("/user/{username}/infos", name="app_profile_infos")
      */
     public function index(string $username, Helpers $helper, UserRepository $ur): Response {
         $allowEditing = false;
@@ -38,7 +36,7 @@ class ProfileController extends AbstractController {
     }
 
     /**
-     * @Route("/infos/status/change", name="app_change_status")
+     * @Route("/user/{username}/infos/status/change", name="app_change_status")
      */
     public function changeStatus(string $username, UserRepository $ur, StatutRepository $sr, Helpers $helper){
         if (!$helper->checkUser($username)){
@@ -55,7 +53,7 @@ class ProfileController extends AbstractController {
     }
 
     /**
-     * @Route("/infos/edit", name="app_profile_edit_infos")
+     * @Route("/user/{username}/infos/edit", name="app_profile_edit_infos")
      */
     public function edit(string $username, Request $request, UserRepository $ur, Helpers $helper) {
         $user = $ur->findOneBy(['username' => $username]);
@@ -103,7 +101,7 @@ class ProfileController extends AbstractController {
     }
 
     /**
-     * @Route("/notif", name="app_send_notif")
+     * @Route("/user/{username}/notif", name="app_send_notif")
      */
     public function sendNotif(string $username, UserRepository $ur, Helpers $helper, Request $request, NotificationRepository $nr){
         $recipient = $ur->findOneBy(['username' => $username]);
@@ -138,5 +136,19 @@ class ProfileController extends AbstractController {
 
     }
 
+    public function listUnseenNotifs(){
+        $user = $this->getUser();
+        $unseen = 0;
+
+        if($user) {
+            $notifs = $user->getReceivedNotifs();
+            foreach ($notifs as $notif) {
+                if(!$notif->getSeen()) $unseen ++;
+            }
+        }
+        
+        return $this->render('_partials/unseenNotifs.html.twig', ['notifs' => $unseen]);
+
+    }
 
 }

@@ -41,6 +41,7 @@
 							{% else %}
 								<img src="{{ asset('images/users/' ~ app.user.avatar)}}" alt="avatar">
 							{% endif %}
+							{{ render(controller('App\\Controller\\ProfileController::listUnseenNotifs'))}}
 						</a>
 					</span>
 
