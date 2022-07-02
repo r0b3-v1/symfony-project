@@ -4,10 +4,13 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserType extends AbstractType
 {
@@ -15,11 +18,19 @@ class UserType extends AbstractType
     {
         $builder
         
-        // ->add('password')
-        ->add('name')
-        ->add('surname')
-        ->add('mail')
-        ->add('description')
+        ->add('name', TextType::class, [
+            'empty_data'=>''
+        ])
+        ->add('surname', TextType::class, [
+            'empty_data'=>''
+        ])
+        ->add('mail', EmailType::class, [
+            'required'=>true,
+            'empty_data'=>''
+        ])
+        ->add('description', TextareaType::class, [
+            'required'=>false
+        ])
         ->add('ToS')
         ->add('avatar', FileType::class, [
             'data_class'=>null,

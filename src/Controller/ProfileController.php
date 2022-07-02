@@ -133,9 +133,12 @@ class ProfileController extends AbstractController {
 
             $nr->add($notif);
             $this->addFlash('success', 'Votre notification a bien été envoyée');
-            return $this->redirectToRoute('app_home');
+
+            return $this->redirectToRoute('app_profile_infos',['username'=>$username]);
 
         }
+
+        
 
         return $this->render('profile/notification.html.twig', [
             'notifForm' => $form->createView(),

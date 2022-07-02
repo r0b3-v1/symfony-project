@@ -11,7 +11,6 @@
 
 {% block body %}
 
-	<div class="main">
 
 		<div class="greet">
 			<h1>
@@ -28,37 +27,71 @@
 				<p>Ici vous pouvez voir vos informations et les modifier</p>
 			{% endif %}
 		</div>
-		<div class="tabs">
-			<button class="profile_tabs active" target="infos">mes informations</button>
-			<button class="profile_tabs" target="favoris">mes favoris</button>
-			{% if allowEditing %}
-				<button class="profile_tabs" id="show-notifications" target="notifications">mes notifications</button>
-			{% endif %}
-			{% if user.statut.name == 'artiste' %}
-				<button class="profile_tabs" target="ToS">mes conditions d'utilisation</button>
-				<button class="profile_tabs" target="galerie">galerie</button>
-				<button class="profile_tabs" target="commission">faire une commande</button>
-			{% endif %}
-		</div>
-		<div class="content">
-			<div class="profile_content infos active" data="infos">
-				<p>nom :
-					{{user.name}}</p>
-				<p>prénom :
-					{{user.surname}}</p>
-				<p>adresse mail :
-					{{user.mail}}</p>
-				<p>Votre description :
-					{{ user.description}}</p>
 
+		{# navbar pour afficher les blocs #}
+		<nav class="tabs">
+			<button class="profile_tabs active" target="infos">Mes informations</button>
+			<button class="profile_tabs" target="favoris">Mes favoris</button>
+			{% if allowEditing %}
+				<button class="profile_tabs" id="show-notifications" target="notifications">Mes notifications</button>
+			{% endif %}
+
+			{% if user.statut.name == 'artiste' %}
+				<button class="profile_tabs" target="ToS">Mes conditions d'utilisation</button>
+				<button class="profile_tabs" target="galerie">Galerie</button>
+				{% if allowEditing %}
+					<button class="profile_tabs" target="my-commissions">Mes commandes</button>
+				{% else %}
+					<a class="profile_tabs" href="">Faire une commande
+						<i class="fa-solid fa-file"></i>
+					</a> 
+				{% endif %}
+			{% endif %}
+			{% if allowEditing %}
+						<button class="profile_tabs" target="demandes">Mes demandes</button>
+			{% endif %}
+			{% if not allowEditing %}
+				<a href="{{path('app_send_notif', {username : user.username})}}" class="profile_tabs"> Message privé
+					<i class="fa-solid fa-envelope"></i>
+				</a>
+			{% endif %}
+		</nav>
+		<div class="content">
+			
+			{# bloc informations de l'utilisateur #}
+			<div class="profile_content infos active" data="infos">
+
+				<div class="infos-left">
+					<p><span class="attribute">nom :</span>
+						{{ (user.name != '' ) ? user.name : '<span class="missing">non renseigné</span>'}}</p>
+					<p><span class="attribute">prénom :</span>
+						{{ (user.surname != '' ) ? user.surname : '<span class="missing">non renseigné</span>'}}</p>
+					<p><span class="attribute">adresse mail :</span>
+						{{ (user.mail != '' ) ? user.mail : '<span class="missing">non renseigné</span>'}}</p>
+					<p><span class="attribute">Votre description :</span>
+					{# | nl2br permet d'insérer des line breaks à chaque retour à la ligne dans une string #}
+						{{ (user.description != '' ) ? user.description | nl2br : '<span class="missing">non renseigné</span>'}}
+						</p>
+											
 				{% if allowEditing %}
 					<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
 					{% if user.statut.name != 'artiste' %}
 						<a class="button" collapse-trigger target="artiste-modal">Devenir un artiste</a>
 					{% endif %}
 				{% endif %}
+				</div>
+
+				<div class="infos-right">
+					{% if not(user.avatar)%}
+						<img src="{{ asset('images/static/avatar.png') }}" alt="avatar">
+					{% else %}
+						<img src="{{ asset('images/users/' ~ user.avatar)}}" alt="avatar">
+					{% endif %}
+				</div>
 
 			</div>
+
+			{# bloc affichant les favoris #}
 			<div class="profile_content favoris" data="favoris">
 				<p>ici sont listés les images favorites de {{user.username}}</p>
 				<div class="images_container">
@@ -71,12 +104,21 @@
 					{% endfor %}
 				</div>
 			</div>
+
+			{# bloc affichant les terms of service d'un artiste #}
 			<div class="profile_content ToS" data="ToS">
-				<p>{{user.ToS}}</p>
+				<p class="attribute">Mes conditions d'utilisation : </p>
+				{% if user.ToS == ''  %}
+					<p class="missing">non spécifié</p>
+				{% endif %}
+			
+				<p>{{user.ToS | nl2br}}</p>
 				{% if allowEditing %}
 					<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
 				{% endif %}
 			</div>
+
+			{# bloc affichant les posts de l'utilisateur #}
 			<div class="profile_content galerie" data="galerie">
 				<p>Ma galerie</p>
 				<div class="images_container">
@@ -89,6 +131,8 @@
 					{% endfor %}
 				</div>
 			</div>
+
+			{# bloc des notifications #}
 			{% if allowEditing %}
 				<div class="profile_content notifications" id="block-notifications" data="notifications">
 					<p>Mes notifications</p>
@@ -102,7 +146,7 @@
 					{% for notif in user.receivedNotifs | reverse %}
 						<div class="notif {% if 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" sender="{{notif.author.username}}">
 							<p>{{notif.content}}</p>
-							{# <a href="{{path('app_send_notif', { username: notif.author.username})}}" class="button">Répondre</a> #}
+							<a href="{{path('app_send_notif', { username: notif.author.username})}}" class="button">Répondre</a>
 						</div>
 					{% endfor %}
 					<script>
@@ -116,9 +160,29 @@
 					</script>
 				</div>
 			{% endif %}
-			<div class="profile_content commission" data="commission">
+
+			{# bloc pour faire une commande #}
+			<div class="profile_content commissions" data="commissions">
 				<p>Me commissionner</p>
 			</div>
+
+			{# pour suivre les commandes qui nous ont été faites #}
+			<div class="profile_content commissions" data="my-commissions">
+				<p class="attribute">Mes commandes :</p>
+				{% if user.clientCommissions is empty %}
+					<p class="missing">Aucune commande en cours</p>
+				{% endif %}
+			</div>
+
+			{# bloc pour suivre les commandes qu'on a fait auprès d'autres artistes #}
+			{% if allowEditing %}
+				<div class="profile_content demandes" data="demandes">
+					<p class="attribute">Mes demandes de commission :</p>
+					{% if user.orderedCommissions is empty %}
+						<p class="missing">Aucune demande en cours</p>
+					{% endif %}
+				</div>
+			{% endif %}
 		</div>
 
 		<div id="artiste-modal" collapsable>
@@ -136,5 +200,4 @@
 			{{ parent() }}
 			<script src="{{asset('js/profile.js')}}"></script>
 		{% endblock %}
-	</div>
 {% endblock %}

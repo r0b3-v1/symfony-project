@@ -2,6 +2,8 @@
     min-height: 500px;
     color: var(--MP-text-primary);
     background-color: var(--MP-bg-primary);
+    padding: 8em;
+    padding-top: 4em;
 }
 
 .content {
@@ -10,9 +12,13 @@
     padding: 0 1em;
     padding-top: 2em;
 
-    .profile_content:not(.active) {
-        display: none;
+    .profile_content{
+        min-height: 400px;
+        &:not(.active) {
+            display: none;
+        }
     }
+    
 }
 
 .greet {
@@ -25,7 +31,8 @@
     width: 100%;
     background-color: #202020;
 
-    button {
+    .profile_tabs {
+        font-size: 1em;
         height: 100%;
         border: none;
         border-radius: 0;
@@ -46,11 +53,31 @@
 
 .infos{
     display: flex;
-    flex-direction: column;
+    padding: 2em;
     height: 100%;
     justify-content: space-around;
+    gap: 1em;
+
+
     .button{
         align-self: flex-start;
+    }
+    .infos-left, .infos-right{
+        padding: 1em;
+        border: 1px solid gray;
+        flex: 0.5;
+        display: flex;
+    }
+    .infos-left{
+        flex-direction: column;
+        gap: 1em;
+    }
+    .infos-right{
+        justify-content: center;
+        img{
+            align-self: center;
+            max-width: 270px;
+        }
     }
 }
 
@@ -75,4 +102,12 @@
 
 .notif-admin{
     border: 1px solid red;
+}
+
+.attribute{
+    color: orange;
+}
+
+.missing{
+    font-style: italic;
 }
