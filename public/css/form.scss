@@ -18,7 +18,7 @@
         align-items: center;
         padding: 1em;
     }
-    .inputs div{
+    .inputs div:not(.input-errors){
         display: flex;
         justify-content: space-between;
     }
@@ -66,6 +66,8 @@
             border-radius: 10px;
             border: 1px solid red;
             color: white;
+            display: flex;
+            flex-direction: column;
         }
 
         .input-errors{

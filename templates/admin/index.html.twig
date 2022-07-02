@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!
+{% endblock %}
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset('css/admin.css')}}">
+{% endblock %}
+
+{% block body %}
+	<div class="filter">
+		<label for="user-filter">filter :
+		</label>
+		<input type="text" id="user-filter">
+	</div>
+	<div class="user-container">
+        {% for user in users %}
+            <div class="user-row">
+                <a target="_blank" href="{{path('app_profile_infos', { username : user.username })}}" class='username'>{{user.username}}</a>
+                <div class="actions">
+                    <a href="">notifier</a>
+                    <a onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur?')"  href="{{path('app_admin_delete', {  userId : user.id })}}">supprimer</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% block javascripts %}
+        {{parent()}}
+        <script src="{{asset('js/admin.js')}}"></script>
+    {% endblock %}
+{% endblock %}

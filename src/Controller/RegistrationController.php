@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\StatutRepository;
 use App\Repository\UserRepository;
 use App\Security\UserAuthenticator;
 use App\Service\JWTService;
@@ -21,7 +22,7 @@ class RegistrationController extends AbstractController {
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, MailerService $mailerService, JWTService $jWTService): Response {
+    public function register(Request $request,StatutRepository $sr, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager, MailerService $mailerService, JWTService $jWTService): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -36,6 +37,9 @@ class RegistrationController extends AbstractController {
                 )
             );
             $user->setIsVerified(false);
+
+            $defaultStatut = $sr->findOneBy(['name'=>'client']);
+            $user->setStatut($defaultStatut);
 
             $entityManager->persist($user);
             $entityManager->flush();

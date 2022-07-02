@@ -99,11 +99,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $favorites;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="author")
+     */
+    private $sentNotifs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="recipient")
+     */
+    private $receivedNotifs;
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->favorites = new ArrayCollection();
+        $this->sentNotifs = new ArrayCollection();
+        $this->receivedNotifs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -378,6 +390,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeFavorite(Submission $favorite): self
     {
         $this->favorites->removeElement($favorite);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getSentNotifs(): Collection
+    {
+        return $this->sentNotifs;
+    }
+
+    public function addSentNotif(Notification $sentNotif): self
+    {
+        if (!$this->sentNotifs->contains($sentNotif)) {
+            $this->sentNotifs[] = $sentNotif;
+            $sentNotif->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSentNotif(Notification $sentNotif): self
+    {
+        if ($this->sentNotifs->removeElement($sentNotif)) {
+            // set the owning side to null (unless already changed)
+            if ($sentNotif->getAuthor() === $this) {
+                $sentNotif->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getReceivedNotifs(): Collection
+    {
+        return $this->receivedNotifs;
+    }
+
+    public function addReceivedNotif(Notification $receivedNotif): self
+    {
+        if (!$this->receivedNotifs->contains($receivedNotif)) {
+            $this->receivedNotifs[] = $receivedNotif;
+            $receivedNotif->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceivedNotif(Notification $receivedNotif): self
+    {
+        if ($this->receivedNotifs->removeElement($receivedNotif)) {
+            // set the owning side to null (unless already changed)
+            if ($receivedNotif->getRecipient() === $this) {
+                $receivedNotif->setRecipient(null);
+            }
+        }
 
         return $this;
     }

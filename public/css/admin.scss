@@ -1,0 +1,23 @@
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .user-container{
+        margin-top: 2em;
+        background-color: var(--MP-bg-primary);
+        padding: 3em;
+
+        .user-row{
+            margin-top: 1em;
+        }
+        .user-row:not(.hidden):nth-child(2n){
+            background-color: rgba($color: #FFF, $alpha: 0.1);
+        }
+    }
+
+    .hidden{
+        display: none;
+    }
+}

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,6 +35,10 @@ class newPasswordType extends AbstractType
                     // max length allowed by Symfony for security reasons
                     'max' => 4096,
                 ]),
+                new Regex([
+                    'message'=>'Votre mot de passe doit comporter au moins une lettre en majuscule, une en minuscule et un chiffre',
+                    'pattern'=>'/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/'
+                ])
             ],
         ])
         ;

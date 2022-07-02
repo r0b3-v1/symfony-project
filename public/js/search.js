@@ -4,7 +4,7 @@ const typeSelect = document.getElementById('search-type-select');
 const quickSearchSubmit = document.getElementById('quicksearch-submit');
 const searchCollapser = document.getElementById('search-collapser');
 
-searchCollapser.addEventListener('click', function(){
+searchCollapser?.addEventListener('click', function(){
     this.classList.toggle('fa-plus');
     this.classList.toggle('fa-minus');
 })
@@ -18,7 +18,7 @@ quickSearchSubmit.addEventListener('click', function(e){
 //     toggleCollapse(searchDiv);
 // });
 
-typeSelect.addEventListener('change', function(){
+typeSelect?.addEventListener('change', function(){
     let selectedValue = this.options[this.selectedIndex].value;
     for(const option of document.querySelectorAll('[data]')){
         
