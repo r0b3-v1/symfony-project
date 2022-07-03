@@ -208,8 +208,13 @@ footer {
 }
 
 .button.danger {
-  color: red;
-  border-color: red;
+  color: red !important;
+  border-color: red !important;
+}
+
+.button.success {
+  color: green !important;
+  border-color: green !important;
 }
 
 .button:hover {

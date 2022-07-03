@@ -93,14 +93,14 @@ class CommissionController extends AbstractController
         if($client->getId() == $this->getUser()->getId()){
             $notif->setAuthor($client);
             $notif->setRecipient($artist);  
-            $notif->setContent('Le client ' . $client->getUsername() . ' a annulé sa commande '.$commission->getTitle());
+            $notif->setContent('Le client "' . $client->getUsername() . '" a annulé sa commande "'.$commission->getTitle() . '"');
             $this->addFlash('success', 'Votre demande a bien été annulée');
         }
         //sinon c'est l'artiste
         else{
             $notif->setAuthor($artist);
             $notif->setRecipient($client);  
-            $notif->setContent('L\'artiste ' . $artist->getUsername() . ' a refusé votre commande '.$commission->getTitle());
+            $notif->setContent('L\'artiste "' . $artist->getUsername() . '" a refusé votre commande "'.$commission->getTitle() . '"');
             $this->addFlash('success', 'La commande a bien été annulée');
         }
         $nr->add($notif);
@@ -134,9 +134,9 @@ class CommissionController extends AbstractController
             $commission->setPrice($price);
 
             $notif = new Notification();
-            $notif->setAuthor($client);
-            $notif->setRecipient($artist);
-            $notif->setContent('Votre demande' . $commission->getTitle() . ' a été acceptée par ' . $artist->getUsername());
+            $notif->setAuthor($artist);
+            $notif->setRecipient($client);
+            $notif->setContent('Votre demande "' . $commission->getTitle() . '" a été acceptée par "' . $artist->getUsername() . '"');
             $nr->add($notif);
 
             $cr->add($commission);
@@ -149,4 +149,34 @@ class CommissionController extends AbstractController
         return $this->redirect($route);
 
     }
+
+    /**
+     * @Route("/commission/{commissionId}/done", name="app_commission_done")
+     */
+    public function done($commissionId, CommissionRepository $cr, NotificationRepository $nr, CommissionStatutRepository $csr, Helpers $helper, Request $request){
+        $commission = $cr->find($commissionId);
+        $route = $request->headers->get('referer');
+        if(!$commission){
+            return $helper->error(404);
+        }
+        $artist = $commission->getArtist();
+        $client = $commission->getClient();
+
+        $statut = $csr->findOneBy(['name'=>'terminé']);
+        $commission->setStatut($statut);
+
+        $notif = new Notification();
+        $notif->setAuthor($artist);
+        $notif->setRecipient($client);
+        $notif->setContent('Votre demande "' . $commission->getTitle() . '" est terminée');
+        $nr->add($notif);
+
+        $cr->add($commission);
+        $this->addFlash('success', 'La commande est terminée');
+        
+        return $this->redirect($route);
+
+    }
+
+
 }

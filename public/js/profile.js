@@ -2,6 +2,7 @@ const profileTabs = document.getElementsByClassName('profile_tabs');
 const contents = document.getElementsByClassName('profile_content');
 const notifs = document.getElementsByClassName('notif');
 const acceptDemandBtn = document.getElementsByClassName('accept-demand');
+const main = document.querySelector('.main');
 
 const notifSelect = document.getElementById('sender-choice');
 
@@ -29,8 +30,8 @@ function removeActiveClass(collection) {
 //cliquer sur un bouton de cette classe crée un modal permettant d'accepter la demande de commission
 for (const button of acceptDemandBtn) {
     
-    const main = document.querySelector('.main');
     button.addEventListener('click',function(){
+        document.querySelector('.modal')?.remove()
         const path = this.getAttribute('data');
         const title = this.getAttribute('title');
         const modal = HTMLFromString(`
@@ -54,3 +55,25 @@ for (const button of acceptDemandBtn) {
         main.append(modal);
     })
 }
+
+const detailsButtons = document.getElementsByClassName('details-btn');
+for (const button of detailsButtons) {
+    
+    button.addEventListener('click', function(){
+        document.querySelector('.modal')?.remove()
+        const desc = this.getAttribute('data');
+        const modal = HTMLFromString(`
+        <div class="modal">
+            <div class="modal-content">
+                <h3>Détails de la commande</h3>
+                <p>
+                ${desc}
+                </p>
+                <button class="button" onclick="this.parentElement.parentElement.remove()">Fermer</button>
+            </div>
+        </div>
+    `);
+    main.append(modal);
+    })
+}
+

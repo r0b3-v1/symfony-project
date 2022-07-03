@@ -173,8 +173,12 @@ footer {
     padding: 0.5em;
     transition: all 0.2s ease-in-out;
     &.danger{
-        color: red;
-        border-color: red;
+        color: red!important;
+        border-color: red!important;
+    }
+    &.success{
+        color: green!important;
+        border-color: green!important;
     }
 
     &:hover {
