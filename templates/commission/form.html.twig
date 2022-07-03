@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle commission
+{% endblock %}
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
+	<link rel="stylesheet" href="{{ asset('css/form.css')}}">
+
+{% endblock %}
+
+{% block body %}
+    {% form_theme commissionForm 'forms/fields.twig' %}
+    
+	{{ form_start(commissionForm, { 'attr' : { 'class': 'text_light' } }) }}
+	<div class="form-content">
+        <h1>Nouvelle commission</h1>
+
+        <div class="inputs">
+            {{ form_row(commissionForm.description, {
+                        label: 'Description : ',
+                    }) }}
+            {{ form_row(commissionForm.deadline, {
+                        label: 'Deadline : '
+                    }) }}
+            {{ form_row(commissionForm.nodeadline, {
+                        label: 'Pas de deadline : '
+                    }) }}
+            {{ form_row(commissionForm.category, {
+                        label: 'Catégorie : '
+                    }) }}
+        </div>
+        <button type="submit" class="button">Valider la demande</button>
+
+    </div>
+	{{ form_end(commissionForm) }}
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset('js/commission.js')}}"></script>
+{% endblock %}

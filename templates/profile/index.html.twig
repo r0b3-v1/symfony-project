@@ -42,7 +42,7 @@
 				{% if allowEditing %}
 					<button class="profile_tabs" target="my-commissions">Mes commandes</button>
 				{% else %}
-					<a class="profile_tabs" href="">Faire une commande
+					<a class="profile_tabs" href="{{path('app_commission', {username : user.username})}}">Faire une commande
 						<i class="fa-solid fa-file"></i>
 					</a> 
 				{% endif %}

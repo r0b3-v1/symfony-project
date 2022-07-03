@@ -354,4 +354,14 @@ footer {
 .hidden {
   display: none;
 }
+
+.deactivated {
+  color: black;
+  background-color: gray;
+  pointer-events: none;
+}
+
+.deactivated select {
+  background-color: gray;
+}
 /*# sourceMappingURL=style.css.map */
