@@ -1,0 +1,26 @@
+{# bloc des notifications #}
+{% if allowEditing %}
+	<div class="profile_content notifications" id="block-notifications" data="notifications">
+		<p>Mes notifications</p>
+		<label for="sender-choice">filter par envoyeur :
+		</label>
+		<select name="sender-choice" id="sender-choice">
+			<option value="all" selected>Tous</option>
+			{% for sender in senders %}
+				<option value="{{sender}}">{{sender}}</option>
+			{% endfor %}
+		</select>
+		{% for notif in user.receivedNotifs | reverse %}
+			<div class="notif {% if 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" sender="{{notif.author.username}}">
+				<p>{{notif.content}}</p>
+				<a href="{{path('app_send_notif', { username: notif.author.username})}}" class="button">Répondre</a>
+			</div>
+		{% endfor %}
+		<script>
+			$('#show-notifications').click(function () {
+                $.ajax({url: '{{ path('app_update_notifs', {'username': user.username}) }}', type: 'GET'})
+            $('#notifs-indicator') ?. remove();
+            })
+		</script>
+	</div>
+{% endif %}

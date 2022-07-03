@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Votre profil
+{% block title %}
+	{% if allowEditing %}
+		Votre profil
+	{% else %}
+		Profil de {{user.username}}
+	{% endif %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -42,8 +47,9 @@
 				{% if allowEditing %}
 					<button class="profile_tabs" target="my-commissions">Mes commandes</button>
 				{% else %}
-					<a class="profile_tabs" href="{{path('app_commission', {username : user.username})}}">Faire une commande
+					<a class="profile_tabs {% if not user.disponible %}deactivated{% endif %}" href="{{path('app_commission', {username : user.username})}}" >Faire une commande
 						<i class="fa-solid fa-file"></i>
+						
 					</a> 
 				{% endif %}
 			{% endif %}
@@ -56,139 +62,28 @@
 				</a>
 			{% endif %}
 		</nav>
+
 		<div class="content">
 			
-			{# bloc informations de l'utilisateur #}
-			<div class="profile_content infos active" data="infos">
+			{% include "_partials/profile/infos.html.twig" %}
 
-				<div class="infos-left">
-					<p><span class="attribute">nom :</span>
-						{{ (user.name != '' ) ? user.name : '<span class="missing">non renseigné</span>'}}</p>
-					<p><span class="attribute">prénom :</span>
-						{{ (user.surname != '' ) ? user.surname : '<span class="missing">non renseigné</span>'}}</p>
-					<p><span class="attribute">adresse mail :</span>
-						{{ (user.mail != '' ) ? user.mail : '<span class="missing">non renseigné</span>'}}</p>
-					<p><span class="attribute">Votre description :</span>
-					{# | nl2br permet d'insérer des line breaks à chaque retour à la ligne dans une string #}
-						{{ (user.description != '' ) ? user.description | nl2br : '<span class="missing">non renseigné</span>'}}
-						</p>
-											
-				{% if allowEditing %}
-					<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
-					{% if user.statut.name != 'artiste' %}
-						<a class="button" collapse-trigger target="artiste-modal">Devenir un artiste</a>
-					{% endif %}
-				{% endif %}
-				</div>
+			{% include "_partials/profile/favoris.html.twig" %}
 
-				<div class="infos-right">
-					{% if not(user.avatar)%}
-						<img src="{{ asset('images/static/avatar.png') }}" alt="avatar">
-					{% else %}
-						<img src="{{ asset('images/users/' ~ user.avatar)}}" alt="avatar">
-					{% endif %}
-				</div>
-
-			</div>
-
-			{# bloc affichant les favoris #}
-			<div class="profile_content favoris" data="favoris">
-				<p>ici sont listés les images favorites de {{user.username}}</p>
-				<div class="images_container">
-					{% for submission in user.favorites %}
-						<div class="submission text_light">
-							<a href="{{ path('app_post_show', { 'postId':submission.id })}}"><img src="{{ asset('images/users/' ~ submission.url) }}" alt="{{ submission.title }}"/>
-								<h3>{{ submission.title }}</h3>
-							</a>
-						</div>
-					{% endfor %}
-				</div>
-			</div>
-
-			{# bloc affichant les terms of service d'un artiste #}
-			<div class="profile_content ToS" data="ToS">
-				<p class="attribute">Mes conditions d'utilisation : </p>
-				{% if user.ToS == ''  %}
-					<p class="missing">non spécifié</p>
-				{% endif %}
+			{% include "_partials/profile/ToS.html.twig" %}
 			
-				<p>{{user.ToS | nl2br}}</p>
-				{% if allowEditing %}
-					<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
-				{% endif %}
-			</div>
+			{% include "_partials/profile/posts.html.twig" %}
 
-			{# bloc affichant les posts de l'utilisateur #}
-			<div class="profile_content galerie" data="galerie">
-				<p>Ma galerie</p>
-				<div class="images_container">
-					{% for submission in user.submissions %}
-						<div class="submission text_light">
-							<a href="{{ path('app_post_show', { 'postId':submission.id })}}"><img src="{{ asset('images/users/' ~ submission.url) }}" alt="{{ submission.title }}"/>
-								<h3>{{ submission.title }}</h3>
-							</a>
-						</div>
-					{% endfor %}
-				</div>
-			</div>
+			{% include "_partials/profile/notifs.html.twig" %}
+			
+			{% include "_partials/profile/commissions.html.twig" %}
 
-			{# bloc des notifications #}
-			{% if allowEditing %}
-				<div class="profile_content notifications" id="block-notifications" data="notifications">
-					<p>Mes notifications</p>
-					<label for="sender-choice">filter par envoyeur : </label>
-					<select name="sender-choice" id="sender-choice">
-						<option value="all" selected>Tous</option>
-						{% for sender in senders %}
-							<option value="{{sender}}">{{sender}}</option>
-						{% endfor %}
-					</select>
-					{% for notif in user.receivedNotifs | reverse %}
-						<div class="notif {% if 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" sender="{{notif.author.username}}">
-							<p>{{notif.content}}</p>
-							<a href="{{path('app_send_notif', { username: notif.author.username})}}" class="button">Répondre</a>
-						</div>
-					{% endfor %}
-					<script>
-						$('#show-notifications').click(function(){
-							$.ajax({
-								url : '{{ path('app_update_notifs', {'username': user.username})  }}',
-								type : 'GET'
-							})
-							$('#notifs-indicator')?.remove();
-						})
-					</script>
-				</div>
-			{% endif %}
-
-			{# bloc pour faire une commande #}
-			<div class="profile_content commissions" data="commissions">
-				<p>Me commissionner</p>
-			</div>
-
-			{# pour suivre les commandes qui nous ont été faites #}
-			<div class="profile_content commissions" data="my-commissions">
-				<p class="attribute">Mes commandes :</p>
-				{% if user.clientCommissions is empty %}
-					<p class="missing">Aucune commande en cours</p>
-				{% endif %}
-			</div>
-
-			{# bloc pour suivre les commandes qu'on a fait auprès d'autres artistes #}
-			{% if allowEditing %}
-				<div class="profile_content demandes" data="demandes">
-					<p class="attribute">Mes demandes de commission :</p>
-					{% if user.orderedCommissions is empty %}
-						<p class="missing">Aucune demande en cours</p>
-					{% endif %}
-				</div>
-			{% endif %}
+			
 		</div>
 
 		<div id="artiste-modal" collapsable>
 			<div class="modal-content">
 				<h3>Changer de statut?</h3>
-					<p>En validant vous allez passer du statut de simple visiteur à celui d'artiste, ce qui vous permettra de créer un galerie et même recevoir des commissions!</p>
+					<p>En validant vous allez passer du statut de simple visiteur à celui d'artiste, ce qui vous permettra de créer une galerie et même recevoir des commissions!</p>
 					<p>Il vous sera demandé de renseigner certaines informations supplémentaires pour être validé en tant qu'artiste.</p>
 					<div class="buttons">
 						<a href="{{ path('app_change_status',{username: user.username})}}" class="button">Valider</a>

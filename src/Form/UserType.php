@@ -19,9 +19,11 @@ class UserType extends AbstractType
         $builder
         
         ->add('name', TextType::class, [
+            'required'=>false,
             'empty_data'=>''
         ])
         ->add('surname', TextType::class, [
+            'required'=>false,
             'empty_data'=>''
         ])
         ->add('mail', EmailType::class, [
@@ -32,6 +34,8 @@ class UserType extends AbstractType
             'required'=>false
         ])
         ->add('ToS')
+        ->add('disponible')
+        ->add('private')
         ->add('avatar', FileType::class, [
             'data_class'=>null,
             'required' => false,

@@ -10,13 +10,19 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class CommissionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('description', TextareaType::class)
+            ->add('title', TextType::class, [
+                'required'=>true,
+            ])
+            ->add('description', TextareaType::class, [
+                'required'=>true,
+            ])
             ->add('deadline', DateType::class, [
                 'data' => new \DateTime()
             ])

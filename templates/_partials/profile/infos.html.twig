@@ -1,0 +1,45 @@
+{# bloc informations de l'utilisateur #}
+<div class="profile_content infos active" data="infos">
+
+	<div class="infos-left">
+		{% if user.statut.name == 'artiste' %}
+			<p>
+				<span class="attribute">disponible pour une commission :</span>
+				{{user.disponible ? '<span style="color:green;">oui</span>' : '<span style="color:red">non</span>'}}</p>
+		{% endif %}
+
+		{% if not user.private or allowEditing %}
+			<p>
+				<span class="attribute">nom :</span>
+				{{ (user.name != '' ) ? user.name : '<span class="missing">non renseigné</span>'}}</p>
+			<p>
+				<span class="attribute">prénom :</span>
+				{{ (user.surname != '' ) ? user.surname : '<span class="missing">non renseigné</span>'}}</p>
+			<p>
+				<span class="attribute">adresse mail :</span>
+				{{ (user.mail != '' ) ? user.mail : '<span class="missing">non renseigné</span>'}}</p>
+		{% endif %}
+
+		<p>
+			<span class="attribute">Votre description :</span>
+			{# | nl2br permet d'insérer des line breaks à chaque retour à la ligne dans une string #}
+			{{ (user.description != '' ) ? user.description | nl2br : '<span class="missing">non renseigné</span>'}}
+		</p>
+
+		{% if allowEditing %}
+			<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
+			{% if user.statut.name != 'artiste' %}
+				<a class="button" collapse-trigger target="artiste-modal">Devenir un artiste</a>
+			{% endif %}
+		{% endif %}
+	</div>
+
+	<div class="infos-right">
+		{% if not(user.avatar)%}
+			<img src="{{ asset('images/static/avatar.png') }}" alt="avatar">
+		{% else %}
+			<img src="{{ asset('images/users/' ~ user.avatar)}}" alt="avatar">
+		{% endif %}
+	</div>
+
+</div>

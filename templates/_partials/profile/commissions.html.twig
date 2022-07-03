@@ -1,0 +1,53 @@
+{# pour suivre les commandes qui nous ont été faites #}
+<div class="profile_content commissions" data="my-commissions">
+	<p class="attribute">Mes commandes :</p>
+	{% if user.clientCommissions is empty %}
+		<p class="missing">Aucune commande en cours</p>
+	{% endif %}
+</div>
+
+{# bloc pour suivre les commandes qu'on a fait auprès d'autres artistes #}
+{% if allowEditing %}
+	<div class="profile_content demandes" data="demandes">
+		<p>Mes demandes de commission :</p>
+		<label for="demande-select">Filtrer par statut : </label>
+		<select name="demande-select" id="demande-select">
+			<option value="all">Tous</option>
+			{% for statut in statuts %}
+				<option value="{{statut.name}}">{{statut.name | capitalize}}</option>
+			{% endfor %}
+		</select>
+		{% if user.orderedCommissions is empty %}
+			<p class="missing">Aucune demande en cours</p>
+		{% endif %}
+		{% for demande in user.orderedCommissions | reverse %}
+			<div class="demande">
+			<h3>{{demande.title}}</h3>
+				<p><span class="attribute">émise le : </span> {{demande.date | date('d/m/Y')}} , <span class="attribute">deadline : </span>{{demande.deadline ? demande.deadline | date('d/m/Y') : 'pas de deadline'}}</p>
+				<p>
+					<span class="attribute">artiste : </span>
+					<a target="_blank" href="{{path('app_profile_infos', {username : demande.artist.username})}}">{{ demande.artist.username}}
+						<i class="fa-solid fa-eye"></i>
+					</a>
+				</p>		
+				<p><span class="attribute">statut : </span> {{demande.statut.name ?? ''}}</p>
+				<button class="button details-btn">Voir</button>
+				
+				{% if demande.statut.name == 'en attente' %}
+					<a href="{{path('app_commission_cancel', {commissionId : demande.id})}}" class="button danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette demande?')">Annuler</a>
+				{% endif %}
+
+			</div>
+		{% endfor %}
+	</div>
+
+	<script>
+		const detailsButtons = document.getElementsByClassName('details-btn');
+		detailsButtons.addEventListener('click', function(){
+			
+		})
+		function modalDetails(){
+			console.log(this);
+		}
+	</script>
+{% endif %}

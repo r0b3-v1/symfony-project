@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Notification;
 use App\Form\NotifType;
 use App\Form\UserType;
+use App\Repository\CommissionStatutRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\StatutRepository;
 use App\Repository\UserRepository;
@@ -20,8 +21,9 @@ class ProfileController extends AbstractController {
     /**
      * @Route("/user/{username}/infos", name="app_profile_infos")
      */
-    public function index(string $username, Helpers $helper, UserRepository $ur): Response {
+    public function index(string $username, Helpers $helper, UserRepository $ur, CommissionStatutRepository $csr): Response {
         $allowEditing = false;
+        $statuts = $csr->findAll(); 
         $user = $ur->findOneBy(['username' => $username]);
         if (!$user) {
             return $helper->error(404, 'Utilisateur introuvable', 'Cet utilisateur n\'existe pas!');
@@ -38,7 +40,8 @@ class ProfileController extends AbstractController {
             'controller_name' => 'ProfileController',
             'user' => $user,
             'allowEditing' => $allowEditing,
-            'senders' => $senders
+            'senders' => $senders,
+            'statuts' => $statuts
         ]);
     }
 
@@ -127,7 +130,6 @@ class ProfileController extends AbstractController {
             $notif = new Notification;
             $notif->setAuthor($author);
             $notif->setRecipient($recipient);
-            $notif->setDate(new \DateTime);
             $notif->setContent($form->get('content')->getData());
             $notif->setSeen(false);
 

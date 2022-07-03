@@ -1,0 +1,13 @@
+{# bloc affichant les terms of service d'un artiste #}
+<div class="profile_content ToS" data="ToS">
+	<p class="attribute">Mes conditions d'utilisation :
+	</p>
+	{% if user.ToS == ''  %}
+		<p class="missing">non spécifié</p>
+	{% endif %}
+
+	<p>{{user.ToS | nl2br}}</p>
+	{% if allowEditing %}
+		<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
+	{% endif %}
+</div>

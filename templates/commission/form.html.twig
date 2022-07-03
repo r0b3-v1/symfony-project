@@ -18,6 +18,9 @@
         <h1>Nouvelle commission</h1>
 
         <div class="inputs">
+            {{ form_row(commissionForm.title, {
+                        label: 'Intitulé : ',
+                    }) }}
             {{ form_row(commissionForm.description, {
                         label: 'Description : ',
                     }) }}

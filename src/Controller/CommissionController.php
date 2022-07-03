@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Commission;
+use App\Entity\Notification;
 use App\Form\CommissionType;
 use App\Repository\CommissionRepository;
 use App\Repository\CommissionStatutRepository;
+use App\Repository\NotificationRepository;
 use App\Service\Helpers;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +20,7 @@ class CommissionController extends AbstractController
     /**
      * @Route("/{username}/commission", name="app_commission")
      */
-    public function commission(string $username, Request $request, UserRepository $ur, Helpers $helper, CommissionRepository $cr, CommissionStatutRepository $csr): Response
+    public function commission(string $username, Request $request, UserRepository $ur, NotificationRepository $nr, Helpers $helper, CommissionRepository $cr, CommissionStatutRepository $csr): Response
     {
         $user = $ur->findOneBy(['username' => $username]);
         
@@ -33,6 +35,7 @@ class CommissionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $title = $form->get('title')->getData();
             $deadline = $form->get('deadline')->getData();
             $description = $form->get('description')->getData();
             $noDeadline = $form->get('nodeadline')->getData();
@@ -42,6 +45,7 @@ class CommissionController extends AbstractController
 
             if(!$noDeadline) $commission->setDeadline($deadline);
 
+            $commission->setTitle($title);
             $commission->setDescription($description);
             $commission->setCategory($category);
             $commission->setClient($client);
@@ -50,6 +54,14 @@ class CommissionController extends AbstractController
             $commission->setPrice(0);
             
             $cr->add($commission);
+
+            $notif = new Notification;
+            $notif->setAuthor($client);
+            $notif->setRecipient($artist);
+            $notif->setContent('Nouvelle demande de commission');
+            $notif->setSeen(false);
+
+            $nr->add($notif);
             $this->addFlash('success', 'Votre demande a bien été enregistrée');
             
 
@@ -59,5 +71,25 @@ class CommissionController extends AbstractController
         return $this->render('commission/form.html.twig', [
             'commissionForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/commission/{commissionId}/cancel", name="app_commission_cancel")
+     */
+    public function cancel($commissionId, CommissionRepository $cr, CommissionStatutRepository $csr, Helpers $helper, Request $request){
+        $commission = $cr->find($commissionId);
+        if(!$commission){
+            return $helper->error(404);
+        }
+
+        $statut = $csr->findOneBy(['name'=>'annulé']);
+        $commission->setStatut($statut);
+
+        $cr->add($commission);
+        $this->addFlash('success', 'Votre demande a bien été annulée');
+        $route = $request->headers->get('referer');
+
+        return $this->redirect($route);
+
     }
 }

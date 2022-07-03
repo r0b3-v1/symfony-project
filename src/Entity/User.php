@@ -119,6 +119,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $clientCommissions;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $private;
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
@@ -128,6 +133,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->receivedNotifs = new ArrayCollection();
         $this->orderedCommissions = new ArrayCollection();
         $this->clientCommissions = new ArrayCollection();
+        $this->disponible = false;
+        $this->private = true;
     }
 
     public function getId(): ?int
@@ -522,6 +529,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $clientCommission->setArtist(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrivate(): ?bool
+    {
+        return $this->private;
+    }
+
+    public function setPrivate(?bool $private): self
+    {
+        $this->private = $private;
 
         return $this;
     }

@@ -196,6 +196,7 @@ footer {
 }
 
 .button {
+  font-size: 1em;
   background-color: var(--MP-bg-primary);
   color: var(--MP-text-primary);
   border: 1px solid var(--MP-text-primary);
@@ -204,6 +205,11 @@ footer {
   padding: 0.5em;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
+}
+
+.button.danger {
+  color: red;
+  border-color: red;
 }
 
 .button:hover {
@@ -357,7 +363,7 @@ footer {
 
 .deactivated {
   color: black;
-  background-color: gray;
+  background-color: gray !important;
   pointer-events: none;
 }
 

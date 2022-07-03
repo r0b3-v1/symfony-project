@@ -32,11 +32,19 @@
                 label: 'Votre description :'
             }) }}
 
+			{{ form_row(profileForm.private,{
+                label: 'Cacher mes informations personnelles :'
+            }) }}
+
 			{% if user.statut.name == 'artiste' %}
+				{{ form_row(profileForm.disponible,{
+                label: 'disponible pour une commission :'
+            }) }}
 				{{ form_row(profileForm.ToS,{
                 label: 'Vos conditions d\'utilisation :'
             }) }}
 			{% else %}
+				{{ form_widget(profileForm.disponible, { 'attr': {'style': 'display:none;'} }) }}
 				{{ form_widget(profileForm.ToS, { 'attr': {'style': 'display:none;'} }) }}
 			{% endif %}
 			
