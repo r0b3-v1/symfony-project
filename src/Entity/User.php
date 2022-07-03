@@ -124,6 +124,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $private;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Submission::class, mappedBy="viewedBy")
+     */
+    private $viewedSubmissions;
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
@@ -135,6 +140,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->clientCommissions = new ArrayCollection();
         $this->disponible = false;
         $this->private = true;
+        $this->viewedSubmissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -541,6 +547,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrivate(?bool $private): self
     {
         $this->private = $private;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Submission>
+     */
+    public function getViewedSubmissions(): Collection
+    {
+        return $this->viewedSubmissions;
+    }
+
+    public function addViewedSubmission(Submission $viewedSubmission): self
+    {
+        if (!$this->viewedSubmissions->contains($viewedSubmission)) {
+            $this->viewedSubmissions[] = $viewedSubmission;
+            $viewedSubmission->addViewedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeViewedSubmission(Submission $viewedSubmission): self
+    {
+        if ($this->viewedSubmissions->removeElement($viewedSubmission)) {
+            $viewedSubmission->removeViewedBy($this);
+        }
 
         return $this;
     }

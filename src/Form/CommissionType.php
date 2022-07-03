@@ -24,7 +24,11 @@ class CommissionType extends AbstractType
                 'required'=>true,
             ])
             ->add('deadline', DateType::class, [
-                'data' => new \DateTime()
+                'data' => new \DateTime(),
+                'widget' => 'choice',
+                'years' => range(date('Y'), date('Y')+100),
+                'months' => range(date('m'), 12),
+                'days' => range(date('d'), 31),
             ])
             ->add('nodeadline', CheckboxType::class, [
                 'required'=>false

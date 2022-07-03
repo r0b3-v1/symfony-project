@@ -66,11 +66,17 @@ class Submission
      */
     private $category;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="viewedSubmissions")
+     */
+    private $viewedBy;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->favedby = new ArrayCollection();
+        $this->viewedBy = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -233,5 +239,29 @@ class Submission
 
     public function __toString(){
         return 'title: ' . $this->getTitle() . ', id:' . $this->getId();
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getViewedBy(): Collection
+    {
+        return $this->viewedBy;
+    }
+
+    public function addViewedBy(User $viewedBy): self
+    {
+        if (!$this->viewedBy->contains($viewedBy)) {
+            $this->viewedBy[] = $viewedBy;
+        }
+
+        return $this;
+    }
+
+    public function removeViewedBy(User $viewedBy): self
+    {
+        $this->viewedBy->removeElement($viewedBy);
+
+        return $this;
     }
 }

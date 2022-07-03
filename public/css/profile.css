@@ -125,8 +125,12 @@
   margin-top: 1em;
 }
 
-.notif-admin {
+.notif-admin, .notif-report {
   border: 1px solid red;
+}
+
+.unseen {
+  border: 1px solid orange;
 }
 
 .attribute {

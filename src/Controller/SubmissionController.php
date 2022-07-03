@@ -7,16 +7,19 @@ use App\Entity\Comment;
 use App\Service\Helpers;
 use App\Form\CommentType;
 use App\Entity\Submission;
-use App\Form\EditSubmissionType;
+use App\Entity\Notification;
 use App\Form\SubmissionType;
-use App\Repository\CommentRepository;
+use App\Form\EditSubmissionType;
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
+use App\Repository\CommentRepository;
 use App\Repository\SubmissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\NotificationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SubmissionController extends AbstractController {
@@ -25,15 +28,19 @@ class SubmissionController extends AbstractController {
      */
     public function show(int $postId, SubmissionRepository $sr, Helpers $helper, Request $request, CommentRepository $cr): Response {
         $submission = $sr->find($postId);
+        if (!$submission) {
+                    return $helper->error(404, 'Post introuvable', 'Ce post n\'existe pas');
+                }
+        if($this->getUser())
+            $submission->addViewedBy($this->getUser());
+        $sr->add($submission);
         $isFaved = false;
         $editAllowed = false;
         $comment = new Comment;
         $commentForm = $this->createForm(CommentType::class, $comment)->handleRequest($request);
         if($this->getUser()==$submission->getAuthor()) $editAllowed = true;
         if($this->getUser() && $this->getUser()->getFavorites()->contains($submission)) $isFaved = true;
-        if (!$submission) {
-            return $helper->error(404, 'Post introuvable', 'Ce post n\'existe pas');
-        }
+        
         if($commentForm->isSubmitted() && $commentForm->isValid()){
             if($this->getUser()){
                 $comment->setUser($this->getUser());
@@ -58,6 +65,7 @@ class SubmissionController extends AbstractController {
 
     /**
      * @Route("/post/{postId}/favorite", name="app_post_fav")
+     * @IsGranted("ROLE_USER")
      */
     public function addFavorite(int $postId, SubmissionRepository $sr, UserRepository $ur) {
         $submission = $sr->find($postId);
@@ -76,6 +84,7 @@ class SubmissionController extends AbstractController {
 
     /**
      * @Route("/post/{postId}/unfavorite", name="app_post_unfav")
+     * @IsGranted("ROLE_USER")
      */
     public function removeFavorite(int $postId,SubmissionRepository $sr, UserRepository $ur){
         $submission = $sr->find($postId);
@@ -94,11 +103,10 @@ class SubmissionController extends AbstractController {
 
     /**
      * @Route("/upload", name="app_post_upload")
+     * @IsGranted("ROLE_USER")
      */
-    public function upload(Request $request, TagRepository $tr, EntityManagerInterface $em, Helpers $helper) {
-        if (!$this->getUser()) {
-            return $helper->error(404, 'Accès non autorisé', 'Vous ne pouvez pas upload de fichier sans être connecté');
-        }
+    public function upload(Request $request, TagRepository $tr, EntityManagerInterface $em) {
+
         $submission = new Submission;
         $form = $this->createForm(SubmissionType::class)
             ->handleRequest($request);
@@ -161,6 +169,7 @@ class SubmissionController extends AbstractController {
 
     /**
      * @Route("/post/{postId}/delete", name="app_post_delete")
+     * @IsGranted("ROLE_USER")
      */
     public function delete(int $postId, SubmissionRepository $sr, Helpers $helper, TagRepository $tr) {
 
@@ -184,6 +193,7 @@ class SubmissionController extends AbstractController {
 
     /**
      * @Route("/post/{postId}/edit", name="app_post_edit")
+     * @IsGranted("ROLE_USER")
      */
     public function edit(int $postId, SubmissionRepository $sr, Helpers $helper, TagRepository $tr, Request $request, EntityManagerInterface $em, SubmissionRepository $sm) {
 
@@ -260,4 +270,43 @@ class SubmissionController extends AbstractController {
             'tagNames'=>trim($tagNames)
         ]);
     }
+
+     /**
+     * @Route("/post/{postId}/report", name="app_post_report")
+     * @IsGranted("ROLE_USER")
+     */
+    public function report(int $postId, UserRepository $ur, SubmissionRepository $sr, NotificationRepository $nr, Request $request) {
+        $submission = $sr->find($postId);
+        if (!$sr) {
+            $this->addFlash('error', 'Impossible de signaler ce post');
+        }
+        else{
+            $users = $ur->findAll();
+            $admins = [];
+            //on récupère les admins du site pour leur envoyer des notifications
+            foreach ($users as $user) {
+                if(in_array('ROLE_ADMIN', $user->getRoles())){
+                    $notif = new Notification;
+                    $notif->setRecipient($user);
+                    $notif->setAuthor($this->getUser());
+                    $notif->setReport(true);
+                    $notif->setContent(
+                        'Le post "' . $submission->getTitle() . '" par "' . $user->getUsername() . 
+                        '" a été signalé par "'. $this->getUser()->getUsername() . 
+                        '" comme étant contraire à nos règles d\'utitilisation <a target="_blank" href="' . 
+                        $this->generateUrl('app_post_show', ['postId'=>$postId]) . '">voir</a>'
+                    );
+                    $nr->add($notif);
+                }
+                    
+            }
+            $this->addFlash('success', 'Nous avons enregistré votre signalement');
+            
+        }
+        $route = $request->headers->get('referer');
+
+        return $this->redirect($route);
+
+    }
+
 }

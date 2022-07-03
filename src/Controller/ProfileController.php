@@ -16,10 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class ProfileController extends AbstractController {
     /**
      * @Route("/user/{username}/infos", name="app_profile_infos")
+     * Affiche les informations de l'utilisateur
      */
     public function index(string $username, Helpers $helper, UserRepository $ur, CommissionStatutRepository $csr): Response {
         $allowEditing = false;
@@ -47,6 +50,7 @@ class ProfileController extends AbstractController {
 
     /**
      * @Route("/user/{username}/infos/status/change", name="app_change_status")
+     * Change le statut de l'utilisateur pour le faire passer de simple utilisateur à artiste
      */
     public function changeStatus(string $username, UserRepository $ur, StatutRepository $sr, Helpers $helper){
         if (!$helper->checkUser($username)){
@@ -64,6 +68,7 @@ class ProfileController extends AbstractController {
 
     /**
      * @Route("/user/{username}/infos/edit", name="app_profile_edit_infos")
+     * Permet à l'utilisateur de modifier ses informations
      */
     public function edit(string $username, Request $request, UserRepository $ur, Helpers $helper) {
         $user = $ur->findOneBy(['username' => $username]);
@@ -112,6 +117,7 @@ class ProfileController extends AbstractController {
 
     /**
      * @Route("/user/{username}/notif", name="app_send_notif")
+     * Envoie d'une notification d'un utilisateur à un autre
      */
     public function sendNotif(string $username, UserRepository $ur, Helpers $helper, Request $request, NotificationRepository $nr){
         $recipient = $ur->findOneBy(['username' => $username]);
@@ -165,6 +171,7 @@ class ProfileController extends AbstractController {
 
     /**
      * @Route("/user/{username}/update-notif", name="app_update_notifs")
+     * Permet de marquer toutes les notifications d'un utilisateur comme lues
      */
     public function updateNotifs(string $username, NotificationRepository $nr, UserRepository $ur){
         $user = $ur->findOneBy(['username'=>$username]);

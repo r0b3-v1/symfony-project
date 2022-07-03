@@ -42,10 +42,16 @@ class Notification
      */
     private $seen;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $report;
+
     public function __construct()
     {
         $this->date = new \DateTime();    
         $this->seen = false;
+        $this->report = false;
     }
 
     public function getId(): ?int
@@ -109,6 +115,18 @@ class Notification
     public function setSeen(bool $seen): self
     {
         $this->seen = $seen;
+
+        return $this;
+    }
+
+    public function getReport(): ?bool
+    {
+        return $this->report;
+    }
+
+    public function setReport(?bool $report): self
+    {
+        $this->report = $report;
 
         return $this;
     }
