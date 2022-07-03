@@ -86,6 +86,7 @@ class AuthController extends AbstractController {
 
     /**
      * @Route("/new-password/{token}", name="app_password_new")
+     * Récupère l'utilisateur via le token JWT de la requête et lui permet de changer son mot de passe via un formulaire
      */
     public function newPassword($token, JWTService $jwt, UserPasswordHasherInterface $userPasswordHasher, Request $request, UserRepository $ur) {
 

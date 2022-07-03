@@ -16,7 +16,7 @@ class AdminController extends AbstractController
 {
     /**
      * @Route("/admin", name="app_admin")
-     * 
+     * page d'accueil pour les admins
      */
     public function index(UserRepository $ur): Response
     {
@@ -29,7 +29,7 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/admin/delete/{userId}", name="app_admin_delete")
-     * 
+     * Permet de supprimer un utilisateur
      */
     public function deleteUser(UserRepository $ur, int $userId, Helpers $helper): Response
     {

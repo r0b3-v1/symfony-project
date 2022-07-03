@@ -25,12 +25,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class SubmissionController extends AbstractController {
     /**
      * @Route("/post/{postId}/show", name="app_post_show")
+     * Affiche un post
      */
     public function show(int $postId, SubmissionRepository $sr, Helpers $helper, Request $request, CommentRepository $cr): Response {
         $submission = $sr->find($postId);
         if (!$submission) {
                     return $helper->error(404, 'Post introuvable', 'Ce post n\'existe pas');
                 }
+        // on ajoute une relation entre le post et l'utilisateur pour indiquer qu'il l'a visionné 
         if($this->getUser())
             $submission->addViewedBy($this->getUser());
         $sr->add($submission);
@@ -39,8 +41,10 @@ class SubmissionController extends AbstractController {
         $comment = new Comment;
         $commentForm = $this->createForm(CommentType::class, $comment)->handleRequest($request);
         if($this->getUser()==$submission->getAuthor()) $editAllowed = true;
+        // permet de savoir si l'utilisateur a déjà mis ce post en favoris
         if($this->getUser() && $this->getUser()->getFavorites()->contains($submission)) $isFaved = true;
         
+        // formulaire pour les commentaires sous le post
         if($commentForm->isSubmitted() && $commentForm->isValid()){
             if($this->getUser()){
                 $comment->setUser($this->getUser());
@@ -66,6 +70,7 @@ class SubmissionController extends AbstractController {
     /**
      * @Route("/post/{postId}/favorite", name="app_post_fav")
      * @IsGranted("ROLE_USER")
+     * Permet de rajouter un post dans les favoris d'un utilisateur
      */
     public function addFavorite(int $postId, SubmissionRepository $sr, UserRepository $ur) {
         $submission = $sr->find($postId);
@@ -85,6 +90,7 @@ class SubmissionController extends AbstractController {
     /**
      * @Route("/post/{postId}/unfavorite", name="app_post_unfav")
      * @IsGranted("ROLE_USER")
+     * permet de retirer un post des favoris d'un utilisateur
      */
     public function removeFavorite(int $postId,SubmissionRepository $sr, UserRepository $ur){
         $submission = $sr->find($postId);
@@ -104,6 +110,7 @@ class SubmissionController extends AbstractController {
     /**
      * @Route("/upload", name="app_post_upload")
      * @IsGranted("ROLE_USER")
+     * Upload d'un post pour un artiste
      */
     public function upload(Request $request, TagRepository $tr, EntityManagerInterface $em) {
 
@@ -170,12 +177,17 @@ class SubmissionController extends AbstractController {
     /**
      * @Route("/post/{postId}/delete", name="app_post_delete")
      * @IsGranted("ROLE_USER")
+     * Suppression d'un post
      */
     public function delete(int $postId, SubmissionRepository $sr, Helpers $helper, TagRepository $tr) {
 
         $submission = $sr->find($postId);
         if (!$sr) {
             return $helper->error(404);
+        }
+
+        if(!$helper->isAdmin($this->getUser()) && $this->getUser() != $submission->getAuthor()){
+            return $helper->error(403);
         }
 
         $targetTags = $submission->getTags();
@@ -194,6 +206,7 @@ class SubmissionController extends AbstractController {
     /**
      * @Route("/post/{postId}/edit", name="app_post_edit")
      * @IsGranted("ROLE_USER")
+     * Permet de modifier un post
      */
     public function edit(int $postId, SubmissionRepository $sr, Helpers $helper, TagRepository $tr, Request $request, EntityManagerInterface $em, SubmissionRepository $sm) {
 
@@ -201,7 +214,11 @@ class SubmissionController extends AbstractController {
         if (!$sr) {
             return $helper->error(404);
         }
+        if($this->getUser() != $submission->getAuthor()){
+            return $helper->error(403);
+        }
 
+        //on récupère les noms des tags pour pouvoir pré remplir le textarea du formulaire
         $tags = $submission->getTags();
         $tagNames = '';
         foreach ($tags as $tag) {
@@ -274,6 +291,7 @@ class SubmissionController extends AbstractController {
      /**
      * @Route("/post/{postId}/report", name="app_post_report")
      * @IsGranted("ROLE_USER")
+     * Permet de signaler un post
      */
     public function report(int $postId, UserRepository $ur, SubmissionRepository $sr, NotificationRepository $nr, Request $request) {
         $submission = $sr->find($postId);

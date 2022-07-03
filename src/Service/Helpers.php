@@ -19,6 +19,11 @@ class Helpers extends AbstractController{
         return $this->getUser() && ($this->getUser()->getUsername() === $username);
     }
 
+
+    public function isAdmin(User $user){
+        return in_array('ROLE_ADMIN', $user->getRoles());
+    }
+
     //supprime le dossier et tous son contenu récursivement
     public static function deleteDir($dirPath) {
         if (! is_dir($dirPath)) {

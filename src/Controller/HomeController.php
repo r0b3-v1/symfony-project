@@ -17,18 +17,19 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/home/search/{page}", name="app_search")
+     * Fonction de recherche appelée à la fois dans le cas de la recherche rapide et de la recherche avancée
      */
     public function search(Request $request, int $page = 1,TagRepository $tr, SubmissionRepository $sr, CategoryRepository $cr, UserRepository $ur) : Response {
         $paramsGet = $request->query->get('params');
         $categories = $cr->findAll();
         $submissions = [];
         $totalPage = 1;
+
         //dans ce cas c'est une recherche rapide donc peu complexe
         if($paramsGet){
 
             $submissions = $sr->quickSearch($paramsGet);
 
-    
             $tags = $tr->findBy(['name'=>$paramsGet]);
             foreach ($tags as $tag) {
                 $submissions = array_merge($submissions, $tag->getSubmissions()->toArray());
@@ -37,6 +38,7 @@ class HomeController extends AbstractController
             $postPerPage = 20;
             $totalPage = ceil(count($submissions)/$postPerPage);
         }
+
         //dans ce cas c'est une recherche avancée faite via le formulaire de recherche
         else{
             $paramsPost = $request->request;
@@ -55,7 +57,7 @@ class HomeController extends AbstractController
 
         }
 
-
+        // élimination des éventuels doublons
         $submissions = array_unique($submissions);
         return $this->render('home/home.html.twig', [
             'controller_name' => 'HomeController',

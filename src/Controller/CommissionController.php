@@ -2,23 +2,28 @@
 
 namespace App\Controller;
 
+use App\Service\Helpers;
 use App\Entity\Commission;
 use App\Entity\Notification;
 use App\Form\CommissionType;
-use App\Repository\CommissionRepository;
-use App\Repository\CommissionStatutRepository;
-use App\Repository\NotificationRepository;
-use App\Service\Helpers;
 use App\Repository\UserRepository;
+use App\Repository\CommissionRepository;
+use App\Repository\NotificationRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\CommissionStatutRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class CommissionController extends AbstractController
 {
     /**
      * @Route("/{username}/commission", name="app_commission")
+     * Crée la demande de commission via un formulaire rempli par le client
      */
     public function commission(string $username, Request $request, UserRepository $ur, NotificationRepository $nr, Helpers $helper, CommissionRepository $cr, CommissionStatutRepository $csr): Response
     {
@@ -74,11 +79,17 @@ class CommissionController extends AbstractController
 
     /**
      * @Route("/commission/{commissionId}/cancel", name="app_commission_cancel")
+     * Annule la demande de commission si celle ci est encore en attente
      */
     public function cancel($commissionId, CommissionRepository $cr, NotificationRepository $nr, CommissionStatutRepository $csr, Helpers $helper, Request $request){
         $commission = $cr->find($commissionId);
+        $route = $request->headers->get('referer');
         if(!$commission){
             return $helper->error(404);
+        }
+        if($commission->getStatut()->getName() != 'en attente'){
+            $this->addFlash('error', 'Impossible d\'annuler une commande qui a été validée');
+            return $this->redirect($route);
         }
 
         $artist = $commission->getArtist();
@@ -89,14 +100,14 @@ class CommissionController extends AbstractController
 
         $notif = new Notification();
         
-        // dans ce cas c'est le client qui a annulé la commande
+        // dans ce cas c'est le client qui a annulé la commande, on le notifie
         if($client->getId() == $this->getUser()->getId()){
             $notif->setAuthor($client);
             $notif->setRecipient($artist);  
             $notif->setContent('Le client "' . $client->getUsername() . '" a annulé sa commande "'.$commission->getTitle() . '"');
             $this->addFlash('success', 'Votre demande a bien été annulée');
         }
-        //sinon c'est l'artiste
+        //sinon c'est l'artiste, on le notifie également
         else{
             $notif->setAuthor($artist);
             $notif->setRecipient($client);  
@@ -106,7 +117,7 @@ class CommissionController extends AbstractController
         $nr->add($notif);
 
         $cr->add($commission);
-        $route = $request->headers->get('referer');
+        
 
         return $this->redirect($route);
 
@@ -114,6 +125,7 @@ class CommissionController extends AbstractController
 
     /**
      * @Route("/commission/{commissionId}/accept", name="app_commission_accept")
+     * L'artiste valide la commande, on récupère la requête et on s'assure que le prix est bien un flottant
      */
     public function accept($commissionId, CommissionRepository $cr, NotificationRepository $nr, CommissionStatutRepository $csr, Helpers $helper, Request $request){
         $commission = $cr->find($commissionId);
@@ -133,6 +145,7 @@ class CommissionController extends AbstractController
             $commission->setStatut($statut);
             $commission->setPrice($price);
 
+            //on notifie le client que la commande est acceptée
             $notif = new Notification();
             $notif->setAuthor($artist);
             $notif->setRecipient($client);
@@ -152,6 +165,7 @@ class CommissionController extends AbstractController
 
     /**
      * @Route("/commission/{commissionId}/done", name="app_commission_done")
+     * L'artiste passe la commande au stade terminé
      */
     public function done($commissionId, CommissionRepository $cr, NotificationRepository $nr, CommissionStatutRepository $csr, Helpers $helper, Request $request){
         $commission = $cr->find($commissionId);
@@ -165,6 +179,7 @@ class CommissionController extends AbstractController
         $statut = $csr->findOneBy(['name'=>'terminé']);
         $commission->setStatut($statut);
 
+        //on notifie le client que la commande est terminée
         $notif = new Notification();
         $notif->setAuthor($artist);
         $notif->setRecipient($client);
