@@ -7,7 +7,5 @@
 	{% endif %}
 
 	<p>{{user.ToS | nl2br}}</p>
-	{% if allowEditing %}
-		<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
-	{% endif %}
+
 </div>

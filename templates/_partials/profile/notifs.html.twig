@@ -4,16 +4,15 @@
 		<p>Mes notifications</p>
 		<label for="sender-choice">filter par envoyeur :
 		</label>
-		<select name="sender-choice" id="sender-choice">
+		<select name="sender-choice" id="sender-choice" filter="notif">
 			<option value="all" selected>Tous</option>
 			{% for sender in senders %}
 				<option value="{{sender}}">{{sender}}</option>
 			{% endfor %}
 		</select>
 		{% for notif in user.receivedNotifs | reverse %}
-			<div class="notif {% if 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" sender="{{notif.author.username}}">
+			<div class="notif {% if 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" filtrable="notif" data="{{notif.author.username}}">
 				<p>{{notif.content}}</p>
-				<a href="{{path('app_send_notif', { username: notif.author.username})}}" class="button">Répondre</a>
 			</div>
 		{% endfor %}
 		<script>

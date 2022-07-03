@@ -45,6 +45,7 @@ class Notification
     public function __construct()
     {
         $this->date = new \DateTime();    
+        $this->seen = false;
     }
 
     public function getId(): ?int

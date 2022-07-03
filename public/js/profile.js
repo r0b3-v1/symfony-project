@@ -1,6 +1,7 @@
 const profileTabs = document.getElementsByClassName('profile_tabs');
 const contents = document.getElementsByClassName('profile_content');
 const notifs = document.getElementsByClassName('notif');
+const acceptDemandBtn = document.getElementsByClassName('accept-demand');
 
 const notifSelect = document.getElementById('sender-choice');
 
@@ -15,20 +16,8 @@ for (let tab of profileTabs) {
         let contentToBeDisplayed = document.querySelector(`[data="${target}"]`);
         contentToBeDisplayed.classList.add('active');
 
-
     });
 }
-
-//permet d'afficher uniquement les notifications de l'auteur sélectionné 
-notifSelect.addEventListener('change', function(){
-    let sender = this.options[this.selectedIndex].value;
-    for (const notif of notifs) {
-        notif.classList.remove('hidden');
-        if( sender!= 'all' && notif.getAttribute('sender') != sender){
-            notif.classList.add('hidden');
-        }
-    }
-})
 
 //retire la classe .active pour tous les éléments de la collection
 function removeActiveClass(collection) {
@@ -37,3 +26,31 @@ function removeActiveClass(collection) {
     }
 }
 
+//cliquer sur un bouton de cette classe crée un modal permettant d'accepter la demande de commission
+for (const button of acceptDemandBtn) {
+    
+    const main = document.querySelector('.main');
+    button.addEventListener('click',function(){
+        const path = this.getAttribute('data');
+        const title = this.getAttribute('title');
+        const modal = HTMLFromString(`
+            <div class="modal">
+                <div class="modal-content">
+                    <h3>Accepter cette demande de commission?</h3>
+                    <p>(${title})
+                    <p>Vous devez spécifier un prix pour cette commission</p>
+
+                    <form action="${path}" method="POST">
+                        <label for="price">Prix :</label>
+                        <input name="price" type="number" value="0.00" step="0.01">
+                        <div class="buttons">
+                            <button class="button" type="submit">Valider</button>
+                            <button class="button" onclick="this.parentElement.parentElement.parentElement.parentElement.remove()">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `);
+        main.append(modal);
+    })
+}

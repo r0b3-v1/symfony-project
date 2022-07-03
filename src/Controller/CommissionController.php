@@ -59,7 +59,6 @@ class CommissionController extends AbstractController
             $notif->setAuthor($client);
             $notif->setRecipient($artist);
             $notif->setContent('Nouvelle demande de commission');
-            $notif->setSeen(false);
 
             $nr->add($notif);
             $this->addFlash('success', 'Votre demande a bien été enregistrée');
@@ -76,19 +75,77 @@ class CommissionController extends AbstractController
     /**
      * @Route("/commission/{commissionId}/cancel", name="app_commission_cancel")
      */
-    public function cancel($commissionId, CommissionRepository $cr, CommissionStatutRepository $csr, Helpers $helper, Request $request){
+    public function cancel($commissionId, CommissionRepository $cr, NotificationRepository $nr, CommissionStatutRepository $csr, Helpers $helper, Request $request){
         $commission = $cr->find($commissionId);
         if(!$commission){
             return $helper->error(404);
         }
 
+        $artist = $commission->getArtist();
+        $client = $commission->getClient();
+
         $statut = $csr->findOneBy(['name'=>'annulé']);
         $commission->setStatut($statut);
 
+        $notif = new Notification();
+        
+        // dans ce cas c'est le client qui a annulé la commande
+        if($client->getId() == $this->getUser()->getId()){
+            $notif->setAuthor($client);
+            $notif->setRecipient($artist);  
+            $notif->setContent('Le client ' . $client->getUsername() . ' a annulé sa commande '.$commission->getTitle());
+            $this->addFlash('success', 'Votre demande a bien été annulée');
+        }
+        //sinon c'est l'artiste
+        else{
+            $notif->setAuthor($artist);
+            $notif->setRecipient($client);  
+            $notif->setContent('L\'artiste ' . $artist->getUsername() . ' a refusé votre commande '.$commission->getTitle());
+            $this->addFlash('success', 'La commande a bien été annulée');
+        }
+        $nr->add($notif);
+
         $cr->add($commission);
-        $this->addFlash('success', 'Votre demande a bien été annulée');
         $route = $request->headers->get('referer');
 
+        return $this->redirect($route);
+
+    }
+
+    /**
+     * @Route("/commission/{commissionId}/accept", name="app_commission_accept")
+     */
+    public function accept($commissionId, CommissionRepository $cr, NotificationRepository $nr, CommissionStatutRepository $csr, Helpers $helper, Request $request){
+        $commission = $cr->find($commissionId);
+        $route = $request->headers->get('referer');
+        $testFloat = '/^([0-9]*[.])?[0-9]+$/';
+        if(!$commission){
+            return $helper->error(404);
+        }
+        $artist = $commission->getArtist();
+        $client = $commission->getClient();
+
+        $price = $request->request->get('price');
+
+        if($price && preg_match($testFloat, $price)){
+            $price = floatval($price);
+            $statut = $csr->findOneBy(['name'=>'en cours']);
+            $commission->setStatut($statut);
+            $commission->setPrice($price);
+
+            $notif = new Notification();
+            $notif->setAuthor($client);
+            $notif->setRecipient($artist);
+            $notif->setContent('Votre demande' . $commission->getTitle() . ' a été acceptée par ' . $artist->getUsername());
+            $nr->add($notif);
+
+            $cr->add($commission);
+            $this->addFlash('success', 'La demande a été acceptée');
+        }
+        else{
+            $this->addFlash('error', 'Erreur, la demande n\'a pas pu être validée');
+        }
+        
         return $this->redirect($route);
 
     }

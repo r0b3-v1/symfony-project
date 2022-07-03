@@ -81,17 +81,19 @@
     }
 }
 
-#artiste-modal{
+.modal{
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     background-color: var(--MP-bg-primary);
+    &:not([collapsable]){
+        border: 1px solid var(--MP-text-primary);
+    }
     &.collapsed{
         border: 1px solid var(--MP-text-primary);
     }
     .modal-content{
-        
         padding: 1rem;
     }
     .buttons{

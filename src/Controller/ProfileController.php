@@ -131,7 +131,6 @@ class ProfileController extends AbstractController {
             $notif->setAuthor($author);
             $notif->setRecipient($recipient);
             $notif->setContent($form->get('content')->getData());
-            $notif->setSeen(false);
 
             $nr->add($notif);
             $this->addFlash('success', 'Votre notification a bien été envoyée');
