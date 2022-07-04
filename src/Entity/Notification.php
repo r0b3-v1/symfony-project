@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\NotificationRepository;
 
 /**
  * @ORM\Entity(repositoryClass=NotificationRepository::class)
@@ -29,11 +29,13 @@ class Notification
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sentNotifs")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $author;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="receivedNotifs")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $recipient;
 

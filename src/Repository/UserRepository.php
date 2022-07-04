@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Statut;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -62,22 +64,63 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function search($params)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $name = $params['name'] ?? null;
+        $dispo = $params['dispo'] ?? null;
+        $option = $params['option'] ?? null;
+
+        //on filtre uniquement les utilisateurs qui sont des artistes
+        $query = $this->createQueryBuilder('u')
+            ->join(Statut::class, 's', Join::WITH , 'u.statut=s.id')
+            ->andWhere('s.name = :val')
+            ->setParameter('val','artiste')
+            
+
+            ;
+        
+        dump('%' . $name . '%');
+        dump($query->getQuery()->getResult());
+
+        if($name){
+            // $query = $query->andWhere('u.username LIKE :val')
+            // ->setParameter('val', '%' . $name . '%');
+        }
+        
+        if($dispo){
+            $query = $query->andWhere('u.disponible = :val2')
+            ->setParameter('val2', 1);
+        }
+        else{
+            $query = $query->andWhere('u.disponible = :val2')
+            ->setParameter('val2', 0);
+        }
+        
+        if($option){
+
+            switch ($option) {
+                case 'date_asc':
+                    $query = $query->orderBy('u.registration_date', 'ASC');
+                    break;
+                case 'date_desc':
+                    $query = $query->orderBy('u.registration_date', 'DESC');
+                    break;
+                
+                default:
+                    break;
+            }
+
+        }
+
+        dump($query->getQuery()->getResult());
+
+
+        
+        return $query->getQuery()->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?User

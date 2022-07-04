@@ -129,6 +129,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $viewedSubmissions;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $registration_date;
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
@@ -141,6 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->disponible = false;
         $this->private = true;
         $this->viewedSubmissions = new ArrayCollection();
+        $this->registration_date = new \DateTime();
     }
 
     public function getId(): ?int
@@ -574,6 +580,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->viewedSubmissions->removeElement($viewedSubmission)) {
             $viewedSubmission->removeViewedBy($this);
         }
+
+        return $this;
+    }
+
+    public function getRegistrationDate(): ?\DateTimeInterface
+    {
+        return $this->registration_date;
+    }
+
+    public function setRegistrationDate(?\DateTimeInterface $registration_date): self
+    {
+        $this->registration_date = $registration_date;
 
         return $this;
     }

@@ -3,6 +3,25 @@ const searchDiv = document.getElementById('search-modal');
 const typeSelect = document.getElementById('search-type-select');
 const quickSearchSubmit = document.getElementById('quicksearch-submit');
 const searchCollapser = document.getElementById('search-collapser');
+const type = document.getElementById('search-form-type');
+
+type.addEventListener('click', function(e){
+    e.preventDefault();
+    const postSearch = document.querySelector('fieldset.post-field');
+    const artistSearch = document.querySelector('fieldset.author-field');
+    const searchHidden = document.getElementById('search-hidden');
+    postSearch.classList.toggle('deactivated');
+    artistSearch.classList.toggle('deactivated');
+    if(searchHidden.value == 'post'){
+        searchHidden.value = 'artist';
+        type.textContent = 'Chercher des images';
+    }
+    else{
+        searchHidden.value = 'post';
+        type.textContent = 'Chercher des artistes';
+    }
+
+})
 
 searchCollapser?.addEventListener('click', function(){
     this.classList.toggle('fa-plus');
@@ -12,11 +31,6 @@ searchCollapser?.addEventListener('click', function(){
 quickSearchSubmit.addEventListener('click', function(e){
     this.parentElement.submit();
 })
-
-// searchButton.addEventListener('click', function (e) {
-//     e.preventDefault();
-//     toggleCollapse(searchDiv);
-// });
 
 typeSelect?.addEventListener('change', function(){
     let selectedValue = this.options[this.selectedIndex].value;

@@ -24,10 +24,22 @@ class Helpers extends AbstractController{
         return in_array('ROLE_ADMIN', $user->getRoles());
     }
 
+    //calcule l'intersection entre deux tableaux d'entités
+    public function intersectArrays(array $arr1, array $arr2) : array {
+        $result = [];
+        foreach ($arr1 as $e1) {
+            foreach ($arr2 as $e2) {
+                if($e1->getId() == $e2->getId())
+                    $result[] = $e1;
+            }
+        }
+        return $result;
+    }
+
     //supprime le dossier et tous son contenu récursivement
     public static function deleteDir($dirPath) {
         if (! is_dir($dirPath)) {
-            throw new InvalidArgumentException("$dirPath must be a directory");
+            return;
         }
         if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
             $dirPath .= '/';

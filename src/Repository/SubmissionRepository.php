@@ -59,9 +59,9 @@ class SubmissionRepository extends ServiceEntityRepository
         ;
     }
 
-    // /**
-    //  * @return Submission[] Returns an array of Submission objects
-    //  */
+    /**
+     * @return Submission[] Returns an array of Submission objects
+     */
     public function search($params)
     {
         $title = $params['title'] ?? null;
@@ -74,31 +74,23 @@ class SubmissionRepository extends ServiceEntityRepository
             $query = $query->andWhere('s.title LIKE :val')
             ->setParameter('val', '%' . $title . '%');
         }
-        dump($query->getQuery()->getResult());
         if($authorId){
             $query = $query->andWhere('s.author LIKE :val')
             ->setParameter('val', '%' . $authorId . '%');
         }
-        dump($query->getQuery()->getResult());
         if($description){
             $query = $query->andWhere('s.description LIKE :val')
             ->setParameter('val', '%' . $description . '%');
         }
-        dump($query->getQuery()->getResult());
         if($categoryId){
             $query = $query->andWhere('s.category = :val')
             ->setParameter('val', $categoryId);
         }
+
+        
         return $query->getQuery()->getResult();
-        /*
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.title LIKE :val')
-            ->setParameter('val', '%' . $value . '%')
-            ->orderBy('s.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-        */
+        
+
     }
 
     /*

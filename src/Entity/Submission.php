@@ -31,7 +31,7 @@ class Submission
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="submissions")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $author;
 
@@ -62,7 +62,7 @@ class Submission
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="submissions")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $category;
 

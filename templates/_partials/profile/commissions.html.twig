@@ -17,9 +17,14 @@
 			<p><span class="attribute">émise le : </span> {{demande.date | date('d/m/Y')}} , <span class="attribute">deadline : </span>{{demande.deadline ? demande.deadline | date('d/m/Y') : 'pas de deadline'}}</p>
 			<p>
 				<span class="attribute">client : </span>
-				<a target="_blank" href="{{path('app_profile_infos', {username : demande.client.username})}}">{{ demande.client.username}}
-					<i class="fa-solid fa-eye"></i>
-				</a>
+				{% if not demande.client is empty %}
+					<a target="_blank" href="{{path('app_profile_infos', {username : demande.client.username})}}">{{ demande.client.username}}
+						<i class="fa-solid fa-eye"></i>
+					</a>
+				{% else %}
+					<span class="missing">Cet utilisateur a été supprimé</span>
+				{% endif %}
+				
 			</p>		
 			<p><span class="attribute">statut : </span> {{demande.statut.name ?? ''}}</p>
 			<p><span class="attribute">prix : </span>{{demande.statut.name == 'en attente'? '<span class="missing">non défini</span>' : (demande.price ~ ' €')}}</p>
@@ -57,9 +62,15 @@
 				<p><span class="attribute">émise le : </span> {{demande.date | date('d/m/Y')}} , <span class="attribute">deadline : </span>{{demande.deadline ? demande.deadline | date('d/m/Y') : 'pas de deadline'}}</p>
 				<p>
 					<span class="attribute">artiste : </span>
-					<a target="_blank" href="{{path('app_profile_infos', {username : demande.artist.username})}}">{{ demande.artist.username}}
-						<i class="fa-solid fa-eye"></i>
-					</a>
+
+					{% if not demande.artist is empty %}
+						<a target="_blank" href="{{path('app_profile_infos', {username : demande.artist.username})}}">{{ demande.artist.username}}
+							<i class="fa-solid fa-eye"></i>
+						</a>
+					{% else %}
+						<span class="missing">Cet utilisateur a été supprimé</span>
+					{% endif %}
+
 				</p>		
 				<p><span class="attribute">statut : </span> {{demande.statut.name ?? ''}}</p>
 				<p><span class="attribute">prix : </span>{{demande.statut.name == 'en attente'? '<span class="missing">non défini</span>' : (demande.price ~ ' €')}}</p>

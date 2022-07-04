@@ -15,16 +15,28 @@
 <h1 class="home-page">Page
 		{{page}}/{{totalPage}}</h1>
 	<div class="images_container expandable">
-		{% if submissions|length == 0 %}
-			Aucun résultat pour votre recherche
+		
+		
+		{% if users is defined and not users is empty %}
+			{% for user in users %}
+				<div class="submission text_light">
+					<a href="{{ path('app_profile_infos', { 'username': user.username })}}"><img src="{{ asset('images/users/' ~ user.avatar) }}" alt="{{ user.username }}"/>
+						<h3>{{ user.username }}</h3>
+					</a>
+				</div>
+			{% endfor %}
+		{% else %}
+			{% if submissions|length == 0 %}
+				Aucun résultat pour votre recherche
+			{% endif %}
+			{% for submission in submissions %}
+				<div class="submission text_light">
+					<a href="{{ path('app_post_show', { 'postId':submission.id })}}"><img src="{{ asset('images/users/' ~ submission.url) }}" alt="{{ submission.title }}"/>
+						<h3>{{ submission.title }}</h3>
+					</a>
+				</div>
+			{% endfor %}
 		{% endif %}
-		{% for submission in submissions %}
-			<div class="submission text_light">
-				<a href="{{ path('app_post_show', { 'postId':submission.id })}}"><img src="{{ asset('images/users/' ~ submission.url) }}" alt="{{ submission.title }}"/>
-					<h3>{{ submission.title }}</h3>
-				</a>
-			</div>
-		{% endfor %}
 	</div>
 
 	<div class="page-buttons">

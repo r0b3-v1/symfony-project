@@ -9,35 +9,26 @@
 				<form action="{{path('app_search')}}" method="POST">
 					<div class="fieldsets">
 						<fieldset class="search-block post-field">
+							<p>Rechercher des images</p>
 							<div class="field">
 								<label for="">titre :
 								</label>
-								<input type="text" name="title">
+								<input type="text" name="title" {% if arrayPost.title is defined %}value="{{arrayPost['title']}}"{% endif %}
+								>
 							</div>
 							<div class="field">
 								<label for="">description :
 								</label>
-								<input type="text" name="description">
+								<input type="text" name="description" {% if arrayPost.description is defined %}value="{{arrayPost['description']}}"{% endif %}>
 							</div>
 							<div class="field">
 								<label for="">auteur :
 								</label>
-								<input type="text" name="author">
-							</div>
-							<div class="field">
-								<label for="">date  :
-								</label>
-								<div>
-									<label for="">de </label>
-									<input type="date" name="date-min" id="">
-									<label for="">à
-									</label>
-									<input type="date" name="date-max" id="">
-								</div>
+								<input type="text" name="author" {% if arrayPost.author is defined %}value="{{arrayPost['author']}}"{% endif %}>
 							</div>
 							<div class="field" title="les tags doivent être séparés par des espaces">
 								<label for="">tags :</label>
-								<input type="text" name="tags">
+								<input type="text" name="tags" {% if arrayPost.tags is defined %}value="{{arrayPost['tags']}}"{% endif %}>
 							</div>
 							<div class="field">
 								<label for="">categories :</label>
@@ -49,16 +40,35 @@
 								</select>
 							</div>
 						</fieldset>
-						<fieldset class="search-block author-field">
+						<fieldset class="search-block author-field deactivated" >
+							<p>Rechercher des artistes</p>
 							<div class="field">
-								<label for="">disponibilité :
+								<label for="search-name">Nom :
 								</label>
-								<input type="text" name="title">
+								<input type="text" id="search-name" name="name"/>
+							</div>
+							<div class="field">
+								<label for="search-dispo">disponible pour une commande :
+								</label>
+								<input type="checkbox" id="search-dispo" name="dispo" {% if arrayPost.dispo is defined %}checked="checked"{% endif %}
+								 />
+							</div>
+							<div class="field">
+								<label for="sort-artist">trier par :
+								</label>
+								<select name="sort-artist" id="sort-artist">
+									<option value="date_desc" selected>date d'inscription (décroissante)</option>
+									<option value="date_asc">date d'inscription (croissante)</option>
+								</select>
 							</div>
 							
 						</fieldset>
+						<input type="hidden" name="type" value="post" id="search-hidden">
 					</div>
-						<button class="button" type="submit" id="search-post-button">Valider</button>
+						<div class="buttons">
+							<button class="button" id="search-form-type">Chercher des artistes</button>
+							<button class="button" type="submit" id="search-post-button">Valider</button>
+						</div>
 				</form>
 		</div>
 	</div>

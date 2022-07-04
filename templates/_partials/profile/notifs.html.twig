@@ -11,7 +11,7 @@
 			{% endfor %}
 		</select>
 		{% for notif in user.receivedNotifs | reverse %}
-			<div class="notif {{notif.seen ? '' : 'unseen ' }}{% if 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" filtrable="notif" data="{{notif.author.username}}">
+			<div class="notif {{notif.seen ? '' : 'unseen ' }}{% if not notif.author is empty and 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" filtrable="notif" {% if not notif.author is empty %}data="{{notif.author.username}}"{% endif %}>
 				{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé #}
 				{% if notif.report %}
 					<p>{{notif.content | raw}}</p>

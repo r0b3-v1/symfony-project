@@ -2,23 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Notification;
-use App\Form\NotifType;
 use App\Form\UserType;
-use App\Repository\CommissionStatutRepository;
-use App\Repository\NotificationRepository;
-use App\Repository\StatutRepository;
-use App\Repository\UserRepository;
+use App\Form\NotifType;
 use App\Service\Helpers;
-use DateTimeInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Notification;
+use App\Repository\UserRepository;
+use App\Repository\StatutRepository;
+use App\Repository\NotificationRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\CommissionStatutRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @IsGranted("ROLE_USER")
- */
+
 class ProfileController extends AbstractController {
     /**
      * @Route("/user/{username}/infos", name="app_profile_infos")
@@ -36,7 +34,8 @@ class ProfileController extends AbstractController {
         $notifs = $user->getReceivedNotifs();
         $senders = [];
         foreach ($notifs as $notif) {
-            $sender = $notif->getAuthor()->getUsername();
+            if($notif->getAuthor())
+                $sender = $notif->getAuthor()->getUsername();
             if(!in_array($sender,$senders)) $senders[] = $sender;
         }
         return $this->render('profile/index.html.twig', [
@@ -50,6 +49,7 @@ class ProfileController extends AbstractController {
 
     /**
      * @Route("/user/{username}/infos/status/change", name="app_change_status")
+     * @IsGranted("ROLE_USER")
      * Change le statut de l'utilisateur pour le faire passer de simple utilisateur à artiste
      */
     public function changeStatus(string $username, UserRepository $ur, StatutRepository $sr, Helpers $helper){
@@ -68,6 +68,7 @@ class ProfileController extends AbstractController {
 
     /**
      * @Route("/user/{username}/infos/edit", name="app_profile_edit_infos")
+     * @IsGranted("ROLE_USER")
      * Permet à l'utilisateur de modifier ses informations
      */
     public function edit(string $username, Request $request, UserRepository $ur, Helpers $helper) {
@@ -117,6 +118,7 @@ class ProfileController extends AbstractController {
 
     /**
      * @Route("/user/{username}/notif", name="app_send_notif")
+     * @IsGranted("ROLE_USER")
      * Envoie d'une notification d'un utilisateur à un autre
      */
     public function sendNotif(string $username, UserRepository $ur, Helpers $helper, Request $request, NotificationRepository $nr){

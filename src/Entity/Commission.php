@@ -19,16 +19,19 @@ class Commission
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orderedCommissions")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="clientCommissions")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $artist;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="commissions")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $category;
 
@@ -49,6 +52,7 @@ class Commission
 
     /**
      * @ORM\ManyToOne(targetEntity=CommissionStatut::class, inversedBy="commissions")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $statut;
 

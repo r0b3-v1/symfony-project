@@ -6,6 +6,7 @@ use App\Repository\TagRepository;
 use App\Repository\UserRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\SubmissionRepository;
+use App\Service\Helpers;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,12 +20,14 @@ class HomeController extends AbstractController
      * @Route("/home/search/{page}", name="app_search")
      * Fonction de recherche appelée à la fois dans le cas de la recherche rapide et de la recherche avancée
      */
-    public function search(Request $request, int $page = 1,TagRepository $tr, SubmissionRepository $sr, CategoryRepository $cr, UserRepository $ur) : Response {
+    public function search(Request $request, int $page = 1,Helpers $helper, TagRepository $tr, SubmissionRepository $sr, CategoryRepository $cr, UserRepository $ur) : Response {
         $paramsGet = $request->query->get('params');
+        $arrayPost = [];
         $categories = $cr->findAll();
         $submissions = [];
         $totalPage = 1;
-
+        $users = [];
+        $type = 'post';
         //dans ce cas c'est une recherche rapide donc peu complexe
         if($paramsGet){
 
@@ -42,18 +45,59 @@ class HomeController extends AbstractController
         //dans ce cas c'est une recherche avancée faite via le formulaire de recherche
         else{
             $paramsPost = $request->request;
-            $title = $paramsPost->get('title');
-            $description = $paramsPost->get('description');
-            $author = $paramsPost->get('author');
-            $authorId = $ur->findOneBy(['username'=>$author]);
-            $tags = $paramsPost->get('tags');
-            $categoryId = $paramsPost->get('categories');
-            if($categoryId=='all') $categoryId = null;
             
 
+            $type = $paramsPost->get('type');
 
-            dump($sr->search(['title'=>$title, 'description'=>$description, 'authorId'=>$authorId, 'categoryId'=>$categoryId]));
+            // dans ce cas on cherche des images
+            if($type == 'post'){
+                
+                $title = $paramsPost->get('title');
+                $arrayPost['title'] = $title;
+                $description = $paramsPost->get('description');
+                $arrayPost['description'] = $description;
+                $author = $paramsPost->get('author');
+                $arrayPost['author'] = $author;
+                $authorId = $ur->findOneBy(['username'=>$author]);
+                $arrayPost['authorId'] = $authorId;
 
+                $tags = $paramsPost->get('tags');
+                //pour récupérer les posts avec les tags concernés
+                $sub = [];
+                if($tags){
+                    $arrayPost['tags'] = $tags;
+                    $tags = explode(' ', $tags);
+                    foreach ($tags as $tagName) {
+                        $tag = $tr->findOneBy(['name'=>$tagName]);
+                        if($tag){
+                            $sub = array_merge($sub, $tag->getSubmissions()->toArray());
+                        }
+                    }
+                    $sub = array_unique($sub);
+                }
+
+                $categoryId = $paramsPost->get('categories');
+                $arrayPost['categoryId'] = $categoryId;
+                if($categoryId=='all') $categoryId = null;
+                $submissions = $sr->search(['title'=>$title, 'description'=>$description, 'authorId'=>$authorId, 'categoryId'=>$categoryId]);
+
+                if($tags){
+                    $submissions = $helper->intersectArrays($submissions, $sub);
+                }
+
+            }
+            // sinon on cherche des utilisateurs
+            else{
+
+                $name = $paramsPost->get('name');
+                $arrayPost['title'] = $name;
+                $dispo = $paramsPost->get('dispo');
+                $arrayPost['dispo'] = $dispo;
+                $option = $paramsPost->get('sort-artist');
+                $arrayPost['option'] = $option;
+
+                $users = $ur->search(['name'=>$name, 'dispo'=>$dispo, 'option'=>$option]);
+            }
 
         }
 
@@ -65,7 +109,9 @@ class HomeController extends AbstractController
             'page'=>$page,
             'totalPage'=>$totalPage,
             'paramsGet'=>$paramsGet,
-            'categories'=>$categories
+            'arrayPost'=>$arrayPost,
+            'categories'=>$categories,
+            'users'=>$users
         ]);
     }
 
