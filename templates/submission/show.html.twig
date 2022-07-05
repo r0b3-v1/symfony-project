@@ -10,20 +10,59 @@
 {% endblock %}
 
 {% block body %}
-	<div class="image">
-		<img src="{{ asset('images/users/' ~ submission.url)}}" alt="{{ submission.title }}">
-	</div>
-	<div class="actions">
-    {% if isFaved %}
-		<a href="{{path('app_post_unfav',{postId:submission.id})}}" class="button">retirer des favoris</a>
-    {% else %}
-		<a href="{{path('app_post_fav',{postId:submission.id})}}" class="button">ajouter aux favoris</a>
-    {% endif %}
-		<a href="{{path('app_post_report',{postId:submission.id})}}" class="button danger">signaler</a>
-	{% if editAllowed %}
-		<a href="{{path('app_post_delete',{postId:submission.id})}}" class="button" onclick="return confirm('Voulez-vous vraiment supprimer ce post?')">Supprimer</a>
-		<a href="{{path('app_post_edit',{postId:submission.id})}}" class="button">Modifier</a>
-	{% endif %}
+	<div class="post">
+		<div class="content">
+			<div class="text text_light">
+				<div class="title">
+					<h2>{{submission.title}}</h2>
+					<p>
+						<span class="attribute">De </span>
+						{{submission.author ? (('<a href="'~ path('app_profile_infos',{username: submission.author.username}) ~'">' ~ submission.author.username ~ '</a>') | raw) :
+						'<span class="missing">utilisateur supprimé</span>'}}
+					 </p>
+				</div>
+				<div class="description">
+					<p class="attribute">Description : </p>
+					<p>
+						{{submission.description | nl2br}}
+					</p>
+				</div>
+				<div class="meta">
+					<div>
+						<p class="attribute">Tags : </p>
+						<p>
+							{% for tags in submission.tags %}
+								{{tags.name}}&nbsp;&nbsp;&nbsp;
+							{% endfor %}
+						</p>
+					</div>
+					<div>
+						<span class="attribute">Nombre de vues: </span>{{submission.viewedBy | length}}
+					</div>
+					<div>
+						<span class="attribute">Nombre de favoris: </span>{{submission.favedBy | length}}
+					</div>
+				</div>
+			</div>
+			<div class="image">
+				<img src="{{ asset('images/users/' ~ submission.url)}}" alt="{{ submission.title }}">
+			</div>
+		</div>
+		<div class="actions">
+
+			<a href="{{absoluteUrl}}" class="button success" target="_blank">Taille originale</a>
+			{% if isFaved %}
+				<a href="{{path('app_post_unfav',{postId:submission.id})}}" class="button">Retirer des favoris</a>
+			{% else %}
+				<a href="{{path('app_post_fav',{postId:submission.id})}}" class="button">Ajouter aux favoris</a>
+			{% endif %}
+			{% if editAllowed %}
+				<a href="{{path('app_post_delete',{postId:submission.id})}}" class="button" onclick="return confirm('Voulez-vous vraiment supprimer ce post?')">Supprimer</a>
+				<a href="{{path('app_post_edit',{postId:submission.id})}}" class="button">Modifier</a>
+			{% endif %}
+			<a href="{{path('app_post_report',{postId:submission.id})}}" class="button danger">Signaler</a>
+
+		</div>
 	</div>
 
     <div class="description"></div>

@@ -36,6 +36,7 @@ class SubmissionController extends AbstractController {
         if($this->getUser())
             $submission->addViewedBy($this->getUser());
         $sr->add($submission);
+        $absoluteUrl = '/images/users/' . $submission->getUrl();
         $isFaved = false;
         $editAllowed = false;
         $comment = new Comment;
@@ -63,7 +64,8 @@ class SubmissionController extends AbstractController {
             'submission' => $submission,
             'isFaved'=>$isFaved,
             'editAllowed'=>$editAllowed,
-            'commentForm' => $commentForm->createView()
+            'commentForm' => $commentForm->createView(),
+            'absoluteUrl'=> $absoluteUrl
         ]);
     }
 

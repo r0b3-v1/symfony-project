@@ -1,10 +1,66 @@
-.image,.actions {
+.post,.actions {
     display: flex;
     justify-content: center;
 
     background-color: var(--MP-bg-primary);
 }
-.image{
+
+.actions{
+    margin-top: 1em;
+    gap: 0.5em;
+    background-color: #222;
+    padding: 1em;
+}
+
+.post{
     padding: 2em;
+    flex-direction: column;
+    .content{
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+        .image{
+            display: flex;
+            justify-content: center;
+            flex: 0.6;
+            img{
+                max-width: 100%;
+                align-self: center;
+            }
+        }
+        .title{
+            text-align: center;
+        }
+        .description, .meta{
+            margin-top: 2em;
+            margin-left: 2em;
+        }
+        .meta{
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+            position: relative;
+            &::after{
+                content: '';
+                position: absolute;
+                height: 1px;
+                background-color: #787878;
+                top: -10px;
+                width: 100%;
+            }
+        }
+        .text{
+            flex: 0.5;
+            display: flex;
+            flex-direction: column;
+            padding: 1em;
+            border: 1px solid #787878;
+            // font-size: 1.5em;
+        }
+    }
+    // .image{
+    //     align-self: end;
+    //     max-width: 50%;
+    // }
 }
 

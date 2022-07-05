@@ -4,32 +4,6 @@
   }
 }
 
-@media screen and (max-width: 1250px) {
-  .form-content {
-    width: auto !important;
-  }
-}
-
-@media screen and (max-width: 1050px) {
-  .form-login {
-    padding: 0 !important;
-  }
-  .form-content {
-    width: auto !important;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .form-content .form-input {
-    -webkit-box-orient: vertical !important;
-    -webkit-box-direction: normal !important;
-        -ms-flex-direction: column !important;
-            flex-direction: column !important;
-    min-width: 0 !important;
-    gap: 0.5em;
-  }
-}
-
 @media screen and (max-width: 880px) {
   .submission {
     max-width: 33% !important;
@@ -95,6 +69,32 @@
   .submission:hover {
     max-width: 100% !important;
     max-height: 400px !important;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .form-content {
+    width: auto !important;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .form-login {
+    padding: 0 !important;
+  }
+  .form-content {
+    width: auto !important;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .form-content .form-input {
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
+    min-width: 0 !important;
+    gap: 0.5em;
   }
 }
 /*# sourceMappingURL=responsive.css.map */
