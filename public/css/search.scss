@@ -1,6 +1,8 @@
 .search{
     color: var(--MP-text-primary);
+    margin-bottom: 1.5em;
     background: var(--MP-bg-primary);
+    border: 1px solid black;
     .search-container, .field{
         display: flex;
     }

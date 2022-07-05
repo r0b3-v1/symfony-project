@@ -104,7 +104,6 @@ class HomeController extends AbstractController
         // élimination des éventuels doublons
         $submissions = array_unique($submissions);
         return $this->render('home/home.html.twig', [
-            'controller_name' => 'HomeController',
             'submissions'=>$submissions,
             'page'=>$page,
             'totalPage'=>$totalPage,

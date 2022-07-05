@@ -188,9 +188,6 @@ footer {
 }
 
 .images_container {
-    background-color: #333;
-    border: 1px solid black;
-    padding: 2em;
     display: flex;
     flex-wrap: wrap;
     gap: 2em;
@@ -335,4 +332,23 @@ footer {
 
 .missing{
     font-style: italic;
+}
+
+.block-content{
+    background-color: var(--MP-bg-primary);
+    padding: 2em;
+    border: 1px solid black;
+}
+
+.presentation{
+    display: flex;
+    margin-bottom: 1.5em;
+    justify-content: space-between;
+    box-shadow: -5px 5px 10px 3px #00000070;
+    .title{
+        margin-bottom: 0.5em;
+    }
+    img{
+        max-height: 230px;
+    }
 }

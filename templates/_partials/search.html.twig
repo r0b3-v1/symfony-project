@@ -66,10 +66,15 @@
 						<input type="hidden" name="type" value="post" id="search-hidden">
 					</div>
 						<div class="buttons">
-							<button class="button" id="search-form-type">Chercher des artistes</button>
 							<button class="button" type="submit" id="search-post-button">Valider</button>
+							<button class="button" id="search-form-type">Chercher des artistes</button>
 						</div>
 				</form>
 		</div>
 	</div>
 </div>
+{% if arrayPost is defined and not arrayPost is empty %}
+	<script>
+		document.getElementById('search-container').classList.add('collapsed');
+	</script>
+{% endif %}

@@ -29,6 +29,7 @@ searchCollapser?.addEventListener('click', function(){
 })
 
 quickSearchSubmit.addEventListener('click', function(e){
+    console.log('test');
     this.parentElement.submit();
 })
 

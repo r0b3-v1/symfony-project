@@ -223,9 +223,6 @@ footer {
 }
 
 .images_container {
-  background-color: #333;
-  border: 1px solid black;
-  padding: 2em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -394,5 +391,31 @@ footer {
 
 .missing {
   font-style: italic;
+}
+
+.block-content {
+  background-color: var(--MP-bg-primary);
+  padding: 2em;
+  border: 1px solid black;
+}
+
+.presentation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 1.5em;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-shadow: -5px 5px 10px 3px #00000070;
+          box-shadow: -5px 5px 10px 3px #00000070;
+}
+
+.presentation .title {
+  margin-bottom: 0.5em;
+}
+
+.presentation img {
+  max-height: 230px;
 }
 /*# sourceMappingURL=style.css.map */

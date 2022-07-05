@@ -9,13 +9,19 @@
 {% endblock %}
 
 {% block body %}
+	{% include "_partials/presentation.html.twig" %}
 
-{% include "_partials/search.html.twig" %}
+	{% include "_partials/search.html.twig" %}
 
-<h1 class="home-page">Page
-		{{page}}/{{totalPage}}</h1>
-	<div class="images_container expandable">
-		
+	<h1 class="home-page">
+		{% if paramsGet is defined or arrayPost is defined %}
+			Page {{page}}/{{totalPage}}		
+		{% else %}
+			Explorez!
+		{% endif %}
+	</h1>
+
+	<div class="images_container block-content expandable">
 		
 		{% if users is defined and not users is empty %}
 			{% for user in users %}
