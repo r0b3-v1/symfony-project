@@ -239,6 +239,7 @@ footer {
 
 .page-buttons{
     margin-top: 1em;
+    margin-bottom: 2.5em;
     position: relative;
     .left{
         position: absolute;
@@ -318,4 +319,12 @@ footer {
     select{
         background-color: gray;
     }
+}
+
+.burger{
+    display: none;
+    text-align: center;
+    color: var(--MP-text-primary);
+    font-size: 1.5em;
+    padding: 0.5em 0;
 }

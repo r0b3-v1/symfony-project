@@ -5,7 +5,7 @@
 
 {% block stylesheets %}
 
-	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
+	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/form.css')}}">
 
 {% endblock %}
@@ -13,7 +13,7 @@
 {% block body %}
     {% form_theme registrationForm 'forms/fields.twig' %}
     
-	{{ form_start(registrationForm, { 'attr' : { 'class': 'text_light' } }) }}
+	{{ form_start(registrationForm, { 'attr' : { 'class': 'text_light form-login' } }) }}
 	<div class="form-content">
         <h1>Créer mon compte</h1>
 

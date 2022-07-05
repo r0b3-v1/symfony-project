@@ -1,0 +1,94 @@
+@media screen and (max-width: 1150px) {
+    .main, nav{
+        padding: 0!important;
+    }
+}
+
+@media screen and (max-width: 1250px) {
+
+    .form-content{
+        width: auto!important;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .form-login{
+        padding: 0!important;
+    }
+    .form-content{
+        width: auto!important;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    .form-content .form-input{
+        flex-direction: column!important;
+        min-width: 0!important;
+        gap: 0.5em;
+    }
+}
+
+@media screen and (max-width: 880px) {
+// à cette taille, il faut remplacer les éléments de la nav pas un boutton
+    .submission{
+        max-width: 33%!important;
+        max-height: 300px!important;
+        &:hover{
+            max-width: 33%!important;
+            max-height: 300px!important;
+        }
+    }
+
+    header > nav{
+        display: none;
+    }
+    .burger{
+        display: block;
+        &> i{
+            cursor: pointer;
+            padding: 0.5em;
+            border-radius: 50%;
+            &:hover{
+                box-shadow: 0 0 3px 3px var(--MP-text-primary);
+            }
+        }
+    
+        nav{
+            display: flex;
+            flex-direction: column;
+            margin-top: 00.5em;
+            position: relative;
+            > *{
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+                padding: 1em 0;
+            }
+            > *:nth-child(2n){
+                background-color: var(#424242);
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 700px) {
+    #search-container {
+        &.collapsed{
+            max-height: 450px!important;
+        }
+        .fieldsets{
+            flex-direction: column!important;
+        }
+    }
+
+    .submission{
+        max-width: 100%!important;
+        max-height: 400px!important;
+        &:hover{
+            max-width: 100%!important;
+            max-height: 400px!important;
+        }
+    }
+}

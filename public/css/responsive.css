@@ -1,0 +1,100 @@
+@media screen and (max-width: 1150px) {
+  .main, nav {
+    padding: 0 !important;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .form-content {
+    width: auto !important;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .form-login {
+    padding: 0 !important;
+  }
+  .form-content {
+    width: auto !important;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .form-content .form-input {
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
+    min-width: 0 !important;
+    gap: 0.5em;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .submission {
+    max-width: 33% !important;
+    max-height: 300px !important;
+  }
+  .submission:hover {
+    max-width: 33% !important;
+    max-height: 300px !important;
+  }
+  header > nav {
+    display: none;
+  }
+  .burger {
+    display: block;
+  }
+  .burger > i {
+    cursor: pointer;
+    padding: 0.5em;
+    border-radius: 50%;
+  }
+  .burger > i:hover {
+    -webkit-box-shadow: 0 0 3px 3px var(--MP-text-primary);
+            box-shadow: 0 0 3px 3px var(--MP-text-primary);
+  }
+  .burger nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-top: 00.5em;
+    position: relative;
+  }
+  .burger nav > * {
+    width: 100%;
+    text-align: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding: 1em 0;
+  }
+  .burger nav > *:nth-child(2n) {
+    background-color: var(#424242);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #search-container.collapsed {
+    max-height: 450px !important;
+  }
+  #search-container .fieldsets {
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
+  }
+  .submission {
+    max-width: 100% !important;
+    max-height: 400px !important;
+  }
+  .submission:hover {
+    max-width: 100% !important;
+    max-height: 400px !important;
+  }
+}
+/*# sourceMappingURL=responsive.css.map */

@@ -5,13 +5,13 @@
 
 {% block stylesheets %}
 
-	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
+	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/form.css')}}">
 
 {% endblock %}
 
 {% block body %}
-	<form method="post" class='text_light'>
+	<form method="post" class='text_light form-login'>
 
 		<div class="form-content">
             <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
