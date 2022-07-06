@@ -20,7 +20,16 @@
 			Explorez!
 		{% endif %}
 	</h1>
-
+	<div class="page-buttons">
+		{% if page > 1 %}
+			<a class="button left" href="{{ path('app_home',{page : page-1 })}}"><< page
+				{{ page - 1}}</a>
+		{% endif %}
+		{% if page < totalPage %}
+			<a class="button right" href="{{ path('app_home',{page : page+1 })}}">page
+				{{ page + 1}} >></a>
+		{% endif %}
+	</div>
 	<div class="images_container block-content expandable">
 		
 		{% if users is defined and not users is empty %}

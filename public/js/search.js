@@ -1,9 +1,11 @@
 const searchButton = document.getElementById('search-link');
 const searchDiv = document.getElementById('search-modal');
 const typeSelect = document.getElementById('search-type-select');
-const quickSearchSubmit = document.getElementById('quicksearch-submit');
+const quickSearchSubmits = document.getElementsByClassName('quicksearch-submit');
 const searchCollapser = document.getElementById('search-collapser');
 const type = document.getElementById('search-form-type');
+
+
 
 type.addEventListener('click', function(e){
     e.preventDefault();
@@ -28,10 +30,11 @@ searchCollapser?.addEventListener('click', function(){
     this.classList.toggle('fa-minus');
 })
 
-quickSearchSubmit.addEventListener('click', function(e){
-    console.log('test');
-    this.parentElement.submit();
-})
+for (const quickSearchSubmit of quickSearchSubmits) {
+        quickSearchSubmit.addEventListener('click', function(){
+        this.parentElement.submit();
+    })
+}
 
 typeSelect?.addEventListener('change', function(){
     let selectedValue = this.options[this.selectedIndex].value;
