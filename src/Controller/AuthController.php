@@ -67,7 +67,7 @@ class AuthController extends AbstractController {
                 $token = str_replace('.', '*', $token);
 
                 $mailer->send(
-                    'martketplace.no-reply@outlook.com',
+                    'martketplace@no-reply.com',
                     $user->getMail(),
                     'nouveau mot de passe',
                     'new-password',
