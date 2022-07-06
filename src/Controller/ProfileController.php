@@ -36,7 +36,9 @@ class ProfileController extends AbstractController {
         foreach ($notifs as $notif) {
             if($notif->getAuthor())
                 $sender = $notif->getAuthor()->getUsername();
-            if(!in_array($sender,$senders)) $senders[] = $sender;
+            else
+                $sender=null;
+            if($sender && !in_array($sender,$senders)) $senders[] = $sender;
         }
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
