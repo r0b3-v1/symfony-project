@@ -6,6 +6,58 @@
 		<p class="missing">non spécifié</p>
 	{% endif %}
 
-	<p>{{user.ToS | nl2br}}</p>
-
+	<div id="ToS">{{user.ToS | nl2br}}</div>
 </div>
+
+<script>
+
+// ce script permet de modifier le contenu des terms of service en remplaçant les balises custom du site par des balises html
+	let ToS = document.getElementById('ToS');
+	const matches = new Map();
+	matches.set('title','h3')
+	matches.set('list','ul')
+	matches.set('numlist','ol')
+	matches.set('item','li')
+	matches.set('important','strong')
+	matches.set('underlined','u')
+	matches.set('italic','i')
+	matches.set('color','span')
+	
+	const div = document.createElement('div');
+	div.innerHTML = ToS.textContent;
+	filter(div);
+	ToS.innerHTML = div.innerHTML;
+
+	replace(ToS);
+
+	function filter (node) {
+		
+		for (var i = 0; i < node.childNodes.length; i++) {
+		var child = node.childNodes[i];
+
+		if(child.nodeType != Node.TEXT_NODE && (!matches.has(child.tagName?.toLowerCase()) || (child.tagName?.toLowerCase() != 'color' && child.getAttributeNames().length > 0)))
+			child.remove();
+		else
+			filter(child);
+		}
+
+	}
+
+	function replace(parent){
+		matches.forEach((match, key) => {
+			
+			for (const item of parent.querySelectorAll(`${key}`)) {
+
+				let color = '';
+
+				if(key == 'color'){
+					let val = item.getAttribute('val');
+					color = ` style="color: #${val}" `;
+				}
+
+				item.outerHTML = '<' + match + color +'>' + item.innerHTML + '</' + match + '>';
+			}
+		});
+	}
+	
+</script>

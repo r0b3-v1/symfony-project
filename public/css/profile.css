@@ -132,4 +132,8 @@
 .unseen {
   border: 1px solid orange;
 }
+
+#ToS ol, #ToS ul {
+  margin-left: 2em;
+}
 /*# sourceMappingURL=profile.css.map */

@@ -7,7 +7,7 @@ const type = document.getElementById('search-form-type');
 
 
 
-type.addEventListener('click', function(e){
+type?.addEventListener('click', function(e){
     e.preventDefault();
     const postSearch = document.querySelector('fieldset.post-field');
     const artistSearch = document.querySelector('fieldset.author-field');
