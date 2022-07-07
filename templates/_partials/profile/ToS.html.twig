@@ -24,7 +24,7 @@
 	matches.set('color','span')
 	
 	const div = document.createElement('div');
-	div.innerHTML = ToS.textContent;
+	div.innerHTML = ToS.textContent.replace(/\n/g, "<br />");;
 	filter(div);
 	ToS.innerHTML = div.innerHTML;
 
@@ -33,12 +33,12 @@
 	function filter (node) {
 		
 		for (var i = 0; i < node.childNodes.length; i++) {
-		var child = node.childNodes[i];
+			var child = node.childNodes[i];
 
-		if(child.nodeType != Node.TEXT_NODE && (!matches.has(child.tagName?.toLowerCase()) || (child.tagName?.toLowerCase() != 'color' && child.getAttributeNames().length > 0)))
-			child.remove();
-		else
-			filter(child);
+			if(child.nodeType != Node.TEXT_NODE && child.tagName!='BR' && (!matches.has(child.tagName?.toLowerCase()) || (child.tagName?.toLowerCase() != 'color' && child.getAttributeNames().length > 0)))
+				child.remove();
+			else
+				filter(child);
 		}
 
 	}
