@@ -28,15 +28,17 @@ class HomeController extends AbstractController
         $totalPage = 1;
         $users = [];
         $type = 'post';
+        dump($paramsGet);
         //dans ce cas c'est une recherche rapide donc peu complexe
         if(!is_null($paramsGet)){
-
+            
             $submissions = $sr->quickSearch($paramsGet);
-
+            
             $tags = $tr->findBy(['name'=>$paramsGet]);
             foreach ($tags as $tag) {
                 $submissions = array_merge($submissions, $tag->getSubmissions()->toArray());
             }
+            dd($submissions);
 
             $postPerPage = 20;
             $totalPage = ceil(count($submissions)/$postPerPage);
