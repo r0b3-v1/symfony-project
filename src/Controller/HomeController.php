@@ -22,13 +22,13 @@ class HomeController extends AbstractController
      */
     public function search(Request $request, int $page = 1,Helpers $helper, TagRepository $tr, SubmissionRepository $sr, CategoryRepository $cr, UserRepository $ur) : Response {
         $paramsGet = $request->query->get('params');
+        $paramsPost = $request->request;
         $arrayPost = [];
         $categories = $cr->findAll();
         $submissions = [];
         $totalPage = 1;
         $users = [];
         $type = 'post';
-        dump($paramsGet);
         //dans ce cas c'est une recherche rapide donc peu complexe
         if(!is_null($paramsGet)){
             
@@ -38,17 +38,14 @@ class HomeController extends AbstractController
             foreach ($tags as $tag) {
                 $submissions = array_merge($submissions, $tag->getSubmissions()->toArray());
             }
-            dd($submissions);
 
             $postPerPage = 20;
             $totalPage = ceil(count($submissions)/$postPerPage);
         }
 
         //dans ce cas c'est une recherche avancée faite via le formulaire de recherche
-        else{
-            $paramsPost = $request->request;
+        elseif (!is_null($paramsPost)){
             
-
             $type = $paramsPost->get('type');
 
             // dans ce cas on cherche des images
