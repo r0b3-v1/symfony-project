@@ -44,7 +44,7 @@ class HomeController extends AbstractController
         }
 
         //dans ce cas c'est une recherche avancée faite via le formulaire de recherche
-        elseif (!is_null($paramsPost)){
+        elseif (count($paramsPost->all())>0){
             
             $type = $paramsPost->get('type');
 
