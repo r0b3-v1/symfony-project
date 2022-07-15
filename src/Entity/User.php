@@ -198,6 +198,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    //fonction qui renvoie true si l'utilisateur a le rôle passé en paramètre
+    public function isGranted(string $role) : bool {
+        return in_array($role, $this->getRoles());
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */

@@ -82,8 +82,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
             ;
         
-        dump('%' . $name . '%');
-        dump($query->getQuery()->getResult());
 
         if($name){
             // $query = $query->andWhere('u.username LIKE :val')
@@ -115,7 +113,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         }
 
-        dump($query->getQuery()->getResult());
 
 
         

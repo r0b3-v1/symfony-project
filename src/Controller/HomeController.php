@@ -29,7 +29,7 @@ class HomeController extends AbstractController
         $users = [];
         $type = 'post';
         //dans ce cas c'est une recherche rapide donc peu complexe
-        if($paramsGet){
+        if(!is_null($paramsGet)){
 
             $submissions = $sr->quickSearch($paramsGet);
 

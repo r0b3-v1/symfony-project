@@ -56,6 +56,7 @@ for (const button of acceptDemandBtn) {
     })
 }
 
+// modal pour afficher les détails d'une commission
 const detailsButtons = document.getElementsByClassName('details-btn');
 for (const button of detailsButtons) {
     
