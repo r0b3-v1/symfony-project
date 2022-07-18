@@ -418,4 +418,13 @@ footer {
 .presentation img {
   max-height: 230px;
 }
+
+.password-toggle {
+  cursor: pointer;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin-left: 0.5em;
+  width: 0px;
+}
 /*# sourceMappingURL=style.css.map */
