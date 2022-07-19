@@ -27,6 +27,8 @@ class CommissionController extends AbstractController
      */
     public function commission(string $username, Request $request, UserRepository $ur, NotificationRepository $nr, Helpers $helper, CommissionRepository $cr, CommissionStatutRepository $csr): Response
     {
+        if(!$helper->isVerified()) return $helper->error(403, 'Erreur 403','Vous devez être vérifié pour accéder à cette page');
+
         $user = $ur->findOneBy(['username' => $username]);
         
         //si l'utilisateur n'existe pas ou que ce n'est pas un artiste alors on renvoie une erreur 404

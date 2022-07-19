@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Console\Helper\Helper;
 
 class SubmissionController extends AbstractController {
     /**
@@ -47,7 +48,7 @@ class SubmissionController extends AbstractController {
         
         // formulaire pour les commentaires sous le post
         if($commentForm->isSubmitted() && $commentForm->isValid()){
-            if($this->getUser()){
+            if($helper->isVerified()){
                 $comment->setUser($this->getUser());
                 $comment->setDate(new \DateTime());
                 $comment->setSubmission($submission);
@@ -55,7 +56,7 @@ class SubmissionController extends AbstractController {
 
             }
             else{
-                $this->addFlash('error', 'vous devez être connecté pour poster un commentaire');
+                $this->addFlash('error', 'Vous devez être connecté et vérifié pour poster un commentaire');
             }
             
         }
@@ -114,8 +115,10 @@ class SubmissionController extends AbstractController {
      * @IsGranted("ROLE_USER")
      * Upload d'un post pour un artiste
      */
-    public function upload(Request $request, TagRepository $tr, EntityManagerInterface $em) {
+    public function upload(Request $request, TagRepository $tr, EntityManagerInterface $em, Helpers $helper) {
 
+        if(!$helper->isVerified()) return $helper->error(403, 'Erreur 403','Vous devez être vérifié pour accéder à cette page');
+        
         $submission = new Submission;
         $form = $this->createForm(SubmissionType::class)
             ->handleRequest($request);

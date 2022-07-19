@@ -57,7 +57,7 @@
 						<button class="profile_tabs" target="demandes">Mes demandes</button>
 			{% endif %}
 			{% if not allowEditing %}
-				<a href="{{path('app_send_notif', {username : user.username})}}" class="profile_tabs"> Message privé
+				<a href="{{path('app_send_notif', {username : user.username})}}" class="profile_tabs {{ app.user.isVerified ? '' : 'deactivated' }}"> Message privé
 					<i class="fa-solid fa-envelope"></i>
 				</a>
 			{% endif %}

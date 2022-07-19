@@ -1,4 +1,7 @@
 {% for label, messages in app.flashes %}
+	{% if label =="error" %}
+		{% set label = "danger" %}
+	{% endif %}
 	{% for message in messages %}
 		<div class="alert alert-{{ label }} alert-dismissible" role="alert">
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

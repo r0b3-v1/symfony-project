@@ -124,6 +124,7 @@ class ProfileController extends AbstractController {
      * Envoie d'une notification d'un utilisateur à un autre
      */
     public function sendNotif(string $username, UserRepository $ur, Helpers $helper, Request $request, NotificationRepository $nr){
+        if(!$helper->isVerified()) return $helper->error(403,'Erreur 403','Vous devez être vérifié pour accéder à cette page');
         $recipient = $ur->findOneBy(['username' => $username]);
         if(!$recipient){
             return $helper->error(404);

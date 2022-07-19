@@ -15,8 +15,12 @@ class Helpers extends AbstractController{
         ]);
     }
 
-    public function checkUser(string $username){
+    public function checkUser(string $username) : bool{
         return $this->getUser() && ($this->getUser()->getUsername() === $username);
+    }
+
+    public function isVerified() : bool{
+        return $this->getUser() && $this->getUser()->getIsVerified();
     }
 
 
