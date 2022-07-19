@@ -17,8 +17,10 @@
             <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
             {% if error %}
                 <div class="error">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    <div class="alert alert-danger">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
                 </div>
             {% endif %}
             {% if app.user %}

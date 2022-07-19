@@ -1,6 +1,5 @@
 const triggers = document.querySelectorAll('[target][collapse-trigger]');
-const passInput = document.querySelectorAll('input[type="password"]');
-console.log(passInput);
+const passInput = document.querySelectorAll('input[type="password"]:not(#inputPassword)');
 
 for (const trigger of triggers) {
     trigger.addEventListener('click', function (e) {
@@ -64,3 +63,22 @@ function HTMLFromString(str){
         divContainer.append(inputContainer);
     }
 })()
+
+//fonction qui indique à l'utilisateur si son mot de passe correspond à ce qui est attendu
+function checkPassword(){
+    const check = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,}$/;
+    for (const input of passInput){
+        input.addEventListener('input', function(){
+            if(!check.test(this.value)){
+                this.classList.add('invalid');
+                this.setAttribute('title', 'mot de passe invalide');
+            }
+            else{
+                this.classList.remove('invalid');
+                this.classList.add('valid');
+                this.setAttribute('title', 'mot de passe valide');
+            }
+        })
+    }
+}
+checkPassword()

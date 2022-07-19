@@ -23,7 +23,7 @@ class RegistrationFormType extends AbstractType
             ->add('username',TextType::class, [
                 'constraints'=> [
                     new Regex([
-                    'message'=>'Votre nom d\'utilisateur contient des caractères interdits',
+                    'message'=>'Votre nom d\'utilisateur contient des caractères interdits ou est trop petit (3 caractères minimun)',
                     'pattern'=>'/^(?=.{3,20}$)(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9_-]+([^._-])$/'
                     ])
                 ]
@@ -66,8 +66,8 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                     new Regex([
-                        'message'=>'Votre mot de passe doit comporter au moins une lettre en majuscule, une en minuscule et un chiffre',
-                        'pattern'=>'/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/'
+                        'message'=>'Votre mot de passe doit comporter au moins une lettre en majuscule, une en minuscule, un caractère spécial et un chiffre',
+                        'pattern'=>'/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/'
                         ])
                 ],
             ])

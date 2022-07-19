@@ -80,7 +80,7 @@
 }
 
 .main form .form-content .input-alert {
-  background: #ca9393;
+  background: #e1bfbf;
   padding: 1em;
   border-radius: 10px;
   border: 1px solid red;
@@ -94,13 +94,27 @@
           flex-direction: column;
 }
 
+.main form .form-content .input-alert .password-toggle {
+  width: auto;
+}
+
 .main form .form-content .input-errors {
   font-size: 0.8em;
+  max-width: 350px;
+  margin-top: 0.5em;
   color: red;
 }
 
 .main form .form-content .input-errors i {
   margin-right: 10px;
+}
+
+input.valid {
+  border: 3px solid green !important;
+}
+
+input.invalid {
+  border: 3px solid red !important;
 }
 
 .top-separator {

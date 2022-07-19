@@ -61,26 +61,41 @@
         }
 
         .input-alert{
-            background: #ca9393;
+            background: #e1bfbf;
             padding: 1em;
             border-radius: 10px;
             border: 1px solid red;
             color: white;
             display: flex;
             flex-direction: column;
+            .password-toggle{
+                width: auto;
+            }
         }
 
         .input-errors{
             font-size: 0.8em;
+            max-width: 350px;
+            margin-top: 0.5em;
             color: red;
             i{
                 margin-right: 10px;
             }
+
         }
     }
 
     
 
+}
+
+input{
+    &.valid{
+        border: 3px solid green!important;
+    }
+    &.invalid{
+        border: 3px solid red!important;
+    }
 }
 
 .top-separator {
