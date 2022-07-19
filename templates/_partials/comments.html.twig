@@ -22,20 +22,23 @@
 							<img src="{{ asset('images/static/avatar.png') }}" alt="avatar">
 						{% endif %}
 					</div>
-					<div class="author">
-						{{comment.user.username}}
+					<div class="meta">
+						<div class="author">
+							<a class="attribute" target="_blank" href="{{path('app_profile_infos', {username : comment.user.username})}}">{{comment.user.username}}</a>
+						</div>
+						<div class="date">
+							le
+							{{comment.date | date('d/m/Y')}}
+							à
+							{{comment.date | date('h:i:s')}}
+						</div>
 					</div>
 				{% else %}
 					<p class="missing">Utilisateur supprimé</p>		
 				{% endif %}
 				</div>
 				<div class="content">{{comment.content}}</div>
-				<div class="date">
-					le
-					{{comment.date | date('d/m/Y')}}
-					à
-					{{comment.date | date('h:i:s')}}
-				</div>
+				
 			</div>
 		{% endfor %}
 	</div>

@@ -8,9 +8,11 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: baseline;
-      -ms-flex-align: baseline;
-          align-items: baseline;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #575757;
+  margin-bottom: 1.5em;
 }
 
 .messages-container .head .avatar {
@@ -27,5 +29,44 @@
   margin-top: 1em;
   padding: 1em;
   border: 1px solid;
+}
+
+.messages-container .message .date, .messages-container .message .author {
+  margin-left: 0.75em;
+}
+
+.messages-container .message .date {
+  font-size: 0.75em;
+}
+
+.comment-new form, .comment-new form > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1em;
+}
+
+.comment-new form {
+  margin: 1em 0;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.comment-new form div {
+  width: 50%;
+}
+
+.comment-new label {
+  color: var(--MP-text-primary);
+}
+
+.comment-new textarea {
+  height: 200px;
+  border: 1px solid var(--MP-text-primary);
 }
 /*# sourceMappingURL=comments.css.map */

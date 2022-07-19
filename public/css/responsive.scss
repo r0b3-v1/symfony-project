@@ -73,6 +73,13 @@
         }
     }
 
+    .post .content{
+        flex-direction: column;
+        .text{
+            order: 1;
+        }
+    }
+
 }
 
 @media screen and (max-width: 700px) {
@@ -95,6 +102,17 @@
         &:hover{
             max-width: 100%!important;
             max-height: 400px!important;
+        }
+    }
+}
+
+@media screen and (max-width: 500px){
+    .post .actions{
+        align-items: center;
+        flex-direction: column;
+        a{
+            width: 75%;
+            text-align: center;  
         }
     }
 }
