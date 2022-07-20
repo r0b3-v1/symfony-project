@@ -9,8 +9,7 @@
 .content {
   background-color: #282828;
   min-height: 300px;
-  padding: 0 1em;
-  padding-top: 2em;
+  padding: 2em 1em;
 }
 
 .content .profile_content {
@@ -125,8 +124,24 @@
   margin-top: 1em;
 }
 
-.notif-admin, .notif-report {
-  border: 1px solid red;
+.notifs {
+  margin-top: 1em;
+}
+
+.notif {
+  margin-bottom: 0.5em;
+  border: 1px solid var(--MP-text-primary);
+  padding: 1em;
+}
+
+.notif .head {
+  background-color: #424242;
+  margin-bottom: 1em;
+}
+
+.notif-admin .head .attribute:after, .notif-report .head .attribute:after {
+  content: " (Admin)";
+  color: red;
 }
 
 .unseen {

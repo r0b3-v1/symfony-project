@@ -316,8 +316,8 @@ class SubmissionController extends AbstractController {
                     $notif->setContent(
                         'Le post "' . $submission->getTitle() . '" par "' . $user->getUsername() . 
                         '" a été signalé par "'. $this->getUser()->getUsername() . 
-                        '" comme étant contraire à nos règles d\'utitilisation <a target="_blank" href="' . 
-                        $this->generateUrl('app_post_show', ['postId'=>$postId]) . '">voir</a>'
+                        '" comme étant contraire à nos règles d\'utitilisation <a target="_blank" class="attribute" href="' . 
+                        $this->generateUrl('app_post_show', ['postId'=>$postId]) . '">Voir</a>'
                     );
                     $nr->add($notif);
                 }

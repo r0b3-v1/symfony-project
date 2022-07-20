@@ -10,16 +10,19 @@
 				<option value="{{sender}}">{{sender}}</option>
 			{% endfor %}
 		</select>
-		{% for notif in user.receivedNotifs | reverse %}
-			<div class="notif {{notif.seen ? '' : 'unseen ' }}{% if not notif.author is empty and 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" filtrable="notif" {% if not notif.author is empty %}data="{{notif.author.username}}"{% endif %}>
-				{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé #}
-				{% if notif.report %}
-					<p>{{notif.content | raw}}</p>
-				{% else %}
-					<p>{{notif.content}}</p>
-				{% endif %}
-			</div>
-		{% endfor %}
+		<div class="notifs">
+			{% for notif in user.receivedNotifs | reverse %}
+				<div class="notif {{notif.seen ? '' : 'unseen ' }}{% if not notif.author is empty and 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" filtrable="notif" {% if not notif.author is empty %}data="{{notif.author.username}}"{% endif %}>
+					<div class="head">Notification de : <span class="attribute">{{notif.author ? (('<a target="_blank" href="'~ path('app_profile_infos',{username:notif.author.username}) ~'">' ~ notif.author.username ~ '</a>') | raw ) : '<span class="missing">utilisateur supprimé</span>'}}</span></div>
+					{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé #}
+					{% if notif.report %}
+						<p>{{notif.content | raw}}</p>
+					{% else %}
+						<p>{{notif.content}}</p>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
 		<script>
 			$('#show-notifications').click(function () {
                 $.ajax({url: '{{ path('app_update_notifs', {'username': user.username}) }}', type: 'GET'})

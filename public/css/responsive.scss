@@ -1,7 +1,7 @@
 // ------------------------------------------------------Home page + recherche------------------------------------------------------
 
 @media screen and (max-width: 1150px) {
-    .main, nav{
+    .main, header nav{
         padding: 0!important;
     }
 }
@@ -140,5 +140,34 @@
         flex-direction: column!important;
         min-width: 0!important;
         gap: 0.5em;
+    }
+}
+
+// ------------------------------------------------------profil------------------------------------------------------
+
+@media screen and (max-width: 1100px) {
+
+    nav.tabs{
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        padding: 0.5em;
+        .profile_tabs{
+            padding: 0.5em;
+        }
+    }
+}
+@media screen and (max-width: 850px) {
+
+    .profile_content.infos{
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 650px) {
+
+    nav.tabs{
+        flex-direction: column;
     }
 }

@@ -1,5 +1,5 @@
 @media screen and (max-width: 1150px) {
-  .main, nav {
+  .main, header nav {
     padding: 0 !important;
   }
 }
@@ -158,6 +158,40 @@
             flex-direction: column !important;
     min-width: 0 !important;
     gap: 0.5em;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  nav.tabs {
+    height: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    gap: 1em;
+    padding: 0.5em;
+  }
+  nav.tabs .profile_tabs {
+    padding: 0.5em;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .profile_content.infos {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  nav.tabs {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
 }
 /*# sourceMappingURL=responsive.css.map */
