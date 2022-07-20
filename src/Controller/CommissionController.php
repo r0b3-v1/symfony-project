@@ -32,9 +32,9 @@ class CommissionController extends AbstractController
         $user = $ur->findOneBy(['username' => $username]);
         
         //si l'utilisateur n'existe pas ou que ce n'est pas un artiste alors on renvoie une erreur 404
-        if(!$user || $user->getStatut()->getName() !='artiste'){
-            return $helper->error(404);
-        }
+        if(!$user || $user->getStatut()->getName() !='artiste') return $helper->error(404);
+        
+        if(!$user->getDisponible()) return $helper->error(403, 'Action impossible','Cette personne n\'est pas disponible pour une commission');
 
         $defaultStatut = $csr->findOneBy(['name'=>'en attente']);
         $commission = new Commission();
