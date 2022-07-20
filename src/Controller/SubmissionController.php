@@ -323,7 +323,8 @@ class SubmissionController extends AbstractController {
                 if(in_array('ROLE_ADMIN', $user->getRoles())){
                     $notif = new Notification;
                     $notif->setRecipient($user);
-                    $notif->setAuthor($this->getUser());
+                    $notif->setAuthor(null);
+                    $notif->setFromServer(true);
                     $notif->setReport(true);
                     $notif->setContent($content);
                     $nr->add($notif);
