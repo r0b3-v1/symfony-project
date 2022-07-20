@@ -360,3 +360,31 @@ footer {
     margin-left: 0.5em;
     width: 0px;
 }
+
+.CGU{
+    color:var(--MP-bg-primary) ;
+    background-color: #e8e8e8;
+    padding: 2em;
+    max-height: 80vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    ul,p{
+        margin-left: 2em;
+        margin-top: 1em;
+    }
+}
+
+.error-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2em;
+    background: var(--MP-bg-primary);
+    color: var(--MP-text-primary);
+    border: 2px dashed var(--MP-bg-link-hover);
+    h1{
+        margin-bottom: 1em;
+        color: red;
+    }
+}

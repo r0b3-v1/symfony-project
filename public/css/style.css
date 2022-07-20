@@ -428,4 +428,43 @@ footer {
   margin-left: 0.5em;
   width: 0px;
 }
+
+.CGU {
+  color: var(--MP-bg-primary);
+  background-color: #e8e8e8;
+  padding: 2em;
+  max-height: 80vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.CGU ul, .CGU p {
+  margin-left: 2em;
+  margin-top: 1em;
+}
+
+.error-page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 2em;
+  background: var(--MP-bg-primary);
+  color: var(--MP-text-primary);
+  border: 2px dashed var(--MP-bg-link-hover);
+}
+
+.error-page h1 {
+  margin-bottom: 1em;
+  color: red;
+}
 /*# sourceMappingURL=style.css.map */

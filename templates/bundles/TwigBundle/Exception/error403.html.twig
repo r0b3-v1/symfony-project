@@ -9,10 +9,12 @@
 {% endblock %}
 
 {% block body %}
-<h1>Erreur 403</h1>
-	{% if not customMessage is defined or customMessage == '' %}
-		Vous n'avez pas l'autorisation d'accéder à cette page!
-	{% else %}
-		{{customMessage | raw}}
-	{% endif %}
+<div class="error-page">
+	<h1>Erreur 403</h1>
+		{% if not customMessage is defined or customMessage == '' %}
+			Vous n'avez pas l'autorisation d'accéder à cette page!
+		{% else %}
+			{{customMessage | raw}}
+		{% endif %}
+</div>
 {% endblock %}
