@@ -1,12 +1,22 @@
 // ------------------------------------------------------Home page + recherche------------------------------------------------------
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1650px) {
     .main, header nav{
         padding: 0!important;
     }
 }
 
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 1375px) {
+    header nav>div{
+        gap: 0!important;
+    }
+
+    header .left > :not(.logo):not(:last-child)::after, header .right > :not(:last-child)::after{
+        right: 0!important;
+    }
+}
+
+@media screen and (max-width: 1225px) {
 // à cette taille, il faut remplacer les éléments de la nav par un boutton
     .submission{
         max-width: 33%!important;
@@ -73,14 +83,17 @@
         }
     }
 
+}
+
+@media screen and (max-width: 880px) {
     .post .content{
         flex-direction: column;
         .text{
             order: 1;
         }
     }
-
 }
+
 
 @media screen and (max-width: 700px) {
     #search-container {

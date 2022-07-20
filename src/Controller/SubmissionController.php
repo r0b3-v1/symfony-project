@@ -306,6 +306,18 @@ class SubmissionController extends AbstractController {
         else{
             $users = $ur->findAll();
             $admins = [];
+            //on teste si l'utilisateur a déjà report ce contenu
+            $content = 'Le post "' . $submission->getTitle() . '" par "' .  $submission->getAuthor()->getUsername() . 
+            '" a été signalé par "'. $this->getUser()->getUsername() . 
+            '" comme étant contraire à nos règles d\'utitilisation <a target="_blank" class="attribute" href="' . 
+            $this->generateUrl('app_post_show', ['postId'=>$postId]) . '">Voir</a>';
+
+            $isAlreadyReported = $nr->findOneBy(['content'=>$content]);
+            if($isAlreadyReported){
+                $this->addFlash('error', 'Vous avez déjà signalé ce contenu');
+                return $this->redirectToRoute('app_post_show',['postId'=>$postId]);
+            }
+
             //on récupère les admins du site pour leur envoyer des notifications
             foreach ($users as $user) {
                 if(in_array('ROLE_ADMIN', $user->getRoles())){
@@ -313,12 +325,7 @@ class SubmissionController extends AbstractController {
                     $notif->setRecipient($user);
                     $notif->setAuthor($this->getUser());
                     $notif->setReport(true);
-                    $notif->setContent(
-                        'Le post "' . $submission->getTitle() . '" par "' . $user->getUsername() . 
-                        '" a été signalé par "'. $this->getUser()->getUsername() . 
-                        '" comme étant contraire à nos règles d\'utitilisation <a target="_blank" class="attribute" href="' . 
-                        $this->generateUrl('app_post_show', ['postId'=>$postId]) . '">Voir</a>'
-                    );
+                    $notif->setContent($content);
                     $nr->add($notif);
                 }
                     

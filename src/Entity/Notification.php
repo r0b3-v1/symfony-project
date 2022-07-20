@@ -49,11 +49,17 @@ class Notification
      */
     private $report;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $fromServer;
+
     public function __construct()
     {
         $this->date = new \DateTime();    
         $this->seen = false;
         $this->report = false;
+        $this->fromServer = false;
     }
 
     public function getId(): ?int
@@ -129,6 +135,18 @@ class Notification
     public function setReport(?bool $report): self
     {
         $this->report = $report;
+
+        return $this;
+    }
+
+    public function getFromServer(): ?bool
+    {
+        return $this->fromServer;
+    }
+
+    public function setFromServer(bool $fromServer): self
+    {
+        $this->fromServer = $fromServer;
 
         return $this;
     }

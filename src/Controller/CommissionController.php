@@ -63,9 +63,10 @@ class CommissionController extends AbstractController
             $cr->add($commission);
 
             $notif = new Notification;
-            $notif->setAuthor($client);
+            $notif->setAuthor(null);
+            $notif->setFromServer(true);
             $notif->setRecipient($artist);
-            $notif->setContent('Nouvelle demande de commission');
+            $notif->setContent('Nouvelle demande de commission de la part de ' . $client->getUsername);
 
             $nr->add($notif);
             $this->addFlash('success', 'Votre demande a bien été enregistrée');
@@ -101,17 +102,18 @@ class CommissionController extends AbstractController
         $commission->setStatut($statut);
 
         $notif = new Notification();
+        $notif->setAuthor(null);
+        $notif->setFromServer(true);
         
         // dans ce cas c'est le client qui a annulé la commande, on le notifie
         if($client->getId() == $this->getUser()->getId()){
-            $notif->setAuthor($client);
             $notif->setRecipient($artist);  
             $notif->setContent('Le client "' . $client->getUsername() . '" a annulé sa commande "'.$commission->getTitle() . '"');
             $this->addFlash('success', 'Votre demande a bien été annulée');
         }
         //sinon c'est l'artiste, on le notifie également
         else{
-            $notif->setAuthor($artist);
+            
             $notif->setRecipient($client);  
             $notif->setContent('L\'artiste "' . $artist->getUsername() . '" a refusé votre commande "'.$commission->getTitle() . '"');
             $this->addFlash('success', 'La commande a bien été annulée');
@@ -149,7 +151,8 @@ class CommissionController extends AbstractController
 
             //on notifie le client que la commande est acceptée
             $notif = new Notification();
-            $notif->setAuthor($artist);
+            $notif->setAuthor(null);
+            $notif->setFromServer(true);
             $notif->setRecipient($client);
             $notif->setContent('Votre demande "' . $commission->getTitle() . '" a été acceptée par "' . $artist->getUsername() . '"');
             $nr->add($notif);
@@ -175,7 +178,6 @@ class CommissionController extends AbstractController
         if(!$commission){
             return $helper->error(404);
         }
-        $artist = $commission->getArtist();
         $client = $commission->getClient();
 
         $statut = $csr->findOneBy(['name'=>'terminé']);
@@ -183,7 +185,8 @@ class CommissionController extends AbstractController
 
         //on notifie le client que la commande est terminée
         $notif = new Notification();
-        $notif->setAuthor($artist);
+        $notif->setAuthor(null);
+        $notif->setFromServer(true);
         $notif->setRecipient($client);
         $notif->setContent('Votre demande "' . $commission->getTitle() . '" est terminée');
         $nr->add($notif);

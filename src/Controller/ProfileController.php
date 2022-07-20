@@ -38,6 +38,8 @@ class ProfileController extends AbstractController {
                 $sender = $notif->getAuthor()->getUsername();
             else
                 $sender=null;
+            if($notif->getFromServer())
+                $sender = 'Marketplace';
             if($sender && !in_array($sender,$senders)) $senders[] = $sender;
         }
         return $this->render('profile/index.html.twig', [
