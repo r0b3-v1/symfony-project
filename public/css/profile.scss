@@ -133,3 +133,15 @@
 #ToS ol, #ToS ul {
     margin-left: 2em;
 }
+
+.demande{
+    h3{
+        background-color: #424242;
+    }
+    padding: 1em;
+    padding-bottom: 2em;
+    margin-bottom: 1em;
+    &:not(:last-child){
+        border-bottom: 1px solid var(--MP-text-primary);
+    }
+}

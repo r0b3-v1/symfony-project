@@ -196,6 +196,9 @@
         -ms-flex-direction: column;
             flex-direction: column;
   }
+  .modal {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 650px) {

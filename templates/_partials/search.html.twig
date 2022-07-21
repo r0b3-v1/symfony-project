@@ -50,7 +50,7 @@
 						<div class="field">
 							<label for="search-dispo">disponible pour une commande :
 							</label>
-							<input type="checkbox" id="search-dispo" name="dispo" {% if arrayPost is defined and not arrayPost.dispo is null %}checked="checked"{% endif %}/>
+							<input type="checkbox" id="search-dispo" name="dispo" {% if arrayPost is defined and not ((arrayPost | length) == 0) and not arrayPost.dispo is null %}checked="checked"{% endif %}/>
 
 						</div>
 						<div class="field">
