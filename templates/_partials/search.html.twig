@@ -6,75 +6,70 @@
 			<i id="search-collapser" class="fa-solid fa-plus" data-collapse-trigger data-target="search-container"></i>
 		</div>
 		<div id="search-container" data-collapsable>
-				<form action="{{path('app_search')}}" method="POST">
-					<div class="fieldsets">
-						<fieldset class="search-block post-field">
-							<p>Rechercher des images</p>
-							<div class="field">
-								<label for="search-title">titre :
-								</label>
-								<input type="text" id="search-title" name="title" {% if arrayPost.title is defined %}value="{{arrayPost['title']}}"{% endif %}
-								>
-							</div>
-							<div class="field">
-								<label for="search-desc">description :
-								</label>
-								<input id="search-desc" type="text" name="description" {% if arrayPost.description is defined %}value="{{arrayPost['description']}}"{% endif %}>
-							</div>
-							<div class="field">
-								<label for="search-author">auteur :
-								</label>
-								<input id="search-author" type="text" name="author" {% if arrayPost.author is defined %}value="{{arrayPost['author']}}"{% endif %}>
-							</div>
-							<div class="field" title="les tags doivent être séparés par des espaces">
-								<label for="search-tags">tags :</label>
-								<input id="search-tags" type="text" name="tags" {% if arrayPost.tags is defined %}value="{{arrayPost['tags']}}"{% endif %}>
-							</div>
-							<div class="field">
-								<label for="search-cat">categories :</label>
-								<select name="categories" id="search-cat">
-									<option value="all" selected>tous</option>
-								{% for cat in categories %}
-									<option value="{{cat.id}}">{{cat.name}}</option>
-								{% endfor %}
-								</select>
-							</div>
-						</fieldset>
-						<fieldset class="search-block author-field deactivated" >
-							<p>Rechercher des artistes</p>
-							<div class="field">
-								<label for="search-name">Nom :
-								</label>
-								<input type="text" id="search-name" name="name"/>
-							</div>
-							<div class="field">
-								<label for="search-dispo">disponible pour une commande :
-								</label>
-								<input type="checkbox" id="search-dispo" name="dispo" {% if arrayPost.dispo is defined %}checked="checked"{% endif %}
-								 />
-							</div>
-							<div class="field">
-								<label for="sort-artist">trier par :
-								</label>
-								<select name="sort-artist" id="sort-artist">
-									<option value="date_desc" selected>date d'inscription (décroissante)</option>
-									<option value="date_asc">date d'inscription (croissante)</option>
-								</select>
-							</div>
-							
-						</fieldset>
-						<input type="hidden" name="type" value="post" id="search-hidden">
-					</div>
-						<div class="buttons">
-							<button class="button" type="submit" id="search-post-button">Valider</button>
-							<button class="button" id="search-form-type">Chercher des artistes</button>
+			<form action="{{path('app_search')}}" method="POST">
+				<div class="fieldsets">
+					<fieldset class="search-block post-field">
+						<p>Rechercher des images</p>
+						<div class="field">
+							<label for="search-title">titre :
+							</label>
+							<input type="text" id="search-title" name="title" {% if arrayPost.title is defined %}value="{{arrayPost['title']}}"{% endif %}
+							>
 						</div>
-				</form>
+						<div class="field">
+							<label for="search-desc">description :
+							</label>
+							<input id="search-desc" type="text" name="description" {% if arrayPost.description is defined %}value="{{arrayPost['description']}}"{% endif %}>
+						</div>
+						<div class="field">
+							<label for="search-author">auteur :
+							</label>
+							<input id="search-author" type="text" name="author" {% if arrayPost.author is defined %}value="{{arrayPost['author']}}"{% endif %}>
+						</div>
+						<div class="field" title="les tags doivent être séparés par des espaces">
+							<label for="search-tags">tags :</label>
+							<input id="search-tags" type="text" name="tags" {% if arrayPost.tags is defined %}value="{{arrayPost['tags']}}"{% endif %}>
+						</div>
+						<div class="field">
+							<label for="search-cat">categories :</label>
+							<select name="categories" id="search-cat">
+								<option value="all" selected>tous</option>
+							{% for cat in categories %}
+								<option value="{{cat.id}}">{{cat.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+					</fieldset>
+					<fieldset class="search-block author-field deactivated" >
+						<p>Rechercher des artistes</p>
+						<div class="field">
+							<label for="search-name">Nom :
+							</label>
+							<input type="text" id="search-name" name="name"/>
+						</div>
+						<div class="field">
+							<label for="search-dispo">disponible pour une commande :
+							</label>
+							<input type="checkbox" id="search-dispo" name="dispo" {% if arrayPost is defined and not arrayPost.dispo is null %}checked="checked"{% endif %}/>
+
+						</div>
+						<div class="field">
+							<label for="sort-artist">trier par :
+							</label>
+							<select name="sort-artist" id="sort-artist">
+								<option value="date_desc" selected>date d'inscription (décroissante)</option>
+								<option value="date_asc">date d'inscription (croissante)</option>
+							</select>
+						</div>
+						
+					</fieldset>
+					<input type="hidden" name="type" value="post" id="search-hidden">
+				</div>
+					<div class="buttons">
+						<button class="button" type="submit" id="search-post-button">Valider</button>
+						<button class="button" id="search-form-type">Chercher des artistes</button>
+					</div>
+			</form>
 		</div>
 	</div>
 </div>
-{% if arrayPost is defined and not arrayPost is empty %}
-	<script>
-		document.getElementById('search-container').classList.add('collapsed');
-	</script>
-{% endif %}

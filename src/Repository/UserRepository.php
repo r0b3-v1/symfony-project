@@ -78,23 +78,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->join(Statut::class, 's', Join::WITH , 'u.statut=s.id')
             ->andWhere('s.name = :val')
             ->setParameter('val','artiste')
-            
-
             ;
         
 
         if($name){
-            // $query = $query->andWhere('u.username LIKE :val')
-            // ->setParameter('val', '%' . $name . '%');
+            $query = $query->andWhere('u.username LIKE :val2')
+            ->setParameter('val2', '%' . $name . '%');
         }
         
         if($dispo){
-            $query = $query->andWhere('u.disponible = :val2')
-            ->setParameter('val2', 1);
+            $query = $query->andWhere('u.disponible = :val3')
+            ->setParameter('val3', 1);
         }
         else{
-            $query = $query->andWhere('u.disponible = :val2')
-            ->setParameter('val2', 0);
+            $query = $query->andWhere('u.disponible = :val3')
+            ->setParameter('val3', 0);
         }
         
         if($option){
@@ -112,9 +110,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             }
 
         }
-
-
-
         
         return $query->getQuery()->getResult();
     }

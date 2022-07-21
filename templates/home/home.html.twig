@@ -69,5 +69,12 @@
 		{{parent()}}
 		<script src="{{asset('js/search.js')}}"></script>
 	{% endblock %}
-
+	{# Dans le cas où il y a eu une recherche avancée, on collapse le menu de recherche et on affiche le type de recherche approprié #}
+	{% if arrayPost is defined and not arrayPost is empty %}
+		<script>
+			document.getElementById('search-container').classList.add('collapsed');
+			if('{{arrayPost['type']}}'=='artist')
+				toggleType();
+		</script>
+	{% endif %}
 {% endblock %}

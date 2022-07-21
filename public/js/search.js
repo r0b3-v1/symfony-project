@@ -6,8 +6,11 @@ const type = document.getElementById('search-form-type');
 
 
 
-type?.addEventListener('click', function(e){
-    e.preventDefault();
+type?.addEventListener('click', function(e){toggleType(e)});
+
+function toggleType(e=null){
+    if(e)
+        e.preventDefault();
     const postSearch = document.querySelector('fieldset.post-field');
     const artistSearch = document.querySelector('fieldset.author-field');
     const searchHidden = document.getElementById('search-hidden');
@@ -21,8 +24,7 @@ type?.addEventListener('click', function(e){
         searchHidden.value = 'post';
         type.textContent = 'Chercher des artistes';
     }
-
-})
+}
 
 searchCollapser?.addEventListener('click', function(){
     this.classList.toggle('fa-plus');

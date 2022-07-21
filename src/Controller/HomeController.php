@@ -47,6 +47,7 @@ class HomeController extends AbstractController
         elseif (count($paramsPost->all())>0){
             
             $type = $paramsPost->get('type');
+            $arrayPost['type'] = $type;
 
             // dans ce cas on cherche des images
             if($type == 'post'){
