@@ -15,7 +15,7 @@
 				<div class="notif {{notif.seen ? '' : 'unseen ' }}{% if not notif.author is empty and 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" data-filtrable="notif" {% if not notif.author is empty %}data-name="{{notif.author.username}}" {% endif %} {% if notif.fromServer %}data-name="Marketplace"{% endif %}
 				 >
 					<div class="head">Notification de : <span class="attribute">{{notif.author ? (('<a target="_blank" href="'~ path('app_profile_infos',{username:notif.author.username}) ~'">' ~ notif.author.username ~ '</a>') | raw ) : (notif.fromServer) ? 'Martketplace' : '<span class="missing">utilisateur supprimé</span>'}}</span></div>
-					{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé #}
+					{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé, dans ce cas la notification est générée par le serveur, il n'y a donc pas de risque de faille XSS #}
 					{% if notif.report %}
 						<p>{{notif.content | raw}}</p>
 					{% else %}
