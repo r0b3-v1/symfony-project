@@ -32,7 +32,7 @@
 				{% else %}
 
 					<span class="user">
-						<a href="{{ path('app_profile_infos',{username: app.user.username}) }}">
+						<a class="link-anim" href="{{ path('app_profile_infos',{username: app.user.username}) }}">
 							Bienvenue
 							{{app.user.username}}!
 							{% if not(app.user.avatar)%}
