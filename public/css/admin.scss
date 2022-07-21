@@ -5,12 +5,22 @@
     flex-direction: column;
 
     .user-container{
+        min-height: 300px;
         margin-top: 2em;
         background-color: var(--MP-bg-primary);
         padding: 3em;
-
-        .user-row{
+        h1{
+            margin-bottom: 1em;
+        }
+        .users{
             margin-top: 1em;
+            padding: 1em;
+            border: 1px solid;
+            max-height: 250px;
+            overflow-y: scroll;
+        }
+        .user-row{
+            padding:1em 0;
         }
         .user-row:not(.hidden):nth-child(2n){
             background-color: rgba($color: #FFF, $alpha: 0.1);

@@ -66,11 +66,11 @@ for (const button of detailsButtons) {
         const modal = HTMLFromString(`
         <div class="modal">
             <div class="modal-content">
-                <h3>Détails de la commande</h3>
+                <h3 style="margin-bottom:1em;">Détails de la commande</h3>
                 <p>
                 ${desc}
                 </p>
-                <button class="button" onclick="this.parentElement.parentElement.remove()">Fermer</button>
+                <button class="button" onclick="this.parentElement.parentElement.remove()" style="margin-top:1em;">Fermer</button>
             </div>
         </div>
     `);

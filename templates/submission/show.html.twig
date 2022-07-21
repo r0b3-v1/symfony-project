@@ -56,7 +56,7 @@
 			{% else %}
 				<a href="{{path('app_post_fav',{postId:submission.id})}}" class="button">Ajouter aux favoris</a>
 			{% endif %}
-			{% if editAllowed %}
+			{% if editAllowed or is_granted('ROLE_ADMIN') %}
 				<a href="{{path('app_post_delete',{postId:submission.id})}}" class="button" onclick="return confirm('Voulez-vous vraiment supprimer ce post?')">Supprimer</a>
 				<a href="{{path('app_post_edit',{postId:submission.id})}}" class="button">Modifier</a>
 			{% endif %}

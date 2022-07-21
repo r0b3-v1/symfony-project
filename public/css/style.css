@@ -15,9 +15,9 @@
   --MP-bg-link-hover: #aaa;
 }
 
-.text_light a:not(.link-anim),
-.text_light a:focus:not(.link-anim),
-.text_light a:visited:not(.link-anim) {
+.text_light a:not(.link-anim):not(.link-danger),
+.text_light a:focus:not(.link-anim):not(.link-danger),
+.text_light a:visited:not(.link-anim):not(.link-danger) {
   color: var(--MP-text-primary) !important;
 }
 
@@ -38,6 +38,10 @@ a:visited {
   background: linear-gradient(90deg, #01ff00 0%, #01ff00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.link-danger {
+  color: red !important;
 }
 
 header {

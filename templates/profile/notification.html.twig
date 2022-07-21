@@ -5,7 +5,7 @@
 
 {% block stylesheets %}
 
-	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
+	{{parent()}}
 	<link rel="stylesheet" href="{{ asset('css/form.css')}}">
 
 {% endblock %}
@@ -13,7 +13,7 @@
 {% block body %}
     {% form_theme notifForm 'forms/fields.twig' %}
     
-	{{ form_start(notifForm, { 'attr' : { 'class': 'text_light' } }) }}
+	{{ form_start(notifForm, { 'attr' : { 'class': 'text_light form-data' } }) }}
 	<div class="form-content">
         <h1>Envoyer une notification à {{recipient.username}}</h1>
 

@@ -8,21 +8,25 @@
 {% endblock %}
 
 {% block body %}
-	<div class="filter">
-		<label for="user-filter">filtrer :
-		</label>
-		<input type="text" id="user-filter">
-	</div>
-	<div class="user-container">
-        {% for user in users %}
-            <div class="user-row">
-                <a target="_blank" href="{{path('app_profile_infos', { username : user.username })}}" class='username'>{{user.username}}</a>
-                <div class="actions">
-                    <a href="{{path('app_send_notif', { username : user.username })}}">Notifier</a>
-                    <a onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur?')"  href="{{path('app_admin_delete', {  userId : user.id, csrf_token : csrf_token('remove') })}}">supprimer</a>
+
+	<div class="user-container text_light">
+        <h1>Liste des utilisateurs : </h1>
+        <div class="filter">
+            <label for="user-filter">filtrer :
+            </label>
+            <input type="text" id="user-filter">
+        </div>
+        <div class="users">
+            {% for user in users %}
+                <div class="user-row">
+                    <a target="_blank" href="{{path('app_profile_infos', { username : user.username })}}" class='username'>{{user.username}}</a>
+                    <div class="actions">
+                        <a class="link-anim" href="{{path('app_send_notif', { username : user.username })}}">Notifier</a>
+                        <a class="link-danger" onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur?')"  href="{{path('app_admin_delete', {  userId : user.id, csrf_token : csrf_token('remove') })}}">Supprimer</a>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
     {% block javascripts %}
         {{parent()}}

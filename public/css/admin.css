@@ -15,13 +15,26 @@
 }
 
 .main .user-container {
+  min-height: 300px;
   margin-top: 2em;
   background-color: var(--MP-bg-primary);
   padding: 3em;
 }
 
-.main .user-container .user-row {
+.main .user-container h1 {
+  margin-bottom: 1em;
+}
+
+.main .user-container .users {
   margin-top: 1em;
+  padding: 1em;
+  border: 1px solid;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+.main .user-container .user-row {
+  padding: 1em 0;
 }
 
 .main .user-container .user-row:not(.hidden):nth-child(2n) {

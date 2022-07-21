@@ -20,6 +20,11 @@
   display: none;
 }
 
+.content .profile_content .images_container {
+  overflow-y: scroll;
+  max-height: 800px;
+}
+
 .greet {
   text-align: center;
   margin-bottom: 1em;
@@ -126,6 +131,9 @@
 
 .notifs {
   margin-top: 1em;
+  padding: 1em;
+  max-height: 500px;
+  overflow-y: scroll;
 }
 
 .notif {
@@ -164,5 +172,13 @@
 
 .demande:not(:last-child) {
   border-bottom: 1px solid var(--MP-text-primary);
+}
+
+.commissions-list {
+  margin-top: 1em;
+  padding: 1em;
+  border: 1px solid;
+  max-height: 500px;
+  overflow-y: scroll;
 }
 /*# sourceMappingURL=profile.css.map */

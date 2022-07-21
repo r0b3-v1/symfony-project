@@ -1,9 +1,7 @@
 {# pour suivre les commandes qui nous ont été faites #}
 <div class="profile_content commissions" data-title="my-commissions">
 	<p>Mes commandes :</p>
-	{% if user.clientCommissions is empty %}
-		<p class="missing">Aucune commande en cours</p>
-	{% endif %}
+	
 	<label for="commission-select">Filtrer par statut : </label>
 	<select name="commission-select" id="commission-select" data-filter="statut">
 		<option value="all">Tous</option>
@@ -11,35 +9,41 @@
 			<option value="{{statut.name}}">{{statut.name | capitalize}}</option>
 		{% endfor %}
 	</select>
-	{% for demande in user.clientCommissions | reverse %}
-		<div class="demande" data-filtrable="statut" data-name="{{demande.statut.name}}">
-		<h3>{{demande.title}}</h3>
-			<p><span class="attribute">émise le : </span> {{demande.date | date('d/m/Y')}} , <span class="attribute">deadline : </span>{{demande.deadline ? demande.deadline | date('d/m/Y') : 'pas de deadline'}}</p>
-			<p>
-				<span class="attribute">client : </span>
-				{% if not demande.client is empty %}
-					<a target="_blank" href="{{path('app_profile_infos', {username : demande.client.username})}}">{{ demande.client.username}}
-						<i class="fa-solid fa-eye"></i>
-					</a>
-				{% else %}
-					<span class="missing">Cet utilisateur a été supprimé</span>
+	{% if user.clientCommissions is empty %}
+		<p class="missing">Aucune commande en cours</p>
+	{% else %}
+		<div class="commissions-list text_light">
+		{% for demande in user.clientCommissions | reverse %}
+			<div class="demande" data-filtrable="statut" data-name="{{demande.statut.name}}">
+			<h3>{{demande.title}}</h3>
+				<p><span class="attribute">émise le : </span> {{demande.date | date('d/m/Y')}} , <span class="attribute">deadline : </span>{{demande.deadline ? demande.deadline | date('d/m/Y') : 'pas de deadline'}}</p>
+				<p>
+					<span class="attribute">client : </span>
+					{% if not demande.client is empty %}
+						<a target="_blank" href="{{path('app_profile_infos', {username : demande.client.username})}}">{{ demande.client.username}}
+							<i class="fa-solid fa-eye"></i>
+						</a>
+					{% else %}
+						<span class="missing">Cet utilisateur a été supprimé</span>
+					{% endif %}
+		
+				</p>
+				<p><span class="attribute">statut : </span> {{demande.statut.name ?? ''}}</p>
+				<p><span class="attribute">prix : </span>{{demande.statut.name == 'en attente'? '<span class="missing">non défini</span>' : (demande.price ~ ' €')}}</p>
+				<button data-content="{{demande.description}}" class="button details-btn">Voir</button>
+		
+				{% if demande.statut.name == 'en attente' %}
+					<button data-content="{{path('app_commission_accept', {commissionId : demande.id})}}" title="{{demande.title}}" class="button accept-demand">Accepter</button>
+					<a href="{{path('app_commission_cancel', {commissionId : demande.id})}}" class="button danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette demande?')">Refuser</a>
 				{% endif %}
-				
-			</p>		
-			<p><span class="attribute">statut : </span> {{demande.statut.name ?? ''}}</p>
-			<p><span class="attribute">prix : </span>{{demande.statut.name == 'en attente'? '<span class="missing">non défini</span>' : (demande.price ~ ' €')}}</p>
-			<button data-content="{{demande.description}}" class="button details-btn">Voir</button>
-			
-			{% if demande.statut.name == 'en attente' %}
-				<button data-content="{{path('app_commission_accept', {commissionId : demande.id})}}" title="{{demande.title}}" class="button accept-demand">Accepter</button>
-				<a href="{{path('app_commission_cancel', {commissionId : demande.id})}}" class="button danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette demande?')">Refuser</a>
-			{% endif %}
-
-			{% if demande.statut.name == 'en cours' %}
-				<a href="{{path('app_commission_done', {commissionId : demande.id})}}" class="button success" onclick="return confirm('Vous confirmez que la commande est terminée et a été livrée au client?')">Terminer</a>
-			{% endif %}
-		</div>
-	{% endfor %}
+				{% if demande.statut.name == 'en cours' %}
+					<a href="{{path('app_commission_done', {commissionId : demande.id})}}" class="button success" onclick="return confirm('Vous confirmez que la commande est terminée et a été livrée au client?')">Terminer</a>
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+	
 </div>
 
 {# bloc pour suivre les commandes qu'on a fait auprès d'autres artistes #}
@@ -55,33 +59,34 @@
 		</select>
 		{% if user.orderedCommissions is empty %}
 			<p class="missing">Aucune demande en cours</p>
-		{% endif %}
-		{% for demande in user.orderedCommissions | reverse %}
-			<div class="demande" data-filtrable="statut" data-name="{{demande.statut.name}}">
-			<h3>{{demande.title}}</h3>
-				<p><span class="attribute">émise le : </span> {{demande.date | date('d/m/Y')}} , <span class="attribute">deadline : </span>{{demande.deadline ? demande.deadline | date('d/m/Y') : 'pas de deadline'}}</p>
-				<p>
-					<span class="attribute">artiste : </span>
-
-					{% if not demande.artist is empty %}
-						<a target="_blank" href="{{path('app_profile_infos', {username : demande.artist.username})}}">{{ demande.artist.username}}
-							<i class="fa-solid fa-eye"></i>
-						</a>
-					{% else %}
-						<span class="missing">Cet utilisateur a été supprimé</span>
+		{% else %}
+			<div class="commissions-list text_light">
+			{% for demande in user.orderedCommissions | reverse %}
+				<div class="demande" data-filtrable="statut" data-name="{{demande.statut.name}}">
+				<h3>{{demande.title}}</h3>
+					<p><span class="attribute">émise le : </span> {{demande.date | date('d/m/Y')}} , <span class="attribute">deadline : </span>{{demande.deadline ? demande.deadline | date('d/m/Y') : 'pas de deadline'}}</p>
+					<p>
+						<span class="attribute">artiste : </span>
+						{% if not demande.artist is empty %}
+							<a target="_blank" href="{{path('app_profile_infos', {username : demande.artist.username})}}">{{ demande.artist.username}}
+								<i class="fa-solid fa-eye"></i>
+							</a>
+						{% else %}
+							<span class="missing">Cet utilisateur a été supprimé</span>
+						{% endif %}
+					</p>
+					<p><span class="attribute">statut : </span> {{demande.statut.name ?? ''}}</p>
+					<p><span class="attribute">prix : </span>{{demande.statut.name == 'en attente'? '<span class="missing">non défini</span>' : (demande.price ~ ' €')}}</p>
+					<button data-content="{{demande.description}}" class="button details-btn">Voir</button>
+			
+					{% if demande.statut.name == 'en attente' %}
+						<a href="{{path('app_commission_cancel', {commissionId : demande.id})}}" class="button danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette demande?')">Annuler</a>
 					{% endif %}
-
-				</p>		
-				<p><span class="attribute">statut : </span> {{demande.statut.name ?? ''}}</p>
-				<p><span class="attribute">prix : </span>{{demande.statut.name == 'en attente'? '<span class="missing">non défini</span>' : (demande.price ~ ' €')}}</p>
-				<button data-content="{{demande.description}}" class="button details-btn">Voir</button>
-				
-				{% if demande.statut.name == 'en attente' %}
-					<a href="{{path('app_commission_cancel', {commissionId : demande.id})}}" class="button danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette demande?')">Annuler</a>
-				{% endif %}
-
-			</div>
-		{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+		
 	</div>
 
 {% endif %}
