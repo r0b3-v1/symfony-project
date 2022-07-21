@@ -1,5 +1,5 @@
 {# pour suivre les commandes qui nous ont été faites #}
-<div class="profile_content commissions" data="my-commissions">
+<div class="profile_content commissions" data-title="my-commissions">
 	<p>Mes commandes :</p>
 	{% if user.clientCommissions is empty %}
 		<p class="missing">Aucune commande en cours</p>
@@ -12,7 +12,7 @@
 		{% endfor %}
 	</select>
 	{% for demande in user.clientCommissions | reverse %}
-		<div class="demande" filtrable="statut" data="{{demande.statut.name}}">
+		<div class="demande" data-filtrable="statut" data-name="{{demande.statut.name}}">
 		<h3>{{demande.title}}</h3>
 			<p><span class="attribute">émise le : </span> {{demande.date | date('d/m/Y')}} , <span class="attribute">deadline : </span>{{demande.deadline ? demande.deadline | date('d/m/Y') : 'pas de deadline'}}</p>
 			<p>
@@ -28,10 +28,10 @@
 			</p>		
 			<p><span class="attribute">statut : </span> {{demande.statut.name ?? ''}}</p>
 			<p><span class="attribute">prix : </span>{{demande.statut.name == 'en attente'? '<span class="missing">non défini</span>' : (demande.price ~ ' €')}}</p>
-			<button data="{{demande.description}}" class="button details-btn">Voir</button>
+			<button data-content="{{demande.description}}" class="button details-btn">Voir</button>
 			
 			{% if demande.statut.name == 'en attente' %}
-				<button data="{{path('app_commission_accept', {commissionId : demande.id})}}" title="{{demande.title}}" class="button accept-demand">Accepter</button>
+				<button data-content="{{path('app_commission_accept', {commissionId : demande.id})}}" title="{{demande.title}}" class="button accept-demand">Accepter</button>
 				<a href="{{path('app_commission_cancel', {commissionId : demande.id})}}" class="button danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette demande?')">Refuser</a>
 			{% endif %}
 
@@ -44,7 +44,7 @@
 
 {# bloc pour suivre les commandes qu'on a fait auprès d'autres artistes #}
 {% if allowEditing %}
-	<div class="profile_content demandes" data="demandes">
+	<div class="profile_content demandes" data-title="demandes">
 		<p>Mes demandes de commission :</p>
 		<label for="demande-select">Filtrer par statut : </label>
 		<select name="demande-select" id="demande-select" data-filter="statut">
@@ -57,7 +57,7 @@
 			<p class="missing">Aucune demande en cours</p>
 		{% endif %}
 		{% for demande in user.orderedCommissions | reverse %}
-			<div class="demande" filtrable="statut" data="{{demande.statut.name}}">
+			<div class="demande" data-filtrable="statut" data-name="{{demande.statut.name}}">
 			<h3>{{demande.title}}</h3>
 				<p><span class="attribute">émise le : </span> {{demande.date | date('d/m/Y')}} , <span class="attribute">deadline : </span>{{demande.deadline ? demande.deadline | date('d/m/Y') : 'pas de deadline'}}</p>
 				<p>
@@ -74,7 +74,7 @@
 				</p>		
 				<p><span class="attribute">statut : </span> {{demande.statut.name ?? ''}}</p>
 				<p><span class="attribute">prix : </span>{{demande.statut.name == 'en attente'? '<span class="missing">non défini</span>' : (demande.price ~ ' €')}}</p>
-				<button data="{{demande.description}}" class="button details-btn">Voir</button>
+				<button data-content="{{demande.description}}" class="button details-btn">Voir</button>
 				
 				{% if demande.statut.name == 'en attente' %}
 					<a href="{{path('app_commission_cancel', {commissionId : demande.id})}}" class="button danger" onclick="return confirm('Êtes-vous sûr de vouloir annuler cette demande?')">Annuler</a>

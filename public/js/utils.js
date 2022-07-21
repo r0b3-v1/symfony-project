@@ -19,9 +19,9 @@ for (const filter of filters) {
         let value = this.options[this.selectedIndex].value;
         let target = this.getAttribute('data-filter');
         //on récupère les éléments que le filtre peut filtrer
-        const filtrables = document.querySelectorAll(`[filtrable=${target}]`);
+        const filtrables = document.querySelectorAll(`[data-filtrable=${target}]`);
         for (const element of filtrables) {
-            let data = element.getAttribute('data');
+            let data = element.getAttribute('data-name');
             element.classList.add('hidden');
             if (data == value || value == 'all') {
                 element.classList.remove('hidden');

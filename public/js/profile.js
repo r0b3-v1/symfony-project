@@ -14,7 +14,7 @@ for (let tab of profileTabs) {
 
         this.classList.add('active');
         let target = this.getAttribute('data-target');
-        let contentToBeDisplayed = document.querySelector(`[data="${target}"]`);
+        let contentToBeDisplayed = document.querySelector(`[data-title="${target}"]`);
         contentToBeDisplayed.classList.add('active');
 
     });
@@ -62,7 +62,7 @@ for (const button of detailsButtons) {
     
     button.addEventListener('click', function(){
         document.querySelector('.modal')?.remove()
-        const desc = this.getAttribute('data');
+        const desc = this.getAttribute('data-content');
         const modal = HTMLFromString(`
         <div class="modal">
             <div class="modal-content">
