@@ -5,12 +5,10 @@
             <a class='nav_link' href="{{path('app_home')}}">Accueil
                 <i class="fa-solid fa-house"></i>
             </a>
-            <span class='nav_link search-link'>Recherche rapide
-                <form action="{{path('app_search')}}">
-                    <input type="text" name="params" value="{% if paramsGet is defined %}{{paramsGet}}{% endif %}"> 
-                    <i class="fa-solid fa-magnifying-glass quicksearch-submit" ></i>
-                </form>
-            </span>
+            <form class='nav_link search-link' action="{{path('app_search')}}">Recherche rapide
+                <input type="text" name="params" value="{% if paramsGet is defined %}{{paramsGet}}{% endif %}"> 
+                <i class="fa-solid fa-magnifying-glass quicksearch-submit"></i>
+            </form>
 
             {% if is_granted('ROLE_USER') and app.user.statut.name == 'artiste' %}
                 <a class='nav_link {{ app.user.isVerified ? '' : 'deactivated' }}' href="{{ path('app_post_upload')}}">Upload
