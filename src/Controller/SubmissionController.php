@@ -309,7 +309,7 @@ class SubmissionController extends AbstractController {
             //on teste si l'utilisateur a déjà report ce contenu
             $content = 'Le post "' . $submission->getTitle() . '" par "' .  $submission->getAuthor()->getUsername() . 
             '" a été signalé par "'. $this->getUser()->getUsername() . 
-            '" comme étant contraire à nos règles d\'utitilisation <a target="_blank" class="attribute" href="' . 
+            '" comme étant contraire à nos règles d\'utitilisation <a target="_blank" class="link-anim" href="' . 
             $this->generateUrl('app_post_show', ['postId'=>$postId]) . '">Voir</a>';
 
             $isAlreadyReported = $nr->findOneBy(['content'=>$content]);

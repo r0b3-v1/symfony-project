@@ -11,10 +11,10 @@
 {% endblock %}
 
 {% block body %}
-	<form method="post" class='text_light form-login'>
+	<form method="post" class='form-login'>
 
 		<div class="form-content">
-            <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
+            <h1 class="text_light font-weight-normal">Se connecter</h1>
             {% if error %}
                 <div class="error">
                     <div class="alert alert-danger">
@@ -30,7 +30,7 @@
                     <a class="logout link-anim" href="{{ path('app_logout') }}">Se déconnecter</a>
                 </div>
             {% endif %}
-            <div class="inputs">
+            <div class="text_light inputs">
                 <div class="form-input">
                     <label for="inputUsername">Votre nom d'utilisateur :
                     </label>

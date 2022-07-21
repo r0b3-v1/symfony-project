@@ -99,22 +99,16 @@ input{
 }
 
 .top-separator {
-
+    display: flex;
+    gap:1em;
+    flex-direction: column;
     text-align: center;
     position: relative;
     padding-top: 1em;
     border-top: 1px solid var(--MP-text-primary);
 }
 
-.link-anim {
-    transition: all 0.2s ease-in-out;
-    color: rgba(0,181,255,1)!important;
-    &:hover {
-        background: linear-gradient(90deg, rgba(1,255,0,1) 0%, rgba(1,255,0,1) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-}
+
 
 .error{
     display: flex;

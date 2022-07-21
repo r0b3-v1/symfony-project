@@ -118,23 +118,18 @@ input.invalid {
 }
 
 .top-separator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1em;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   text-align: center;
   position: relative;
   padding-top: 1em;
   border-top: 1px solid var(--MP-text-primary);
-}
-
-.link-anim {
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  color: #00b5ff !important;
-}
-
-.link-anim:hover {
-  background: -webkit-gradient(linear, left top, right top, from(#01ff00), to(#01ff00));
-  background: linear-gradient(90deg, #01ff00 0%, #01ff00 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .error {

@@ -15,11 +15,29 @@
   --MP-bg-link-hover: #aaa;
 }
 
+.text_light a:not(.link-anim),
+.text_light a:focus:not(.link-anim),
+.text_light a:visited:not(.link-anim) {
+  color: var(--MP-text-primary) !important;
+}
+
 a,
 a:focus,
 a:visited {
   text-decoration: none;
-  color: var(--MP-text-primary) !important;
+}
+
+.link-anim {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  color: #00b5ff !important;
+}
+
+.link-anim:hover {
+  background: -webkit-gradient(linear, left top, right top, from(#01ff00), to(#01ff00));
+  background: linear-gradient(90deg, #01ff00 0%, #01ff00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 header {
@@ -130,7 +148,10 @@ header nav .right .logo img {
 
 body {
   min-height: 100vh;
-  background-color: var(--MP-bg-body);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(rgba(85, 85, 85, 0.8)), to(rgba(85, 85, 85, 0))), url("../images/static/bg.png"), -webkit-gradient(linear, left top, left bottom, from(var(--MP-bg-body)), to(var(--MP-bg-body)));
+  background-image: linear-gradient(0deg, rgba(85, 85, 85, 0.8) 0%, rgba(85, 85, 85, 0) 100%), url("../images/static/bg.png"), linear-gradient(var(--MP-bg-body), var(--MP-bg-body));
+  background-position: center, center, center;
+  background-size: auto, 70%, auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -300,7 +321,7 @@ footer {
 
 .home-page {
   text-align: center;
-  color: var(--MP-text-primary);
+  color: white;
   margin-bottom: 1em;
 }
 
@@ -347,6 +368,15 @@ footer {
 }
 
 #notifs-indicator {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   position: absolute;
   top: 0;
   right: -10px;
@@ -386,6 +416,16 @@ footer {
   padding: 0.5em 0;
 }
 
+.burger form.search-link {
+  gap: 0.5em;
+}
+
+.burger form.search-link input {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
 .attribute {
   color: orange;
 }
@@ -397,6 +437,8 @@ footer {
 .block-content {
   background-color: var(--MP-bg-primary);
   padding: 2em;
+  -webkit-box-shadow: 0px 3px 10px 3px #00000070;
+          box-shadow: 0px 3px 10px 3px #00000070;
   border: 1px solid black;
 }
 
@@ -408,8 +450,6 @@ footer {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  -webkit-box-shadow: -5px 5px 10px 3px #00000070;
-          box-shadow: -5px 5px 10px 3px #00000070;
 }
 
 .presentation .title {

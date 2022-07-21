@@ -13,11 +13,11 @@
 {% block body %}
     {% form_theme registrationForm 'forms/fields.twig' %}
     
-	{{ form_start(registrationForm, { 'attr' : { 'class': 'text_light form-login' } }) }}
+	{{ form_start(registrationForm, { 'attr' : { 'class': 'form-login' } }) }}
 	<div class="form-content">
-        <h1>Créer mon compte</h1>
+        <h1 class="text_light">Créer mon compte</h1>
 
-        <div class="inputs">
+        <div class="text_light inputs">
             {{ form_row(registrationForm.username, {
                         label: 'Nom d\'utilisateur : ',
                     }) }}
