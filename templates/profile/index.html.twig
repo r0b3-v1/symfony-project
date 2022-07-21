@@ -35,17 +35,17 @@
 
 		{# navbar pour afficher les blocs #}
 		<nav class="tabs">
-			<button class="profile_tabs active" target="infos">Mes informations</button>
-			<button class="profile_tabs" target="favoris">Mes favoris</button>
+			<button class="profile_tabs active" data-target="infos">Mes informations</button>
+			<button class="profile_tabs" data-target="favoris">Mes favoris</button>
 			{% if allowEditing %}
-				<button class="profile_tabs" id="show-notifications" target="notifications">Mes notifications</button>
+				<button class="profile_tabs" id="show-notifications" data-target="notifications">Mes notifications</button>
 			{% endif %}
 
 			{% if user.statut.name == 'artiste' %}
-				<button class="profile_tabs" target="ToS">Mes conditions d'utilisation</button>
-				<button class="profile_tabs" target="galerie">Galerie</button>
+				<button class="profile_tabs" data-target="ToS">Mes conditions d'utilisation</button>
+				<button class="profile_tabs" data-target="galerie">Galerie</button>
 				{% if allowEditing %}
-					<button class="profile_tabs" target="my-commissions">Mes commandes</button>
+					<button class="profile_tabs" data-target="my-commissions">Mes commandes</button>
 				{% else %}
 					<a class="profile_tabs {% if not user.disponible %}deactivated{% endif %}" href="{{path('app_commission', {username : user.username})}}" >Faire une commande
 						<i class="fa-solid fa-file"></i>
@@ -54,7 +54,7 @@
 				{% endif %}
 			{% endif %}
 			{% if allowEditing %}
-						<button class="profile_tabs" target="demandes">Mes demandes</button>
+						<button class="profile_tabs" data-target="demandes">Mes demandes</button>
 			{% endif %}
 			{% if not allowEditing %}
 				<a href="{{path('app_send_notif', {username : user.username})}}" class="profile_tabs {{ app.user.isVerified ? '' : 'deactivated' }}"> Message privé
@@ -80,7 +80,7 @@
 			
 		</div>
 
-		<div id="artiste-modal" class="modal" collapsable>
+		<div id="artiste-modal" class="modal" data-collapsable>
 			<div class="modal-content">
 				<h3>Changer de statut?</h3>
 					<p>En validant vous allez passer du statut de simple visiteur à celui d'artiste, ce qui vous permettra de créer une galerie et même recevoir des commissions!</p>

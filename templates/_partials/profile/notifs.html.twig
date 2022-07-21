@@ -4,7 +4,7 @@
 		<p>Mes notifications</p>
 		<label for="sender-choice">filter par envoyeur :
 		</label>
-		<select name="sender-choice" id="sender-choice" filter="notif">
+		<select name="sender-choice" id="sender-choice" data-filter="notif">
 			<option value="all" selected>Tous</option>
 			{% for sender in senders %}
 				<option value="{{sender}}">{{sender}}</option>

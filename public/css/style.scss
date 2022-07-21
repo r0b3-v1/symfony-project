@@ -82,7 +82,7 @@ header {
             margin-left: 0.5em;
         }
 
-        &:not(#search-link):hover {
+        &:not(.search-link):hover {
             color: var(--MP-text-link-hover) !important;
             background-color: var(--MP-bg-link-hover);
         }
@@ -255,7 +255,7 @@ footer {
     margin-bottom: 1em;
 }
 
-#search-link{
+.search-link{
     display: flex;
     color: var(--MP-text-primary);
     input{
@@ -272,7 +272,7 @@ footer {
     transition: max-height 1s cubic-bezier(0, 1, 0, 1);
 }
 
-[collapsable]{
+[data-collapsable]{
     max-height: 0px;
     overflow: hidden;
     transition: max-height 1s cubic-bezier(0, 1, 0, 1);

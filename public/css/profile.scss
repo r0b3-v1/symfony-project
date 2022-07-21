@@ -89,7 +89,7 @@
     left: 50%;
     transform: translate(-50%,-50%);
     background-color: var(--MP-bg-primary);
-    &:not([collapsable]){
+    &:not([data-collapsable]){
         border: 1px solid var(--MP-text-primary);
         max-height: 600px;
     }

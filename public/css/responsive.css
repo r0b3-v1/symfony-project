@@ -22,7 +22,7 @@
     max-width: 33% !important;
     max-height: 300px !important;
   }
-  #search-link {
+  .search-link {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;

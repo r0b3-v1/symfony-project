@@ -29,7 +29,7 @@
 		{% if allowEditing %}
 			<a class="button" href="{{path('app_profile_edit_infos', {username:user.username})}}">Modifier mes informations</a>
 			{% if user.statut.name != 'artiste' %}
-				<a class="button" collapse-trigger target="artiste-modal">Devenir un artiste</a>
+				<a class="button" data-collapse-trigger data-target="artiste-modal">Devenir un artiste</a>
 			{% endif %}
 		{% endif %}
 	</div>

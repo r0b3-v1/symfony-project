@@ -1,23 +1,23 @@
-const triggers = document.querySelectorAll('[target][collapse-trigger]');
+const triggers = document.querySelectorAll('[data-target][data-collapse-trigger]');
 const passInput = document.querySelectorAll('input[type="password"]:not(#inputPassword)');
 
 for (const trigger of triggers) {
     trigger.addEventListener('click', function (e) {
         e.preventDefault();
-        let targetId = this.getAttribute('target');
-        const target = document.querySelector(`#${targetId}[collapsable]`);
+        let targetId = this.getAttribute('data-target');
+        const target = document.querySelector(`#${targetId}[data-collapsable]`);
         target.classList.toggle('collapsed');
     })
 
 }
-// on récupère les select servant à filtrer les listes, ils ont un attribut filter
-const filters = document.querySelectorAll('select[filter]');
+// on récupère les select servant à filtrer les listes, ils ont un attribut data-filter
+const filters = document.querySelectorAll('select[data-filter]');
 
 
 for (const filter of filters) {
     filter.addEventListener('change', function () {
         let value = this.options[this.selectedIndex].value;
-        let target = this.getAttribute('filter');
+        let target = this.getAttribute('data-filter');
         //on récupère les éléments que le filtre peut filtrer
         const filtrables = document.querySelectorAll(`[filtrable=${target}]`);
         for (const element of filtrables) {

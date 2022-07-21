@@ -5,7 +5,7 @@
 		<p class="missing">Aucune commande en cours</p>
 	{% endif %}
 	<label for="commission-select">Filtrer par statut : </label>
-	<select name="commission-select" id="commission-select" filter="statut">
+	<select name="commission-select" id="commission-select" data-filter="statut">
 		<option value="all">Tous</option>
 		{% for statut in statuts %}
 			<option value="{{statut.name}}">{{statut.name | capitalize}}</option>
@@ -47,7 +47,7 @@
 	<div class="profile_content demandes" data="demandes">
 		<p>Mes demandes de commission :</p>
 		<label for="demande-select">Filtrer par statut : </label>
-		<select name="demande-select" id="demande-select" filter="statut">
+		<select name="demande-select" id="demande-select" data-filter="statut">
 			<option value="all">Tous</option>
 			{% for statut in statuts %}
 				<option value="{{statut.name}}">{{statut.name | capitalize}}</option>

@@ -107,7 +107,7 @@
   background-color: var(--MP-bg-primary);
 }
 
-.modal:not([collapsable]) {
+.modal:not([data-collapsable]) {
   border: 1px solid var(--MP-text-primary);
   max-height: 600px;
 }

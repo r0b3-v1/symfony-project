@@ -1,4 +1,3 @@
-const searchButton = document.getElementById('search-link');
 const searchDiv = document.getElementById('search-modal');
 const typeSelect = document.getElementById('search-type-select');
 const quickSearchSubmits = document.getElementsByClassName('quicksearch-submit');

@@ -3,36 +3,36 @@
 	<div class="type-container">
 		<div class="entete">
 			<h3>Recherche avancée</h3>
-			<i id="search-collapser" class="fa-solid fa-plus" collapse-trigger target="search-container"></i>
+			<i id="search-collapser" class="fa-solid fa-plus" data-collapse-trigger data-target="search-container"></i>
 		</div>
-		<div id="search-container" collapsable>
+		<div id="search-container" data-collapsable>
 				<form action="{{path('app_search')}}" method="POST">
 					<div class="fieldsets">
 						<fieldset class="search-block post-field">
 							<p>Rechercher des images</p>
 							<div class="field">
-								<label for="">titre :
+								<label for="search-title">titre :
 								</label>
-								<input type="text" name="title" {% if arrayPost.title is defined %}value="{{arrayPost['title']}}"{% endif %}
+								<input type="text" id="search-title" name="title" {% if arrayPost.title is defined %}value="{{arrayPost['title']}}"{% endif %}
 								>
 							</div>
 							<div class="field">
-								<label for="">description :
+								<label for="search-desc">description :
 								</label>
-								<input type="text" name="description" {% if arrayPost.description is defined %}value="{{arrayPost['description']}}"{% endif %}>
+								<input id="search-desc" type="text" name="description" {% if arrayPost.description is defined %}value="{{arrayPost['description']}}"{% endif %}>
 							</div>
 							<div class="field">
-								<label for="">auteur :
+								<label for="search-author">auteur :
 								</label>
-								<input type="text" name="author" {% if arrayPost.author is defined %}value="{{arrayPost['author']}}"{% endif %}>
+								<input id="search-author" type="text" name="author" {% if arrayPost.author is defined %}value="{{arrayPost['author']}}"{% endif %}>
 							</div>
 							<div class="field" title="les tags doivent être séparés par des espaces">
-								<label for="">tags :</label>
-								<input type="text" name="tags" {% if arrayPost.tags is defined %}value="{{arrayPost['tags']}}"{% endif %}>
+								<label for="search-tags">tags :</label>
+								<inpu id="search-tags"t type="text" name="tags" {% if arrayPost.tags is defined %}value="{{arrayPost['tags']}}"{% endif %}>
 							</div>
 							<div class="field">
-								<label for="">categories :</label>
-								<select name="categories" id="">
+								<label for="search-cat">categories :</label>
+								<select name="categories" id="search-cat">
 									<option value="all" selected>tous</option>
 								{% for cat in categories %}
 									<option value="{{cat.id}}">{{cat.name}}</option>

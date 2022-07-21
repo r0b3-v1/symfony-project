@@ -13,7 +13,7 @@ for (let tab of profileTabs) {
         removeActiveClass(contents);
 
         this.classList.add('active');
-        let target = this.getAttribute('target');
+        let target = this.getAttribute('data-target');
         let contentToBeDisplayed = document.querySelector(`[data="${target}"]`);
         contentToBeDisplayed.classList.add('active');
 
