@@ -47,7 +47,7 @@
 				{% if allowEditing %}
 					<button class="profile_tabs" data-target="my-commissions">Mes commandes</button>
 				{% else %}
-					<a class="profile_tabs {% if not user.disponible %}deactivated{% endif %}" href="{{path('app_commission', {username : user.username})}}" >Faire une commande
+					<a class="profile_tabs {% if not app.user or not user.disponible %}deactivated{% endif %}" href="{{path('app_commission', {username : user.username})}}" >Faire une commande
 						<i class="fa-solid fa-file"></i>
 						
 					</a> 
@@ -57,7 +57,7 @@
 						<button class="profile_tabs" data-target="demandes">Mes demandes</button>
 			{% endif %}
 			{% if not allowEditing %}
-				<a href="{{path('app_send_notif', {username : user.username})}}" class="profile_tabs {{ app.user.isVerified ? '' : 'deactivated' }}"> Message privé
+				<a href="{{path('app_send_notif', {username : user.username})}}" class="profile_tabs {{ (not app.user is null and app.user.isVerified) ? '' : 'deactivated' }}"> Message privé
 					<i class="fa-solid fa-envelope"></i>
 				</a>
 			{% endif %}

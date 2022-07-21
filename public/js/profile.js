@@ -32,7 +32,7 @@ for (const button of acceptDemandBtn) {
     
     button.addEventListener('click',function(){
         document.querySelector('.modal')?.remove()
-        const path = this.getAttribute('data');
+        const path = this.getAttribute('data-content');
         const title = this.getAttribute('title');
         const modal = HTMLFromString(`
             <div class="modal">

@@ -13,8 +13,7 @@
 						<div class="field">
 							<label for="search-title">titre :
 							</label>
-							<input type="text" id="search-title" name="title" {% if arrayPost.title is defined %}value="{{arrayPost['title']}}"{% endif %}
-							>
+							<input type="text" id="search-title" name="title" {% if arrayPost.title is defined %}value="{{arrayPost['title']}}" {% else %} value="" {% endif %}>
 						</div>
 						<div class="field">
 							<label for="search-desc">description :
