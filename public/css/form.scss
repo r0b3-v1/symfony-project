@@ -21,6 +21,12 @@
     .inputs div:not(.input-errors){
         display: flex;
         justify-content: space-between;
+        min-width: 100%;
+    }
+
+    textarea{
+        width: 500px;
+        height: 200px;
     }
 
     .form-content{
@@ -28,7 +34,7 @@
         align-items: center;
         padding: 4em 0;
         padding-top: 2em;
-        width: 50%;
+        width: 100%;
         margin:auto;
         border: 1px solid black;
 

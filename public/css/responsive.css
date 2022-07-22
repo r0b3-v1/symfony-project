@@ -162,6 +162,12 @@
   }
 }
 
+@media screen and (max-width: 650px) {
+  .form-content textarea {
+    width: 325px !important;
+  }
+}
+
 @media screen and (max-width: 450px) {
   .form-content .form-input {
     -webkit-box-orient: vertical !important;
