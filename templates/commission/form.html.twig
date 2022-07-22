@@ -13,7 +13,7 @@
 {% block body %}
     {% form_theme commissionForm 'forms/fields.twig' %}
     
-	{{ form_start(commissionForm, { 'attr' : { 'class': 'text_light' } }) }}
+	{{ form_start(commissionForm, { 'attr' : { 'class': 'text_light form-data' } }) }}
 	<div class="form-content">
         <h1>Nouvelle commission</h1>
 
@@ -39,7 +39,15 @@
     </div>
 	{{ form_end(commissionForm) }}
 
-
+<script>
+    const deadline = document.getElementById('commission_deadline');
+    const container = document.createElement('div');
+    for (const child of document.querySelectorAll('#commission_deadline select')) {
+        container.append(child);
+    }
+    container.style.justifyContent = 'flex-end';
+    deadline.append(container);
+</script>
 
 {% endblock %}
 
