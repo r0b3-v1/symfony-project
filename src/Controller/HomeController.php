@@ -39,7 +39,7 @@ class HomeController extends AbstractController
                 $submissions = array_merge($submissions, $tag->getSubmissions()->toArray());
             }
 
-            $postPerPage = 20;
+            $postPerPage = $this->getParameter('app.postPerPage');
             $totalPage = ceil(count($submissions)/$postPerPage);
         }
 
@@ -110,7 +110,8 @@ class HomeController extends AbstractController
             'paramsGet'=>$paramsGet,
             'arrayPost'=>$arrayPost,
             'categories'=>$categories,
-            'users'=>$users
+            'users'=>$users,
+            'request'=>$request
         ]);
     }
 
@@ -121,7 +122,7 @@ class HomeController extends AbstractController
     {
         // $submissions = $sr->findAll();^
         $categories = $cr->findAll();
-        $postPerPage = 20;
+        $postPerPage = $this->getParameter('app.postPerPage');
         $totalPage = ceil(count($sr->findAll())/$postPerPage);
         $submissions = $sr->findBy([],null,$postPerPage, ($page-1)*$postPerPage);
         return $this->render('home/home.html.twig', [

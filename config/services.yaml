@@ -6,6 +6,7 @@
 parameters:
     app.jwtsecret: '%env(JWT_SECRET)%'
     app.imageDirectory: '%kernel.project_dir%/public/images/users'
+    app.postPerPage: 20
 services:
     # default configuration for services in *this* file
     _defaults:

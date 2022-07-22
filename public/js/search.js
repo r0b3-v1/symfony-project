@@ -13,7 +13,7 @@ function toggleType(e=null){
         e.preventDefault();
     const postSearch = document.querySelector('fieldset.post-field');
     const artistSearch = document.querySelector('fieldset.author-field');
-    const searchHidden = document.getElementById('search-hidden');
+    const searchHidden = document.getElementById('search-type');
     postSearch.classList.toggle('deactivated');
     artistSearch.classList.toggle('deactivated');
     if(searchHidden.value == 'post'){

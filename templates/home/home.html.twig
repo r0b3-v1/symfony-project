@@ -42,7 +42,7 @@
 			{% endfor %}
 		{% else %}
 			{% if submissions|length == 0 %}
-				Aucun résultat pour votre recherche
+				<p class="text_light">Aucun résultat pour votre recherche</p>
 			{% endif %}
 			{% for submission in submissions | reverse %}
 				<div class="submission text_light">
