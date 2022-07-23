@@ -71,26 +71,24 @@ class SubmissionRepository extends ServiceEntityRepository
 
         $query = $this->createQueryBuilder('s');
         if($title){
-            $query = $query->andWhere('s.title LIKE :val')
-            ->setParameter('val', '%' . $title . '%');
+            $query = $query->andWhere('s.title LIKE :val1')
+            ->setParameter('val1', '%' . $title . '%');
         }
         if($authorId){
-            $query = $query->andWhere('s.author LIKE :val')
-            ->setParameter('val', '%' . $authorId . '%');
+            $query = $query->andWhere('s.author LIKE :val2')
+            ->setParameter('val2', '%' . $authorId . '%');
         }
         if($description){
-            $query = $query->andWhere('s.description LIKE :val')
-            ->setParameter('val', '%' . $description . '%');
+            $query = $query->andWhere('s.description LIKE :val3')
+            ->setParameter('val3', '%' . $description . '%');
         }
         if($categoryId){
-            $query = $query->andWhere('s.category = :val')
-            ->setParameter('val', $categoryId);
+            $query = $query->andWhere('s.category = :val4')
+            ->setParameter('val4', $categoryId);
         }
 
-        
         return $query->getQuery()->getResult();
         
-
     }
 
     /*
