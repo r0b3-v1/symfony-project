@@ -1,12 +1,12 @@
 {% block form_row %}
 
-    <div {% if not((form_errors(form)|trim) is empty)%} class="input-alert" {% endif %}>
+     {% if not((form_errors(form)|trim) is empty)%}<div class="input-alert" >{% endif %}
         <div class="form-input">
             {{ form_label(form) }}
             {{ form_widget(form) }}
         </div>
             {{ form_errors(form) }}
-    </div>
+    {% if not((form_errors(form)|trim) is empty)%}</div>{% endif %}
 
 {% endblock %}
 
