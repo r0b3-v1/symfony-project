@@ -56,10 +56,16 @@ class HomeController extends AbstractController
                 $arrayPost['title'] = $title;
                 $description = $paramsPost->get('description');
                 $arrayPost['description'] = $description;
-                $author = $paramsPost->get('author');
-                $arrayPost['author'] = $author;
-                $authorId = $ur->findOneBy(['username'=>$author]);
-                $arrayPost['authorId'] = $authorId;
+                $authorName = $paramsPost->get('author');
+                if($authorName)
+                    $authorId = -1;
+                else
+                    $authorId = null;
+                $arrayPost['author'] = $authorName;
+                $author = $ur->findOneBy(['username'=>$authorName]);
+                if($author) $authorId = $author->getId();
+    
+                    
 
                 $tags = $paramsPost->get('tags');
                 //pour récupérer les posts avec les tags concernés
@@ -79,7 +85,7 @@ class HomeController extends AbstractController
                 $categoryId = $paramsPost->get('categories');
                 $arrayPost['categoryId'] = $categoryId;
                 if($categoryId=='all') $categoryId = null;
-                $submissions = $sr->search(['title'=>$title, 'description'=>$description, 'authorId'=>$authorId, 'categoryId'=>$categoryId]);
+                $submissions = $sr->search(['title'=>$title, 'description'=>$description, 'author'=>$authorId, 'categoryId'=>$categoryId]);
 
                 if($tags){
                     $submissions = $helper->intersectArrays($submissions, $sub);

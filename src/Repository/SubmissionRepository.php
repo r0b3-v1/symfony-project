@@ -68,15 +68,15 @@ class SubmissionRepository extends ServiceEntityRepository
         $authorId = $params['author'] ?? null;
         $description = $params['description'] ?? null;
         $categoryId = $params['categoryId'] ?? null;
-
+        dump($params);
         $query = $this->createQueryBuilder('s');
         if($title){
             $query = $query->andWhere('s.title LIKE :val1')
             ->setParameter('val1', '%' . $title . '%');
         }
         if($authorId){
-            $query = $query->andWhere('s.author LIKE :val2')
-            ->setParameter('val2', '%' . $authorId . '%');
+            $query = $query->andWhere('s.author = :val2')
+            ->setParameter('val2', $authorId);
         }
         if($description){
             $query = $query->andWhere('s.description LIKE :val3')
@@ -87,8 +87,10 @@ class SubmissionRepository extends ServiceEntityRepository
             ->setParameter('val4', $categoryId);
         }
 
+        dump($query->getQuery());
         return $query->getQuery()->getResult();
         
+
     }
 
     /*
