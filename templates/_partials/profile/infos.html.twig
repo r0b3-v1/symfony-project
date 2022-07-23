@@ -31,6 +31,7 @@
 			{% if user.statut.name != 'artiste' %}
 				<a class="button" data-collapse-trigger data-target="artiste-modal">Devenir un artiste</a>
 			{% endif %}
+			<a class="button danger" onclick="return confirm('Voulez-vous vraiment supprimer votre compte?')" href="{{path('app_admin_delete', {userId : user.id, csrf_token : csrf_token('remove')})}}">Supprimer mon compte</a>
 		{% endif %}
 	</div>
 

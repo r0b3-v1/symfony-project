@@ -10,13 +10,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @IsGranted("ROLE_ADMIN")
- */
 class AdminController extends AbstractController
 {
     /**
      * @Route("/admin", name="app_admin")
+     * @IsGranted("ROLE_ADMIN")
      * page d'accueil pour les admins
      */
     public function index(UserRepository $ur): Response
@@ -29,7 +27,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/delete/{userId}", name="app_admin_delete")
+     * @Route("/user/delete/{userId}", name="app_admin_delete")
      * Permet de supprimer un utilisateur
      */
     public function deleteUser(UserRepository $ur, int $userId, Helpers $helper, Request $request): Response
