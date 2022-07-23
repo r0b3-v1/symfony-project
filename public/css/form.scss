@@ -17,11 +17,13 @@
     .inputs{
         align-items: center;
         padding: 1em;
+        &>div{
+            min-width: 100%;
+        }
     }
     .inputs div:not(.input-errors){
         display: flex;
         justify-content: space-between;
-        min-width: 100%;
     }
 
     textarea{

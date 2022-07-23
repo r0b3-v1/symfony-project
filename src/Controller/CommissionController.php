@@ -66,7 +66,7 @@ class CommissionController extends AbstractController
             $notif->setAuthor(null);
             $notif->setFromServer(true);
             $notif->setRecipient($artist);
-            $notif->setContent('Nouvelle demande de commission de la part de "' . $client->getUsername()) . '"';
+            $notif->setContent('Nouvelle demande de commission de la part de "' . $client->getUsername() . '"');
 
             $nr->add($notif);
             $this->addFlash('success', 'Votre demande a bien été enregistrée');

@@ -25,6 +25,10 @@
   padding: 1em;
 }
 
+.main form .inputs > div {
+  min-width: 100%;
+}
+
 .main form .inputs div:not(.input-errors) {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -32,7 +36,6 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  min-width: 100%;
 }
 
 .main form textarea {
