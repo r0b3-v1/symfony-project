@@ -17,8 +17,11 @@
 					<h2>{{submission.title}}</h2>
 					<p>
 						<span class="attribute">De </span>
-						{{submission.author ? (('<a href="'~ path('app_profile_infos',{username: submission.author.username}) ~'">' ~ submission.author.username ~ '</a>') | raw) :
+						{{submission.author ? (('<a class="link-anim" href="'~ path('app_profile_infos',{username: submission.author.username}) ~'">' ~ submission.author.username ~ '</a>') | raw) :
 						'<span class="missing">utilisateur supprimé</span>'}}
+					 </p>
+					 <p><span class="attribute">Posté le </span>
+					 	{{submission.dateCreation | date('d/m/Y')}}
 					 </p>
 				</div>
 				<div class="description">
