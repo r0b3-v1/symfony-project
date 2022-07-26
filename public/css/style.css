@@ -5,6 +5,8 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  scrollbar-color: #202020 #848484;
+  scrollbar-width: thin;
 }
 
 :root {

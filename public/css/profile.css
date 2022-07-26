@@ -160,8 +160,6 @@
 }
 
 .notifs-sent .notifs, .notifs-received .notifs {
-  scrollbar-color: #313131 #848484;
-  scrollbar-width: thin;
   margin-top: 1.5em;
   max-height: 500px;
   overflow-y: scroll;
