@@ -109,15 +109,35 @@
 
 }
 
-.notifs{
+.notif-container{
+    display: flex;
+    justify-content: space-between;
+}
+.notifs-sent, .notifs-received{
+    flex: 1;
     margin-top: 1em;
     padding: 1em;
-    max-height: 500px;
-    overflow-y: scroll;
+    h3{
+        text-align: center;
+        margin-bottom: 1em;
+    }
+    .notifs{
+        margin-top: 1.5em;
+        max-height: 500px;
+        overflow-y: scroll;
+        padding: 1.5em;
+        background-color: #444;
+    }
+    .date{
+        margin-left: 0.75em;
+    }
+    .date{
+        font-size: 0.75em;
+    }
 }
 .notif{
     margin-bottom: 0.5em;
-    border: 1px solid var(--MP-text-primary);
+    background-color: var(--MP-bg-primary);
     padding: 1em;
     .head{
         background-color: #424242;

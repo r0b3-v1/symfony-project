@@ -1,28 +1,59 @@
 {# bloc des notifications #}
 {% if allowEditing %}
 	<div class="profile_content notifications" id="block-notifications" data-title="notifications">
-		<p>Mes notifications</p>
-		<label for="sender-choice">filter par envoyeur :
-		</label>
-		<select name="sender-choice" id="sender-choice" data-filter="notif">
-			<option value="all" selected>Tous</option>
-			{% for sender in senders %}
-				<option value="{{sender}}">{{sender}}</option>
-			{% endfor %}
-		</select>
-		<div class="notifs">
-			{% for notif in user.receivedNotifs | reverse %}
-				<div class="text_light notif {{notif.seen ? '' : 'unseen ' }}{% if not notif.author is empty and 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" data-filtrable="notif" {% if not notif.author is empty %}data-name="{{notif.author.username}}" {% endif %} {% if notif.fromServer %}data-name="Marketplace"{% endif %}
-				 >
-					<div class="head">Notification de : <span class="attribute">{{notif.author ? (('<a target="_blank" href="'~ path('app_profile_infos',{username:notif.author.username}) ~'">' ~ notif.author.username ~ '</a>') | raw ) : (notif.fromServer) ? 'Martketplace' : '<span class="missing">utilisateur supprimé</span>'}}</span></div>
-					{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé, dans ce cas la notification est générée par le serveur, il n'y a donc pas de risque de faille XSS #}
-					{% if notif.report %}
-						<p>{{notif.content | raw}}</p>
-					{% else %}
-						<p>{{notif.content}}</p>
-					{% endif %}
+		
+		<div class="notif-container">
+			<div class="notifs-received">
+				<h3>Notifications reçues</h3>
+				<label for="sender-choice">filter par envoyeur :
+				</label>
+				<select name="sender-choice" id="sender-choice" data-filter="notif-received">
+					<option value="all" selected>Tous</option>
+					{% for sender in senders %}
+						<option value="{{sender}}">{{sender}}</option>
+					{% endfor %}
+				</select>
+			
+				<div class="notifs">
+					{% for notif in user.receivedNotifs | reverse %}
+						<div class="text_light notif {{notif.seen ? '' : 'unseen ' }}{% if not notif.author is empty and 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" data-filtrable="notif-received" {% if not notif.author is empty %}data-name="{{notif.author.username}}" {% endif %} {% if notif.fromServer %}data-name="Marketplace"{% endif %}
+						 >
+							<div class="head">Notification de : <span class="attribute">{{notif.author ? (('<a target="_blank" href="'~ path('app_profile_infos',{username:notif.author.username}) ~'">' ~ notif.author.username ~ '</a>') | raw ) : (notif.fromServer) ? 'Martketplace' : '<span class="missing">utilisateur supprimé</span>'}}</span><span class="date"> le {{notif.date | date('d/m/Y')}} à {{notif.date | date('h:i:s')}}</span></div>
+							{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé, dans ce cas la notification est générée par le serveur, il n'y a donc pas de risque de faille XSS #}
+							{% if notif.report %}
+								<p>{{notif.content | raw}}</p>
+							{% else %}
+								<p>{{notif.content}}</p>
+							{% endif %}
+						</div>
+					{% endfor %}
 				</div>
-			{% endfor %}
+			</div>
+			<div class="notifs-sent">
+				<h3>Notifications envoyées</h3>
+				<label for="sender-choice">filter par destinataire :
+				</label>
+				<select name="sender-choice" id="sender-choice" data-filter="notif-sent">
+					<option value="all" selected>Tous</option>
+					{% for sender in senders %}
+						<option value="{{sender}}">{{sender}}</option>
+					{% endfor %}
+				</select>
+				<div class="notifs">
+					{% for notif in user.sentNotifs | reverse %}
+						<div class="text_light notif {% if not notif.recipient is empty and 'ROLE_ADMIN' in notif.recipient.roles %}notif-admin{% endif %}" data-filtrable="notif-sent" {% if not notif.author is empty %}data-name="{{notif.recipient.username}}" {% endif %} {% if notif.fromServer %}data-name="Marketplace"{% endif %}
+						 >
+							<div class="head">Notification envoyée à : <span class="attribute">{{notif.recipient ? (('<a target="_blank" href="'~ path('app_profile_infos',{username:notif.recipient.username}) ~'">' ~ notif.recipient.username ~ '</a>') | raw ) : (notif.fromServer) ? 'Martketplace' : '<span class="missing">utilisateur supprimé</span>'}}</span><span class="date"> le {{notif.date | date('d/m/Y')}} à {{notif.date | date('h:i:s')}}</span></div>
+							{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé, dans ce cas la notification est générée par le serveur, il n'y a donc pas de risque de faille XSS #}
+							{% if notif.report %}
+								<p>{{notif.content | raw}}</p>
+							{% else %}
+								<p>{{notif.content}}</p>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
 		</div>
 		<script>
 			$('#show-notifications').click(function () {

@@ -181,8 +181,8 @@
 }
 @media screen and (max-width: 850px) {
 
-    .profile_content.infos{
-        flex-direction: column;
+    .profile_content.infos, .notif-container{
+        flex-direction: column!important;
     }
     .modal{
         width: 80%;
@@ -193,6 +193,9 @@
 
     nav.tabs{
         flex-direction: column;
+    }
+    .notif-container .notifs{
+        padding: 1.5em 0!important;
     }
 }
 
