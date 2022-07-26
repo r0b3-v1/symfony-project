@@ -151,12 +151,29 @@
   margin-bottom: 1em;
 }
 
+.notifs-sent img, .notifs-received img {
+  height: 30px;
+  max-width: 30px;
+  border-radius: 50%;
+  margin: 0.5em;
+  border: 1px solid white;
+}
+
 .notifs-sent .notifs, .notifs-received .notifs {
   margin-top: 1.5em;
   max-height: 500px;
   overflow-y: scroll;
   padding: 1.5em;
   background-color: #444;
+}
+
+.notifs-sent .notifs .head, .notifs-received .notifs .head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .notifs-sent .date, .notifs-received .date {

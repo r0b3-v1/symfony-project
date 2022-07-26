@@ -16,9 +16,24 @@
 			
 				<div class="notifs">
 					{% for notif in user.receivedNotifs | reverse %}
-						<div class="text_light notif {{notif.seen ? '' : 'unseen ' }}{% if not notif.author is empty and 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" data-filtrable="notif-received" {% if not notif.author is empty %}data-name="{{notif.author.username}}" {% endif %} {% if notif.fromServer %}data-name="Marketplace"{% endif %}
-						 >
-							<div class="head">Notification de : <span class="attribute">{{notif.author ? (('<a target="_blank" href="'~ path('app_profile_infos',{username:notif.author.username}) ~'">' ~ notif.author.username ~ '</a>') | raw ) : (notif.fromServer) ? 'Martketplace' : '<span class="missing">utilisateur supprimé</span>'}}</span><span class="date"> le {{notif.date | date('d/m/Y')}} à {{notif.date | date('h:i:s')}}</span></div>
+						<div class="text_light notif {{notif.seen ? '' : 'unseen ' }}{% if not notif.author is empty and 'ROLE_ADMIN' in notif.author.roles %}notif-admin{% endif %}" data-filtrable="notif-received" {% if not notif.author is empty %}data-name="{{notif.author.username}}" {% endif %} {% if notif.fromServer %}data-name="Marketplace"{% endif %}>
+							<div class="head">
+								Notification de : 
+								{% if not notif.author is null %}
+									{% if not notif.author.avatar is empty %}
+										<img src="{{asset('images/users/' ~ notif.author.avatar)}}" alt="avatar">
+									{% else %}
+										<img src="{{asset('images/static/avatar.png')}}" alt="avatar">
+									{% endif %}
+								{% endif %}
+								<span class="attribute">
+									{{notif.author ? 
+									(('<a target="_blank" href="'~ path('app_profile_infos',{username:notif.author.username}) ~'">' ~ notif.author.username ~ '</a>') | raw ) 
+									: (notif.fromServer) ? 'Martketplace' 
+									: '<span class="missing">utilisateur supprimé</span>'}}
+								</span>
+								<span class="date"> le {{notif.date | date('d/m/Y')}} à {{notif.date | date('h:i:s')}}</span>
+							</div>
 							{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé, dans ce cas la notification est générée par le serveur, il n'y a donc pas de risque de faille XSS #}
 							{% if notif.report %}
 								<p>{{notif.content | raw}}</p>
@@ -41,9 +56,24 @@
 				</select>
 				<div class="notifs">
 					{% for notif in user.sentNotifs | reverse %}
-						<div class="text_light notif {% if not notif.recipient is empty and 'ROLE_ADMIN' in notif.recipient.roles %}notif-admin{% endif %}" data-filtrable="notif-sent" {% if not notif.author is empty %}data-name="{{notif.recipient.username}}" {% endif %} {% if notif.fromServer %}data-name="Marketplace"{% endif %}
-						 >
-							<div class="head">Notification envoyée à : <span class="attribute">{{notif.recipient ? (('<a target="_blank" href="'~ path('app_profile_infos',{username:notif.recipient.username}) ~'">' ~ notif.recipient.username ~ '</a>') | raw ) : (notif.fromServer) ? 'Martketplace' : '<span class="missing">utilisateur supprimé</span>'}}</span><span class="date"> le {{notif.date | date('d/m/Y')}} à {{notif.date | date('h:i:s')}}</span></div>
+						<div class="text_light notif {% if not notif.recipient is empty and 'ROLE_ADMIN' in notif.recipient.roles %}notif-admin{% endif %}" data-filtrable="notif-sent" {% if not notif.author is empty %}data-name="{{notif.recipient.username}}" {% endif %} {% if notif.fromServer %}data-name="Marketplace"{% endif %}>
+							<div class="head">
+								Notification envoyée à : 
+								{% if not notif.recipient is null %}
+									{% if not notif.recipient.avatar is empty %}
+										<img src="{{asset('images/users/' ~ notif.recipient.avatar)}}" alt="avatar">
+									{% else %}
+										<img src="{{asset('images/static/avatar.png')}}" alt="avatar">
+									{% endif %}
+								{% endif %}
+								<span class="attribute">
+									{{notif.recipient ? 
+									(('<a target="_blank" href="'~ path('app_profile_infos',{username:notif.recipient.username}) ~'">' ~ notif.recipient.username ~ '</a>') | raw ) 
+									: (notif.fromServer) ? 'Martketplace' 
+									: '<span class="missing">utilisateur supprimé</span>'}}
+								</span>
+								<span class="date"> le {{notif.date | date('d/m/Y')}} à {{notif.date | date('h:i:s')}}</span>
+							</div>
 							{# le raw permet de rajouter un lien clickable dans le cas où la notification est un signalement, pour faciliter l'accès au contenu signalé, dans ce cas la notification est générée par le serveur, il n'y a donc pas de risque de faille XSS #}
 							{% if notif.report %}
 								<p>{{notif.content | raw}}</p>
