@@ -77,6 +77,9 @@ class ProfileController extends AbstractController {
      */
     public function edit(string $username, Request $request, UserRepository $ur, Helpers $helper) {
         $user = $ur->findOneBy(['username' => $username]);
+        if(!$user){
+            return $helper->error(404,'Erreur 404', 'Cet utilisateur n\'existe pas!');
+        }
         if($user != $this->getUser()){
             return $helper->error(403);
         }
