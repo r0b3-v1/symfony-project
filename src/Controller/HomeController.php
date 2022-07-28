@@ -130,7 +130,7 @@ class HomeController extends AbstractController
         $categories = $cr->findAll();
         $postPerPage = $this->getParameter('app.postPerPage');
         $totalPage = ceil(count($sr->findAll())/$postPerPage);
-        $submissions = $sr->findBy([],null,$postPerPage, ($page-1)*$postPerPage);
+        $submissions = $sr->findBy([],["date_creation"=>'DESC'],$postPerPage, ($page-1)*$postPerPage);
         return $this->render('home/home.html.twig', [
             'controller_name' => 'HomeController',
             'submissions'=>$submissions,
