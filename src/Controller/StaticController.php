@@ -15,4 +15,11 @@ class StaticController extends AbstractController
     public function terms() : Response {
         return $this->render('static/terms.html.twig');
     }
+
+    /**
+     * @Route("/privacy", name="app_privacy")
+     */
+    public function privacy() : Response {
+        return $this->render('static/privacy.html.twig');
+    }
 }

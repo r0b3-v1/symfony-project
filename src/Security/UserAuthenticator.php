@@ -34,14 +34,19 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $username = $request->request->get('username', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $username);
+        $rememberMe = explode('=',$request->cookies->get('tarteaucitron'))[1];
+
+        $options = [
+            new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
+        ];
+        if($rememberMe==='true')
+            $options[] = new RememberMeBadge();
+
 
         return new Passport(
             new UserBadge($username),
             new PasswordCredentials($request->request->get('password', '')),
-            [
-                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
-                new RememberMeBadge()
-            ]
+            $options
         );
     }
 

@@ -117,6 +117,12 @@
             max-height: 400px!important;
         }
     }
+    footer{
+        flex-direction: column;
+        height: auto;
+        gap: 1em;
+        padding: 1em 0;
+    }
 }
 
 @media screen and (max-width: 500px){

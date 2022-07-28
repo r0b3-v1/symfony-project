@@ -7,6 +7,10 @@
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
+
+		<script src="{{asset('tarteaucitron/tarteaucitron.js')}}"></script>
+		<script src="{{asset('tarteaucitron/tarteaucitronInit.js')}}" data-privacy="{{path('app_privacy')}}"></script>
+
 		{# bootstrap seulement pour les flash message #}
 		<link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.css') }}">
 		<script src="{{ asset('js/bootstrap/bootstrap.bundle.min.js') }}"></script>

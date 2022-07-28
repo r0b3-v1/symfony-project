@@ -129,6 +129,15 @@
     max-width: 100% !important;
     max-height: 400px !important;
   }
+  footer {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    height: auto;
+    gap: 1em;
+    padding: 1em 0;
+  }
 }
 
 @media screen and (max-width: 500px) {
