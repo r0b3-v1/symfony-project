@@ -48,6 +48,14 @@
                     </label>
                     <input type="checkbox" name="_remember_me" id="_remember_me"> 
                 </div>
+                <script>
+                    const rememberMe = document.getElementById('_remember_me').parentElement;
+                    const isTrue = document.cookie.split('rememberme=')[1];
+                    if(isTrue!=='true'){
+                        rememberMe.classList.add('deactivated');
+                        rememberMe.querySelector('label').innerHTML += '<br><span style="font-size:0.75em">Indisponible sans cookies</span>';
+                    }
+                </script>
             </div>            
                                             
                                         

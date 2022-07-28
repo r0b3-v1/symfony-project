@@ -10,7 +10,10 @@ tarteaucitron.services.rememberme = {
     "cookies": ['REMEMBERME'],
     "js": function () {
         "use strict";
-        // When user allow cookie
+        const input = document.getElementById('_remember_me');
+        if(input){
+            input.parentElement.classList.remove('deactivated');
+        }
     },
     "fallback": function () {
         "use strict";
