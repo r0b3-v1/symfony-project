@@ -47,7 +47,7 @@
 				{% if allowEditing %}
 					<button class="profile_tabs" data-target="my-commissions">Mes commandes</button>
 				{% else %}
-					<a class="profile_tabs {% if not app.user or not user.disponible %}deactivated{% endif %}" href="{{path('app_commission', {username : user.username})}}" >Faire une commande
+					<a class="profile_tabs {% if not app.user or not user.disponible or not app.user.isVerified %}deactivated{% endif %}" href="{{path('app_commission', {username : user.username})}}" >Faire une commande
 						<i class="fa-solid fa-file"></i>
 						
 					</a> 
