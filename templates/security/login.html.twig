@@ -24,48 +24,49 @@
                 </div>
             {% endif %}
             {% if app.user %}
-                <div>
+                <div class="text_light">
                     Vous êtes déjà connecté en tant que
-                    {{ app.user.username }},
+                    {{ app.user.username }}
                     <a class="logout link-anim" href="{{ path('app_logout') }}">Se déconnecter</a>
                 </div>
-            {% endif %}
-            <div class="text_light inputs">
-                <div class="form-input">
-                    <label for="inputUsername">Votre nom d'utilisateur :
-                    </label>
-                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="" required autofocus>
-                </div>
-                <div class="form-input">
-                    <label for="inputPassword">Votre mot de passe :
-                    </label>
-                    <input type="password" name="password" id="inputPassword" class="" required>
-                </div>
-                <input
-                type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                <div class="form-input">
-                    <label for="_remember_me">Se souvenir de moi 
-                    </label>
-                    <input type="checkbox" name="_remember_me" id="_remember_me"> 
-                </div>
-                <script>
-                    const rememberMe = document.getElementById('_remember_me').parentElement;
-                    const isTrue = document.cookie.split('rememberme=')[1];
-                    if(isTrue!=='true'){
-                        rememberMe.classList.add('deactivated');
-                        rememberMe.querySelector('label').innerHTML += '<br><span style="font-size:0.75em">Indisponible sans cookies</span>';
-                    }
-                </script>
-            </div>            
+            {% else %}
+                <div class="text_light inputs">
+                    <div class="form-input">
+                        <label for="inputUsername">Votre nom d'utilisateur :
+                        </label>
+                        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="" required autofocus>
+                    </div>
+                    <div class="form-input">
+                        <label for="inputPassword">Votre mot de passe :
+                        </label>
+                        <input type="password" name="password" id="inputPassword" class="" required>
+                    </div>
+                    <input
+                    type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <div class="form-input">
+                        <label for="_remember_me">Se souvenir de moi 
+                        </label>
+                        <input type="checkbox" name="_remember_me" id="_remember_me"> 
+                    </div>
+                    <script>
+                        const rememberMe = document.getElementById('_remember_me').parentElement;
+                        const isTrue = document.cookie.split('rememberme=')[1];
+                        if(isTrue!=='true'){
+                            rememberMe.classList.add('deactivated');
+                            rememberMe.querySelector('label').innerHTML += '<br><span style="font-size:0.75em">Indisponible sans cookies</span>';
+                        }
+                    </script>
+                </div>            
+                                                
                                             
-                                        
-            <button class="button" type="submit">
-                Se Connecter
-            </button>
-            <div class="top-separator">
-                <a class="link-anim" href="{{path('app_password_forgotten')}}">Mot de passe oublié</a>
-                <a class="link-anim" href="{{path('app_register')}}">Je veux me créer un compte</a>
-            </div>
+                <button class="button" type="submit">
+                    Se Connecter
+                </button>
+                <div class="top-separator">
+                    <a class="link-anim" href="{{path('app_password_forgotten')}}">Mot de passe oublié</a>
+                    <a class="link-anim" href="{{path('app_register')}}">Je veux me créer un compte</a>
+                </div>
+            {% endif %}
         </div>
 	</form>
 {% endblock %}
