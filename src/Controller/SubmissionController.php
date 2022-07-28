@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Console\Helper\Helper;
 
 class SubmissionController extends AbstractController {
     /**
@@ -33,9 +32,7 @@ class SubmissionController extends AbstractController {
         if (!$submission) {
                     return $helper->error(404, 'Post introuvable', 'Ce post n\'existe pas');
                 }
-        // on ajoute une relation entre le post et l'utilisateur pour indiquer qu'il l'a visionné 
-        if($this->getUser())
-            $submission->addViewedBy($this->getUser());
+
         $sr->add($submission);
         $absoluteUrl = '/images/users/' . $submission->getUrl();
         $isFaved = false;
