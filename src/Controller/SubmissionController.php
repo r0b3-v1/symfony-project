@@ -117,7 +117,7 @@ class SubmissionController extends AbstractController {
      */
     public function upload(Request $request, TagRepository $tr, EntityManagerInterface $em, Helpers $helper) {
 
-        if(!$helper->isVerified()) return $helper->error(403, 'Erreur 403','Vous devez être vérifié pour accéder à cette page');
+        if(!$helper->isVerified() || ($this->getUser()->getStatut()->getName() !== 'artiste')) return $helper->error(403, 'Erreur 403','Vous devez être un artiste vérifié pour accéder à cette page');
         
         $submission = new Submission;
         $form = $this->createForm(SubmissionType::class)
